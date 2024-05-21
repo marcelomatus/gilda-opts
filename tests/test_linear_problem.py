@@ -8,7 +8,7 @@ import pyomo.environ as pyo
 from scipy.optimize import linprog
 
 from gilda_opts import linear_problem as lpm
- 
+
 
 def test_lp_1():
     lp = lpm.LinearProblem(scale_obj=1.0, solver='cbc')
@@ -50,6 +50,8 @@ def test_lp_1():
     assert np.array_equal(rub, np.array([20, 10, 2]))
 
     lp.solve(keepfiles=False)
+
+    assert lp.get_status() == 'ok'
 
     rel_tol = 1e-6
     assert isclose(lp.get_obj(), -20.7142856, rel_tol=rel_tol)

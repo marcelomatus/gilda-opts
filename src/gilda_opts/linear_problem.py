@@ -1,7 +1,6 @@
 import numpy as np
-import pyomo.environ as pyo # type: ignore
-import pyomo.kernel as pmo # type: ignore
-from pyomo.environ import SymbolMap # type: ignore
+import pyomo.environ as pyo
+import pyomo.kernel as pmo
 from scipy.sparse import dok_matrix
 
 
@@ -166,9 +165,6 @@ class LinearProblem:
 
     def get_col_lb(self, j):
         return self.clb[j]
-
-    def get_obj(self):
-        return pyo.value(self.model.obj) * self.scale_obj
 
     def get_status(self):
         return self.result.solver.status
