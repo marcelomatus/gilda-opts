@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-"""Tests for `linear_problem` package."""
-
 from math import isclose
 
 import numpy as np
@@ -84,8 +81,7 @@ def test_lp_1():
     opt = linprog(c=obj,
                   A_ub=lhs_ineq,
                   b_ub=rhs_ineq,
-                  bounds=bnd,
-                  method="revised simplex")
+                  bounds=bnd)
 
     assert isclose(lp.get_obj(), opt.fun, rel_tol=rel_tol)
 
