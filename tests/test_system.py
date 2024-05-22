@@ -1,5 +1,3 @@
-
-from gilda_opts.bus import Bus
 from gilda_opts.system import System, SystemOptions
 
 
@@ -11,16 +9,29 @@ def test_system_1():
 
 def test_system_2():
 
-    data = '[{"name": "home", "uid": 1}, {"name": "casa", "uid": 2}]'
+    ds = '''{
+      "name": "s1",
+      "uid": 1,
+      "options": {"cfail": 500,
+                  "integer_mode": 1},
+      "buses": [{"uid": 1,
+                 "name": "home"},
+                {"uid": 2,
+                 "name": "casa"}],
+     "demands": [{"name": "d1",
+                   "loads": [1, 2, 3, 4]}]
+    }'''
 
-    buses = Bus.schema().loads(data, many=True)
-
-    s1 = System(name='s1', buses=buses)
+    s1 = System.from_json(ds)
 
     assert s1.name == 's1'
+    assert s1.uid == 1
+    assert s1.options.cfail == 500
+    assert s1.options.integer_mode == 1
+    assert s1.buses[0].name == 'home'
+    assert s1.buses[0].uid == 1
+    assert s1.buses[1].name == 'casa'
+    assert s1.buses[1].uid == 2
 
-    data = s1.to_json()
-
-    s2 = System.from_json(data)
-
-    assert s1 == s2
+    assert s1.demands[0].name == 'd1'
+    assert s1.demands[0].loads == [1, 2, 3, 4]

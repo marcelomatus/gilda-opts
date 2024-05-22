@@ -28,17 +28,3 @@ def test_bus_2():
     assert b2 == b1
 
 
-def test_bus_3():
-    data = '[{"name": "home", "uid": 1}, {"name": "casa", "uid": 2}]'
-
-    buses = Bus.schema().loads(data, many=True)
-
-    b1 = buses[0]
-
-    assert b1.name == 'home'
-    assert b1.uid == 1
-
-    b1 = buses[1]
-
-    assert b1.name == 'casa'
-    assert b1.uid == 2
