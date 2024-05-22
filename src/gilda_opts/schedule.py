@@ -1,4 +1,4 @@
-"""System class represents the scheduling object."""
+"""Schedule class represents the scheduling object."""
 
 from dataclasses import dataclass, field
 from typing import List
@@ -10,19 +10,19 @@ from gilda_opts.demand import Demand
 
 
 @dataclass
-class SystemOptions():
-    """SystemOptions class."""
+class ScheduleOptions():
+    """ScheduleOptions class."""
 
     cfail: float = 1000
     integer_mode: int = 0
 
 
 @dataclass
-class System(DataClassJsonMixin):
-    """System class."""
+class Schedule(DataClassJsonMixin):
+    """Schedule class."""
 
     name: str = ''
     uid: int = -1
-    options: SystemOptions = field(default_factory=SystemOptions)
+    options: ScheduleOptions = field(default_factory=ScheduleOptions)
     buses: List[Bus] = field(default_factory=lambda: [])
     demands: List[Demand] = field(default_factory=lambda: [])
