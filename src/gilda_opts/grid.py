@@ -1,4 +1,4 @@
-"""Grid class represents a basic grid electric connection."""
+"""Grid module contains the basic grid electric provider."""
 
 from dataclasses import dataclass, field
 from typing import List
@@ -13,11 +13,11 @@ class Grid(DataClassJsonMixin):
 
     Attributes:
     ----------
-    uid:              Unique id
+    uid:              Grid unique id
     name:             Grid provider name
     energy_tariffs:   List of energy tariff values [$/KWh]
-    power_tariffs:    List of power tariff values [$/KWh]
-    emission_factors: List of emission factors [gCO2/KWh].
+    power_tariffs:    List of power tariff values [$/KW]
+    emission_factors: List of emission factors [gCO2/KWh]
     """
 
     uid: int = -1
