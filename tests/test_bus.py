@@ -1,4 +1,5 @@
 from gilda_opts.bus import Bus
+from gilda_opts.bus_lp import BusLP
 
 
 def test_bus_1():
@@ -28,3 +29,11 @@ def test_bus_2():
     assert b2 == b1
 
 
+def test_bus_3():
+    data = '{"name": "home", "uid": 1}'
+
+    b1 = Bus.from_json(data)
+
+    b1_lp = BusLP(bus=b1)
+
+    assert b1_lp == b1_lp

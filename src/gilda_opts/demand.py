@@ -1,4 +1,4 @@
-"""Demand module contains the base electric load."""
+"""Demand module represents a base electric load."""
 
 from dataclasses import dataclass, field
 from typing import List
@@ -20,4 +20,6 @@ class Demand(DataClassJsonMixin):
 
     uid: int = -1
     name: str = ''
+    bus_uid: int = -1
     loads: List[float] = field(default_factory=list)
+    cfail: float = 0

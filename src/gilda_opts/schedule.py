@@ -5,24 +5,20 @@ from typing import List
 
 from dataclasses_json import DataClassJsonMixin
 
-from gilda_opts.bus import Bus
-from gilda_opts.demand import Demand
-
-
-@dataclass
-class ScheduleOptions():
-    """ScheduleOptions class."""
-
-    cfail: float = 1000
-    integer_mode: int = 0
+from gilda_opts.block import Block
+from gilda_opts.system import System
 
 
 @dataclass
 class Schedule(DataClassJsonMixin):
-    """Schedule class."""
+    """
+    Schedule class.
 
-    name: str = ''
-    uid: int = -1
-    options: ScheduleOptions = field(default_factory=ScheduleOptions)
-    buses: List[Bus] = field(default_factory=lambda: [])
-    demands: List[Demand] = field(default_factory=lambda: [])
+    Attributes:
+    -----------
+    blocks: List of blocks.
+    system:
+    """
+
+    blocks: List[Block] = field(default_factory=list)
+    system: System = None

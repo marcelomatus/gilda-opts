@@ -1,4 +1,4 @@
-"""Bus class to represent where electric elements are connected."""
+"""bus module contains the electric bus where the electric elements are connected."""
 
 from dataclasses import dataclass
 

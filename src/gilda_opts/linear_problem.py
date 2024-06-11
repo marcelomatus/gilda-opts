@@ -1,13 +1,32 @@
+"""Contains the linear problem module."""
 import numpy as np
 import pyomo.environ as pyo
 import pyomo.kernel as pmo
 from scipy.sparse import dok_matrix
 
 
+def guid(*uids):
+    """Generate an uid valid for use as a LP name."""
+    g = ''
+    for i in uids:
+        g += ':' + str(i) if g else str(i)
+    return g
+
+
 class LinearProblem:
+    """
+    Represents a linear problem interface class and its interaction with the solver.
+
+    Attributes:
+    -----------
+    A: Constraint Matrix
+
+    """
+
     inf = float("inf")
 
     def __init__(self, scale_obj=1.0, solver='cbc', integer_mode=True):
+        """Construct a linear problem."""
         self.scale_obj = scale_obj
         self.solver = solver
         self.integer_mode = integer_mode
@@ -29,7 +48,16 @@ class LinearProblem:
         self.cols = 0
         self.rows = 0
 
+    def numcols(self):
+        """Return the number of columns or variables."""
+        return self.cols
+
+    def numrows(self):
+        """Return the number of rows or constraints."""
+        return self.rows
+
     def add_col(self, name=None, lb=0, ub=inf, c=0, dtype=0):
+        """Add one column or variable to the LP problem."""
         j = self.cols
         self.clb[j] = lb
         self.cub[j] = ub
@@ -42,6 +70,7 @@ class LinearProblem:
         return j
 
     def add_row(self, row={}, name=None, lb=-inf, ub=inf):
+        """Add one column or constraint to the LP problem."""
         i = self.rows
         for j, v in row.items():
             self.A[i, j] = v
@@ -55,9 +84,11 @@ class LinearProblem:
         return i
 
     def add_rhs_row(self, row={}, name=None, rhs=0):
+        """Add one column or constraint to the LP problem providing the RHS."""
         return self.add_row(row, name=name, lb=rhs, ub=rhs)
 
     def set_coeff(self, i, j, v):
+        """Set the constraint matrix coefficient."""
         self.A[i, j] = v
 
     def set_objc(self, j, cv):

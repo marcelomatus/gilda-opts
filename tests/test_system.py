@@ -1,19 +1,11 @@
-from gilda_opts.schedule import Schedule, ScheduleOptions
+from gilda_opts.system import System
 
 
-def test_schedule_1():
-    opts = ScheduleOptions()
-    assert opts.cfail == 1000
-    assert opts.integer_mode == 0
-
-
-def test_schedule_2():
+def test_system_1():
 
     ds = '''{
       "name": "s1",
       "uid": 1,
-      "options": {"cfail": 500,
-                  "integer_mode": 1},
       "buses": [{"uid": 1,
                  "name": "home"},
                 {"uid": 2,
@@ -22,12 +14,10 @@ def test_schedule_2():
                    "loads": [1, 2, 3, 4]}]
     }'''
 
-    s1 = Schedule.from_json(ds)
+    s1 = System.from_json(ds)
 
     assert s1.name == 's1'
     assert s1.uid == 1
-    assert s1.options.cfail == 500
-    assert s1.options.integer_mode == 1
     assert s1.buses[0].name == 'home'
     assert s1.buses[0].uid == 1
     assert s1.buses[1].name == 'casa'

@@ -15,6 +15,7 @@ class Grid(DataClassJsonMixin):
     ----------
     uid:              Grid unique id
     name:             Grid provider name
+    capacity:         Connection Capacity [KW]
     energy_tariffs:   List of energy tariff values [$/KWh]
     power_tariffs:    List of power tariff values [$/KW]
     emission_factors: List of emission factors [gCO2/KWh]
@@ -22,6 +23,8 @@ class Grid(DataClassJsonMixin):
 
     uid: int = -1
     name: str = ''
+    bus_uid: int = -1
+    capacity: float = 0
     energy_tariffs: List[float] = field(default_factory=list)
     power_tariffs: List[float] = field(default_factory=list)
     emission_factors: List[float] = field(default_factory=list)
