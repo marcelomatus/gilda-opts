@@ -13,14 +13,16 @@ def test_system_lp_1():
       "buses": [{"uid": 1,
                  "name": "home"}],
       "demands": [{"name": "d1",
+                  "uid": 1,
                   "bus_uid": 1,
                   "loads": [1, 2, 3, 4]}],
       "grids": [{"name": "g1",
+                "uid": 1,
                 "bus_uid": 1,
                 "capacity": 30,
                 "energy_tariffs": [11, 12, 13, 14],
                 "power_tariff": 5000,
-                "power_factors": [0,0,1,1]}]
+                "power_factors": [0,1,1,0]}]
     }'''
 
     s1 : System = System.from_json(ds)
@@ -52,3 +54,16 @@ def test_system_lp_1():
     lp.solve(keepfiles=True)
 
     assert lp.get_status() == 'ok'
+
+    assert lp.get_col_at(s1_lp.demands_lp[1].block_load_cols[0]) == 1
+    assert lp.get_col_at(s1_lp.demands_lp[1].block_load_cols[1]) == 2
+    assert lp.get_col_at(s1_lp.demands_lp[1].block_load_cols[2]) == 3
+    assert lp.get_col_at(s1_lp.demands_lp[1].block_load_cols[3]) == 4
+
+    injection_values = lp.get_col_sol(s1_lp.grids_lp[1].block_injection_cols)
+    load_values = lp.get_col_sol(s1_lp.demands_lp[1].block_load_cols)
+
+    assert (injection_values == load_values).all()
+
+    assert lp.get_col_at(s1_lp.grids_lp[1].pmax_col) == 3
+    assert lp.get_obj() == 5000*3 + 11*1 + 12*2 + 13*3 + 14*4
