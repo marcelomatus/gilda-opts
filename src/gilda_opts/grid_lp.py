@@ -13,8 +13,22 @@ class GridLP:
     def __init__(self, grid: Grid, system_lp=None):
         """Create the GridLP instance."""
         self.block_injection_cols = {}
+        self.block_pmax_rows = {}
         self.grid = grid
         self.system_lp = system_lp
+
+        uid = self.grid.uid
+        lname = guid('gp', uid)
+        cvar = self.grid.power_tariff
+
+        if cvar <= 0:
+            self.pmax_col = -1
+            return
+
+        pmax = self.grid.capacity
+        pmax_col = system_lp.lp.add_col(name=lname, lb=0, ub=pmax, c=cvar)
+        logging.info('added pmax variable %s %s' % (lname, pmax_col))
+        self.pmax_col = pmax_col
 
     def add_block(self, block: Block):
         """Add Grid equations to a block."""
@@ -26,10 +40,43 @@ class GridLP:
         #
         # adding the grid injection  variable
         #
-        lname = guid('ib', uid, bid)
+        try:
+            energy_cvar = self.grid.energy_tariffs[bid]
+        except IndexError:
+            energy_cvar = 0
+
+        try:
+            emission_cvar = self.grid.emission_factors[bid] * self.emission_cost
+        except IndexError:
+            emission_cvar = 0
+
+        lname = guid('gb', uid, bid)
         pmax = self.grid.capacity
-        injection_col = lp.add_col(name=lname, lb=0, ub=pmax, c=0)
+        cvar = (energy_cvar + emission_cvar) * block.duration
+
+        injection_col = lp.add_col(name=lname, lb=0, ub=pmax, c=cvar)
         logging.info('added injection variable %s %s' % (lname, injection_col))
 
         self.block_injection_cols[bid] = injection_col
         bus_lp.add_block_load_col(block, injection_col, coeff=-1)
+
+        #
+        # adding pmax constraint
+        #
+
+        if self.pmax_col < 0:
+            return
+
+        try:
+            row = {}
+            row[self.pmax_col] = 1
+            pfact = self.grid.power_factors[bid]
+            if pfact > 0:
+                row[injection_col] = -pfact
+        except IndexError:
+            row = {}
+
+        if len(row) > 1:
+            pmax_row = lp.add_row(name=lname, row=row, lb=0)
+            logging.info('added pmax constraint %s %s' % (lname, injection_col))
+            self.block_pmax_rows[bid] = pmax_row

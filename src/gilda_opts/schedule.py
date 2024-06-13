@@ -17,7 +17,7 @@ class Schedule(DataClassJsonMixin):
     Attributes:
     -----------
     blocks: List of blocks.
-    system:
+    system: system definition.
     """
 
     blocks: List[Block] = field(default_factory=list)

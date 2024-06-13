@@ -30,20 +30,21 @@ class DemandLP:
         #
         # adding the load variable
         #
+        cfail = self.demand.cfail
+        cfail *= block.duration * block.discount
+
         lname = guid('lb', uid, bid)
-        load = self.demand.loads[bid]
-        load_col = lp.add_col(name=lname, lb=0, ub=load, c=0)
+        ub = self.demand.loads[bid]
+        lb = 0 if cfail > 0 else ub
+        load_col = lp.add_col(name=lname, lb=lb, ub=ub, c=0)
         logging.info('added load variable %s %s' % (lname, load_col))
 
         self.block_load_cols[bid] = load_col
         bus_lp.add_block_load_col(block, load_col)
 
         #
-        # adding the fail
+        # adding the fail variable
         #
-        cfail = self.demand.cfail
-        cfail *= block.duration * block.discount
-
         if cfail <= 0.0:
             return
 
@@ -56,6 +57,6 @@ class DemandLP:
         row[load_col] = 1
         row[fail_col] = 1
 
-        load_row = lp.add_rhs_row(name=lname, rhs=load, row=row)
+        load_row = lp.add_rhs_row(name=lname, rhs=ub, row=row)
         self.block_load_rows[bid] = load_row
         logging.info('added load + fail row %s %s' % (lname, load_row))

@@ -1,9 +1,9 @@
 ==========
-gilda-opts
+Gilda-opts
 ==========
 
 
-    Gilda Optimization and Scheduling
+    Gilda Optimization and Scheduling package.
 
 
 Note

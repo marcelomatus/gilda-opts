@@ -11,15 +11,16 @@ def test_system_lp_1():
       "name": "s1",
       "uid": 1,
       "buses": [{"uid": 1,
-                 "name": "home"},
-                {"uid": 2,
-                 "name": "casa"}],
-     "demands": [{"name": "d1",
+                 "name": "home"}],
+      "demands": [{"name": "d1",
                   "bus_uid": 1,
                   "loads": [1, 2, 3, 4]}],
-     "grids": [{"name": "g1",
+      "grids": [{"name": "g1",
                 "bus_uid": 1,
-                "capacity": 30}]
+                "capacity": 30,
+                "energy_tariffs": [11, 12, 13, 14],
+                "power_tariff": 5000,
+                "power_factors": [0,0,1,1]}]
     }'''
 
     s1 : System = System.from_json(ds)
@@ -28,8 +29,6 @@ def test_system_lp_1():
     assert s1.uid == 1
     assert s1.buses[0].name == 'home'
     assert s1.buses[0].uid == 1
-    assert s1.buses[1].name == 'casa'
-    assert s1.buses[1].uid == 2
 
     assert s1.demands[0].name == 'd1'
     assert s1.demands[0].loads == [1, 2, 3, 4]
@@ -47,8 +46,8 @@ def test_system_lp_1():
               Block(index=3, duration=1)]
     s1_lp.add_blocks(blocks)
 
-    assert lp.numcols() == 8
-    assert lp.numrows() == 8
+    assert lp.numcols() == 9
+    assert lp.numrows() == 6
 
     lp.solve(keepfiles=True)
 

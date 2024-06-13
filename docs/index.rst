@@ -1,8 +1,8 @@
 ==========
-gilda-opts
+Gilda-opts
 ==========
 
-This is the documentation of **gilda-opts**.
+Welcome to the **gilda-opts** documentation!.
 
 .. note::
 
@@ -34,7 +34,7 @@ Contents
    License <license>
    Authors <authors>
    Changelog <changelog>
-   Module Reference <api/modules>
+   Module Reference <axopi/modules>
 
 
 Indices and tables

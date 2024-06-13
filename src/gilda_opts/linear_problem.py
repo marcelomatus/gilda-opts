@@ -92,12 +92,15 @@ class LinearProblem:
         self.A[i, j] = v
 
     def set_objc(self, j, cv):
+        """Set the variable cost for a given variable."""
         self.c[j] = cv
 
     def set_col_lb(self, j, clb):
+        """Set the lower boundary for a given variable."""
         self.clb[j] = clb
 
     def set_col_ub(self, j, cub):
+        """Set the upper boundary for a given variable."""
         self.cub[j] = cub
 
     def set_col(self, j, value):
