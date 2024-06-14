@@ -40,22 +40,6 @@ _logger = logging.getLogger(__name__)
 # when using this Python module as a library.
 
 
-def fib(n):
-    """Fibonacci example function
-
-    Args:
-      n (int): integer
-
-    Returns:
-      int: n-th Fibonacci number
-    """
-    assert n > 0
-    a, b = 1, 1
-    for _i in range(n - 1):
-        a, b = b, a + b
-    return a
-
-
 # ---- CLI ----
 # The functions defined in this section are wrappers around the main Python
 # API allowing them to be called directly from the terminal as a CLI
@@ -72,13 +56,25 @@ def parse_args(args):
     Returns:
       :obj:`argparse.Namespace`: command line parameters namespace
     """
-    parser = argparse.ArgumentParser(description="Just a Fibonacci demonstration")
+    parser = argparse.ArgumentParser(description="Gilda Optimization Scheduler")
     parser.add_argument(
         "--version",
         action="version",
         version=f"gilda-opts {__version__}",
     )
-    parser.add_argument(dest="n", help="n-th Fibonacci number", type=int, metavar="INT")
+    parser.add_argument(dest="infile",
+                        help="Json input file",
+                        type=argparse.FileType('r'),
+                        metavar="INFILE_NAME",
+                        default=sys.stdin)
+
+    parser.add_argument(dest="outfile",
+                        help="Json output file",
+                        type=argparse.FileType('w'),
+                        metavar="OUTFILE_NAME",
+                        default=sys.stdout)
+    parser.parse_args(['-'])
+
     parser.add_argument(
         "-v",
         "--verbose",
@@ -123,7 +119,6 @@ def main(args):
     args = parse_args(args)
     setup_logging(args.loglevel)
     _logger.debug("Starting crazy calculations...")
-    print(f"The {args.n}-th Fibonacci number is {fib(args.n)}")
     _logger.info("Script ends here")
 
 

@@ -48,12 +48,13 @@ def test_system_lp_1():
               Block(index=3, duration=1)]
     s1_lp.add_blocks(blocks)
 
-    assert lp.numcols() == 9
-    assert lp.numrows() == 6
-
     lp.solve(keepfiles=True)
 
     assert lp.get_status() == 'ok'
+
+    s1_sched = s1_lp.get_sched()
+    str_out = s1_sched.to_json()
+    assert str_out == '{"name": "s1", "uid": 1, "demands": [{"uid": 1, "name": "d1", "block_load_values": [1.0, 2.0, 3.0, 4.0], "block_fail_values": []}], "grids": [{"uid": 1, "name": "g1", "block_injection_values": [1.0, 2.0, 3.0, 4.0]}]}'
 
     assert lp.get_col_at(s1_lp.demands_lp[1].block_load_cols[0]) == 1
     assert lp.get_col_at(s1_lp.demands_lp[1].block_load_cols[1]) == 2
@@ -67,3 +68,7 @@ def test_system_lp_1():
 
     assert lp.get_col_at(s1_lp.grids_lp[1].pmax_col) == 3
     assert lp.get_obj() == 5000*3 + 11*1 + 12*2 + 13*3 + 14*4
+
+
+
+

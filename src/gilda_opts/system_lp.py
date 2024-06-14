@@ -7,6 +7,7 @@ from gilda_opts.demand_lp import DemandLP
 from gilda_opts.grid_lp import GridLP
 from gilda_opts.linear_problem import LinearProblem
 from gilda_opts.system import System
+from gilda_opts.system_sched import SystemSched
 
 
 class SystemLP:
@@ -45,3 +46,14 @@ class SystemLP:
     def get_bus_lp(self, bus_uid):
         """Return the bus_lp element for the bus_uid."""
         return self.buses_lp[bus_uid]
+
+    def get_sched(self):
+        """Return the system sched."""
+
+        demands_sched = [o.get_sched() for o in self.demands_lp.values()]
+        grids_sched = [o.get_sched() for o in self.grids_lp.values()]
+
+        return SystemSched(name=self.system.name,
+                           uid=self.system.uid,
+                           demands=demands_sched,
+                           grids=grids_sched)

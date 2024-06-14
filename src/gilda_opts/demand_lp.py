@@ -5,6 +5,7 @@ import logging
 from gilda_opts.block import Block
 from gilda_opts.demand import Demand
 from gilda_opts.linear_problem import guid
+from gilda_opts.demand_sched import DemandSched
 
 
 class DemandLP:
@@ -60,3 +61,12 @@ class DemandLP:
         load_row = lp.add_rhs_row(name=lname, rhs=ub, row=row)
         self.block_load_rows[bid] = load_row
         logging.info('added load + fail row %s %s' % (lname, load_row))
+
+    def get_sched(self):
+        """Return the optimal demand schedule."""
+        block_load_values = self.system_lp.lp.get_col_sol(self.block_load_cols.values())
+        block_fail_values = self.system_lp.lp.get_col_sol(self.block_fail_cols.values())
+        return DemandSched(uid=self.demand.uid,
+                           name=self.demand.name,
+                           block_load_values=block_load_values,
+                           block_fail_values=block_fail_values)
