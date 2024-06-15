@@ -10,6 +10,10 @@ def test_system_lp_1():
     ds = '''{
       "name": "s1",
       "uid": 1,
+      "blocks": [{"index": 0, "duration": 1},
+                 {"index": 1, "duration": 1},
+                 {"index": 2, "duration": 1},
+                 {"index": 3, "duration": 1}],
       "buses": [{"uid": 1,
                  "name": "home"}],
       "demands": [{"name": "d1",
@@ -38,24 +42,18 @@ def test_system_lp_1():
     assert s1.grids[0].name == 'g1'
     assert s1.grids[0].capacity == 30
 
-    lp = LinearProblem()
-    s1_lp = SystemLP(s1, lp)
+    s1_lp = SystemLP(s1)
     assert s1_lp == s1_lp
 
-    blocks = [Block(index=0, duration=1),
-              Block(index=1, duration=1),
-              Block(index=2, duration=1),
-              Block(index=3, duration=1)]
-    s1_lp.add_blocks(blocks)
+    status = s1_lp.solve(keepfiles=True)
 
-    lp.solve(keepfiles=True)
-
-    assert lp.get_status() == 'ok'
+    assert status == 'ok'
 
     s1_sched = s1_lp.get_sched()
     str_out = s1_sched.to_json()
     assert str_out == '{"name": "s1", "uid": 1, "demands": [{"uid": 1, "name": "d1", "block_load_values": [1.0, 2.0, 3.0, 4.0], "block_fail_values": []}], "grids": [{"uid": 1, "name": "g1", "block_injection_values": [1.0, 2.0, 3.0, 4.0]}]}'
 
+    lp = s1_lp.lp
     assert lp.get_col_at(s1_lp.demands_lp[1].block_load_cols[0]) == 1
     assert lp.get_col_at(s1_lp.demands_lp[1].block_load_cols[1]) == 2
     assert lp.get_col_at(s1_lp.demands_lp[1].block_load_cols[2]) == 3
@@ -68,7 +66,4 @@ def test_system_lp_1():
 
     assert lp.get_col_at(s1_lp.grids_lp[1].pmax_col) == 3
     assert lp.get_obj() == 5000*3 + 11*1 + 12*2 + 13*3 + 14*4
-
-
-
 

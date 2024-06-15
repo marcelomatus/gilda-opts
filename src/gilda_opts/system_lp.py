@@ -13,15 +13,17 @@ from gilda_opts.system_sched import SystemSched
 class SystemLP:
     """Represents a Block in the LP formulation."""
 
-    def __init__(self, system: System, lp: LinearProblem):
+    def __init__(self, system: System, lp: LinearProblem = None):
         """Create the SystemLP instance."""
         self.block_load_rows = {}
         self.system = system
-        self.lp = lp
+        self.lp = lp if lp is not None else LinearProblem()
 
         self.buses_lp = self.create_collection(system.buses, BusLP)
         self.demands_lp = self.create_collection(system.demands, DemandLP)
         self.grids_lp = self.create_collection(system.grids, GridLP)
+
+        self.add_blocks(self.system.blocks)
 
     def create_collection(self, elements, collection_class):
         """Create a collection of lp elements."""
@@ -47,9 +49,13 @@ class SystemLP:
         """Return the bus_lp element for the bus_uid."""
         return self.buses_lp[bus_uid]
 
+    def solve(self, **kwargs):
+        """Optimize the system for a list block definition."""
+        self.lp.solve(**kwargs)
+        return self.lp.get_status()
+
     def get_sched(self):
         """Return the system sched."""
-
         demands_sched = [o.get_sched() for o in self.demands_lp.values()]
         grids_sched = [o.get_sched() for o in self.grids_lp.values()]
 

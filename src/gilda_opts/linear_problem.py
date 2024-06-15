@@ -19,8 +19,12 @@ class LinearProblem:
 
     Attributes:
     -----------
-    A: Constraint Matrix
-
+    A:   Constraint Matrix
+    c:   cost vector
+    clb: col lower boundary vector
+    cub: col upper boundary vector
+    rlb: row lower boundary vector
+    rub: row upper boundary vector
     """
 
     inf = float("inf")
@@ -181,6 +185,7 @@ class LinearProblem:
         keepfiles=False,
         solver_options=None,
     ):
+        """Solve the LP problem."""
         self.model = self.pyomo_model()
 
         solver = solver if solver is not None \

@@ -3,14 +3,14 @@ from gilda_opts.schedule import Schedule
 
 def test_schedule_1():
     dq = """{
-    "blocks":[{"index":0, "duration":1},
+    "system":{
+      "name": "s1",
+      "uid": 1,
+      "blocks":[{"index":0, "duration":1},
               {"index":1, "duration":1},
               {"index":2, "duration":1},
               {"index":3, "duration":1},
               {"index":4, "duration":1}],
-    "system":{
-      "name": "s1",
-      "uid": 1,
       "buses": [{"uid": 1,
                  "name": "home"},
                 {"uid": 2,
@@ -23,4 +23,4 @@ def test_schedule_1():
 
     assert q1.system.name == "s1"
     assert q1.system.demands[0].loads[1] == 2
-    assert q1.blocks[1].index == 1
+    assert q1.system.blocks[1].index == 1

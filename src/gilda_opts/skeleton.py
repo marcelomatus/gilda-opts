@@ -1,30 +1,12 @@
-"""
-This is a skeleton file that can serve as a starting point for a Python
-console script. To run this script uncomment the following lines in the
-``[options.entry_points]`` section in ``setup.cfg``::
-
-    console_scripts =
-         fibonacci = gilda_opts.skeleton:run
-
-Then run ``pip install .`` (or ``pip install -e .`` for editable mode)
-which will install the command ``fibonacci`` inside your current environment.
-
-Besides console scripts, the header (i.e. until ``_logger``...) of this file can
-also be used as template for Python modules.
-
-Note:
-    This file can be renamed depending on your needs or safely removed if not needed.
-
-References:
-    - https://setuptools.pypa.io/en/latest/userguide/entry_point.html
-    - https://pip.pypa.io/en/stable/reference/pip_install
-"""
+"""This is the gilda_opt main program."""
 
 import argparse
 import logging
 import sys
 
 from gilda_opts import __version__
+from gilda_opts.system import System
+from gilda_opts.system_lp import SystemLP
 
 __author__ = "Marcelo Matus"
 __copyright__ = "Marcelo Matus"
@@ -47,33 +29,29 @@ _logger = logging.getLogger(__name__)
 
 
 def parse_args(args):
-    """Parse command line parameters
-
-    Args:
-      args (List[str]): command line parameters as list of strings
-          (for example  ``["--help"]``).
-
-    Returns:
-      :obj:`argparse.Namespace`: command line parameters namespace
-    """
-    parser = argparse.ArgumentParser(description="Gilda Optimization Scheduler")
+    """Parse command line parameters."""
+    parser = argparse.ArgumentParser(prog='gilda_opts',
+                                     description="Gilda Optimization Scheduler")
     parser.add_argument(
         "--version",
         action="version",
         version=f"gilda-opts {__version__}",
     )
-    parser.add_argument(dest="infile",
-                        help="Json input file",
+    parser.add_argument('-i',
+                        '--infile',
+                        dest="infile",
+                        help="Json input file. Stdinp is used if not provided.",
                         type=argparse.FileType('r'),
                         metavar="INFILE_NAME",
                         default=sys.stdin)
 
-    parser.add_argument(dest="outfile",
-                        help="Json output file",
+    parser.add_argument('-o',
+                        '--outfile',
+                        dest="outfile",
+                        help="Json output file. Stdout is used if not provided.",
                         type=argparse.FileType('w'),
                         metavar="OUTFILE_NAME",
                         default=sys.stdout)
-    parser.parse_args(['-'])
 
     parser.add_argument(
         "-v",
@@ -95,9 +73,10 @@ def parse_args(args):
 
 
 def setup_logging(loglevel):
-    """Setup basic logging
+    """Set basic logging.
 
-    Args:
+    Arguments:
+    ---------
       loglevel (int): minimum loglevel for emitting messages
     """
     logformat = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
@@ -107,23 +86,27 @@ def setup_logging(loglevel):
 
 
 def main(args):
-    """Wrapper allowing :func:`fib` to be called with string arguments in a CLI fashion
-
-    Instead of returning the value from :func:`fib`, it prints the result to the
-    ``stdout`` in a nicely formatted message.
-
-    Args:
-      args (List[str]): command line parameters as list of strings
-          (for example  ``["--verbose", "42"]``).
-    """
+    """Wrap allowing gild_opt to be called with string arguments in a CLI fashion."""
     args = parse_args(args)
     setup_logging(args.loglevel)
-    _logger.debug("Starting crazy calculations...")
-    _logger.info("Script ends here")
+    _logger.debug("Starting gilda opt ...")
+
+    file_contents = args.infile.read()
+
+    system = System.from_json(file_contents)
+
+    system_lp = SystemLP(system)
+    status = system_lp.solve()
+
+    if status == 'ok':
+        sched = system_lp.get_sched()
+        str_sched = sched.to_json(indent=4)
+        args.outfile.write(str_sched)
+        args.outfile.write('\n')
 
 
 def run():
-    """Calls :func:`main` passing the CLI arguments extracted from :obj:`sys.argv`
+    """Call :func:`main` passing the CLI arguments extracted from :obj:`sys.argv`.
 
     This function can be used as entry point to create console scripts with setuptools.
     """
@@ -139,6 +122,6 @@ if __name__ == "__main__":
     # After installing your project with pip, users can also run your Python
     # modules as scripts via the ``-m`` flag, as defined in PEP 338::
     #
-    #     python -m gilda_opts.skeleton 42
+    #     python -m gilda_opts.skeleton
     #
     run()
