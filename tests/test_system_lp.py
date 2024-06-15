@@ -66,4 +66,3 @@ def test_system_lp_1():
 
     assert lp.get_col_at(s1_lp.grids_lp[1].pmax_col) == 3
     assert lp.get_obj() == 5000*3 + 11*1 + 12*2 + 13*3 + 14*4
-
