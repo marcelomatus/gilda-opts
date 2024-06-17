@@ -9,6 +9,7 @@ from gilda_opts.block import Block
 from gilda_opts.bus import Bus
 from gilda_opts.demand import Demand
 from gilda_opts.grid import Grid
+from gilda_opts.tssa import TSSA
 
 
 @dataclass
@@ -28,5 +29,6 @@ class System(DataClassJsonMixin):
     uid: int = -1
     blocks: List[Block] = field(default_factory=list)
     buses: List[Bus] = field(default_factory=lambda: [])
-    demands: List[Demand] = field(default_factory=lambda: [])
     grids: List[Grid] = field(default_factory=lambda: [])
+    demands: List[Demand] = field(default_factory=lambda: [])
+    tssas: List[TSSA] = field(default_factory=lambda: [])

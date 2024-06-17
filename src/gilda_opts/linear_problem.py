@@ -60,13 +60,13 @@ class LinearProblem:
         """Return the number of rows or constraints."""
         return self.rows
 
-    def add_col(self, name=None, lb=0, ub=inf, c=0, dtype=0):
+    def add_col(self, name=None, lb=0, ub=inf, c=0, ctype=0):
         """Add one column or variable to the LP problem."""
         j = self.cols
         self.clb[j] = lb
         self.cub[j] = ub
         self.c[j] = c
-        self.ctypes[j] = dtype
+        self.ctypes[j] = ctype
         self.cnames[j] = name
         self.cpos[name] = j
 

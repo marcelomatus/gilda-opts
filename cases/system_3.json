@@ -1,0 +1,187 @@
+{
+    "name": "system test",
+    "uid": 1,
+    "blocks": [
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        }
+    ],
+    "buses": [
+        {
+            "uid": 1,
+            "name": "home"
+        }
+    ],
+    "demands": [
+        {
+            "name": "d1",
+            "uid": 1,
+            "bus_uid": 1,
+            "loads": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                12,
+                11,
+                10,
+                9,
+                8,
+                7,
+                6,
+                5,
+                4,
+                3,
+                2,
+                1
+            ]
+        }
+    ],
+    "grids": [
+        {
+            "name": "g1",
+            "uid": 1,
+            "bus_uid": 1,
+            "capacity": 30,
+            "energy_tariffs": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                12,
+                11,
+                10,
+                9,
+                8,
+                7,
+                6,
+                5,
+                4,
+                3,
+                2,
+                1
+            ],
+            "power_tariff": 5000,
+            "power_factors": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1,
+                0
+            ]
+        }
+    ],
+    "tssas": [
+        {
+            "uid": 1,
+            "name": "lavado",
+            "bus_uid": 1,
+            "load": 3,
+            "on_period": 3
+        }
+    ]
+}

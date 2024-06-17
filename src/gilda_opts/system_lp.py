@@ -8,6 +8,7 @@ from gilda_opts.grid_lp import GridLP
 from gilda_opts.linear_problem import LinearProblem
 from gilda_opts.system import System
 from gilda_opts.system_sched import SystemSched
+from gilda_opts.tssa_lp import TSSALP
 
 
 class SystemLP:
@@ -21,6 +22,7 @@ class SystemLP:
 
         self.buses_lp = self.create_collection(system.buses, BusLP)
         self.demands_lp = self.create_collection(system.demands, DemandLP)
+        self.tssas_lp = self.create_collection(system.tssas, TSSALP)
         self.grids_lp = self.create_collection(system.grids, GridLP)
 
         self.add_blocks(self.system.blocks)
@@ -35,15 +37,21 @@ class SystemLP:
 
     def add_blocks_to_collection(self, collection, blocks):
         """Add blocks to a collections."""
-        for block in blocks:
+        for index, block in enumerate(blocks):
             for olp in collection.values():
-                olp.add_block(block)
+                olp.add_block(index, block)
+                pass
+            pass
+
+        for olp in collection.values():
+            olp.post_blocks()
 
     def add_blocks(self, blocks: List[Block]):
         """Add System equations to a block."""
         self.add_blocks_to_collection(self.buses_lp, blocks)
-        self.add_blocks_to_collection(self.demands_lp, blocks)
         self.add_blocks_to_collection(self.grids_lp, blocks)
+        self.add_blocks_to_collection(self.demands_lp, blocks)
+        self.add_blocks_to_collection(self.tssas_lp, blocks)
 
     def get_bus_lp(self, bus_uid):
         """Return the bus_lp element for the bus_uid."""
@@ -57,9 +65,13 @@ class SystemLP:
     def get_sched(self):
         """Return the system sched."""
         demands_sched = [o.get_sched() for o in self.demands_lp.values()]
+        tssas_sched = [o.get_sched() for o in self.tssas_lp.values()]
         grids_sched = [o.get_sched() for o in self.grids_lp.values()]
 
         return SystemSched(name=self.system.name,
                            uid=self.system.uid,
+                           total_cost=self.lp.get_obj(),
+                           solver_time=self.lp.get_time(),
+                           grids=grids_sched,
                            demands=demands_sched,
-                           grids=grids_sched)
+                           tssas=tssas_sched)

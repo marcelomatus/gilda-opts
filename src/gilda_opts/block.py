@@ -13,9 +13,8 @@ class Block(DataClassJsonMixin):
     Attribute:
     ----------
     duration: Block time duration [hours]
-    index: Block time index, when is part of a time series [0..Inf]
+    discount: Discount factor to be used in the LP formulation
     """
 
-    duration: float = 0
-    index: int = -1
+    duration: float = 1.0
     discount: float = 1.0

@@ -4,8 +4,8 @@ import logging
 
 from gilda_opts.block import Block
 from gilda_opts.demand import Demand
-from gilda_opts.linear_problem import guid
 from gilda_opts.demand_sched import DemandSched
+from gilda_opts.linear_problem import guid
 
 
 class DemandLP:
@@ -20,9 +20,9 @@ class DemandLP:
         self.demand = demand
         self.system_lp = system_lp
 
-    def add_block(self, block: Block):
+    def add_block(self, index: int, block: Block):
         """Add Demand equations to a block."""
-        bid = block.index
+        bid = index
         uid = self.demand.uid
         lp = self.system_lp.lp
         bus_lp = self.system_lp.get_bus_lp(self.demand.bus_uid)
@@ -41,7 +41,7 @@ class DemandLP:
         logging.info('added load variable %s %s' % (lname, load_col))
 
         self.block_load_cols[bid] = load_col
-        bus_lp.add_block_load_col(block, load_col)
+        bus_lp.add_block_load_col(bid, load_col)
 
         #
         # adding the fail variable
@@ -62,10 +62,15 @@ class DemandLP:
         self.block_load_rows[bid] = load_row
         logging.info('added load + fail row %s %s' % (lname, load_row))
 
+    def post_blocks(self):
+        """Close the LP formulation post the blocks formulation."""
+        pass
+
     def get_sched(self):
         """Return the optimal demand schedule."""
-        block_load_values = self.system_lp.lp.get_col_sol(self.block_load_cols.values())
-        block_fail_values = self.system_lp.lp.get_col_sol(self.block_fail_cols.values())
+        lp = self.system_lp.lp
+        block_load_values = lp.get_col_sol(self.block_load_cols.values())
+        block_fail_values = lp.get_col_sol(self.block_fail_cols.values())
         return DemandSched(uid=self.demand.uid,
                            name=self.demand.name,
                            block_load_values=block_load_values,

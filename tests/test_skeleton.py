@@ -1,4 +1,3 @@
-import pytest
 from gilda_opts.skeleton import main
 
 __author__ = "Marcelo Matus"
@@ -11,7 +10,3 @@ def test_main(capsys):
     # capsys is a pytest fixture that allows asserts against stdout/stderr
     # https://docs.pytest.org/en/stable/capture.html
     # main(["-h"])
-
-
-#     captured = capsys.readouterr()
-#     #assert "The 7-th Fibonacci number is 13" in captured.out

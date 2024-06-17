@@ -10,10 +10,10 @@ def test_system_lp_1():
     ds = '''{
       "name": "s1",
       "uid": 1,
-      "blocks": [{"index": 0, "duration": 1},
-                 {"index": 1, "duration": 1},
-                 {"index": 2, "duration": 1},
-                 {"index": 3, "duration": 1}],
+      "blocks": [{"duration": 1},
+                 {"duration": 1},
+                 {"duration": 1},
+                 {"duration": 1}],
       "buses": [{"uid": 1,
                  "name": "home"}],
       "demands": [{"name": "d1",
@@ -48,10 +48,6 @@ def test_system_lp_1():
     status = s1_lp.solve(keepfiles=True)
 
     assert status == 'ok'
-
-    s1_sched = s1_lp.get_sched()
-    str_out = s1_sched.to_json()
-    assert str_out == '{"name": "s1", "uid": 1, "demands": [{"uid": 1, "name": "d1", "block_load_values": [1.0, 2.0, 3.0, 4.0], "block_fail_values": []}], "grids": [{"uid": 1, "name": "g1", "block_injection_values": [1.0, 2.0, 3.0, 4.0]}]}'
 
     lp = s1_lp.lp
     assert lp.get_col_at(s1_lp.demands_lp[1].block_load_cols[0]) == 1

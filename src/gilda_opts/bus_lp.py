@@ -16,9 +16,9 @@ class BusLP:
         self.bus = bus
         self.system_lp = system_lp
 
-    def add_block(self, block: Block):
+    def add_block(self, index: int, block: Block):
         """Add Bus equations to a block."""
-        bid = block.index
+        bid = index
         uid = self.bus.uid
         name = guid('lb', uid, bid)
         lp = self.system_lp.lp
@@ -27,8 +27,12 @@ class BusLP:
 
         logging.info('added block load balance row %s %s' % (name, row))
 
-    def add_block_load_col(self, block, load_col, coeff=1):
+    def post_blocks(self):
+        """Close the LP formulation post the blocks formulation."""
+        pass
+
+    def add_block_load_col(self, index, load_col, coeff=1):
         """Add load variable to load row in a block."""
-        i = self.block_load_rows[block.index]
+        i = self.block_load_rows[index]
         j = load_col
         self.system_lp.lp.set_coeff(i, j, coeff)

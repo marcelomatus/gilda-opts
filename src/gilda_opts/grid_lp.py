@@ -4,8 +4,8 @@ import logging
 
 from gilda_opts.block import Block
 from gilda_opts.grid import Grid
-from gilda_opts.linear_problem import guid
 from gilda_opts.grid_sched import GridSched
+from gilda_opts.linear_problem import guid
 
 
 class GridLP:
@@ -34,9 +34,9 @@ class GridLP:
         logging.info('added pmax variable %s %s' % (lname, pmax_col))
         self.pmax_col = pmax_col
 
-    def add_block(self, block: Block):
+    def add_block(self, index: int, block: Block):
         """Add Grid equations to a block."""
-        bid = block.index
+        bid = index
         uid = self.grid.uid
         lp = self.system_lp.lp
         bus_lp = self.system_lp.get_bus_lp(self.grid.bus_uid)
@@ -62,7 +62,7 @@ class GridLP:
         logging.info('added injection variable %s %s' % (lname, injection_col))
 
         self.block_injection_cols[bid] = injection_col
-        bus_lp.add_block_load_col(block, injection_col, coeff=-1)
+        bus_lp.add_block_load_col(bid, injection_col, coeff=-1)
 
         #
         # adding pmax constraint
@@ -85,9 +85,14 @@ class GridLP:
             logging.info('added pmax constraint %s %s' % (lname, injection_col))
             self.block_pmax_rows[bid] = pmax_row
 
+    def post_blocks(self):
+        """Close the LP formulation post the blocks formulation."""
+        pass
+
     def get_sched(self):
         """Return the optimal grid schedule."""
-        block_injection_values = self.system_lp.lp.get_col_sol(self.block_injection_cols.values())
+        lp = self.system_lp.lp
+        block_injection_values = lp.get_col_sol(self.block_injection_cols.values())
         return GridSched(uid=self.grid.uid,
                          name=self.grid.name,
                          block_injection_values=block_injection_values)

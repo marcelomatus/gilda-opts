@@ -30,29 +30,34 @@ _logger = logging.getLogger(__name__)
 
 def parse_args(args):
     """Parse command line parameters."""
-    parser = argparse.ArgumentParser(prog='gilda_opts',
-                                     description="Gilda Optimization Scheduler")
+    parser = argparse.ArgumentParser(
+        prog='gilda_opts',
+        description="Gilda Optimization Scheduler"
+    )
+
     parser.add_argument(
         "--version",
         action="version",
         version=f"gilda-opts {__version__}",
     )
-    parser.add_argument('-i',
-                        '--infile',
-                        dest="infile",
-                        help="Json input file. Stdinp is used if not provided.",
-                        type=argparse.FileType('r'),
-                        metavar="INFILE_NAME",
-                        default=sys.stdin)
-
-    parser.add_argument('-o',
-                        '--outfile',
-                        dest="outfile",
-                        help="Json output file. Stdout is used if not provided.",
-                        type=argparse.FileType('w'),
-                        metavar="OUTFILE_NAME",
-                        default=sys.stdout)
-
+    parser.add_argument(
+        '-i',
+        '--infile',
+        dest="infile",
+        help="Json input file. Stdinp is used if not provided.",
+        type=argparse.FileType('r'),
+        metavar="INFILE_NAME",
+        default=sys.stdin
+    )
+    parser.add_argument(
+        '-o',
+        '--outfile',
+        dest="outfile",
+        help="Json output file. Stdout is used if not provided.",
+        type=argparse.FileType('w'),
+        metavar="OUTFILE_NAME",
+        default=sys.stdout
+    )
     parser.add_argument(
         "-v",
         "--verbose",
@@ -69,6 +74,20 @@ def parse_args(args):
         action="store_const",
         const=logging.DEBUG,
     )
+    parser.add_argument(
+        '-k',
+        '--keepfiles',
+        action='store_true',
+        default=False,
+        help='If included, the solver keepfiles option is used'
+    )
+    parser.add_argument(
+        '-s',
+        '--solver',
+        type=str,
+        default='cbc',
+        help='Defines the solver to be used (default: cbc)')
+
     return parser.parse_args(args)
 
 
@@ -92,11 +111,12 @@ def main(args):
     _logger.debug("Starting gilda opt ...")
 
     file_contents = args.infile.read()
-
     system = System.from_json(file_contents)
-
     system_lp = SystemLP(system)
-    status = system_lp.solve()
+    status = system_lp.solve(
+        keepfiles=args.keepfiles,
+        solver=args.solver
+    )
 
     if status == 'ok':
         sched = system_lp.get_sched()

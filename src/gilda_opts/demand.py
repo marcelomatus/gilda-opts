@@ -13,9 +13,10 @@ class Demand(DataClassJsonMixin):
 
     Attributes:
     -----------
-    uid:   Load unique id
-    name:  Load name
-    loads: List of load values [KW]
+    uid:     Load unique id
+    name:    Load name
+    bus_uid: Bus uid to be connected to
+    loads:   List of load values [KW]
     """
 
     uid: int = -1
