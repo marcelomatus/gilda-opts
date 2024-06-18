@@ -78,7 +78,7 @@ class TSSALP:
         n_last = i
         logging.info('n and n_last %d %d' % (n, n_last))
 
-        for i in range(0, n_last+1):
+        for i in range(0, n_last):
             t_last = 0.0
             for ii in range(i+1 , n):
                 t_last += d[ii]
@@ -107,6 +107,23 @@ class TSSALP:
                 logging.info('added urow %s %d %d %s' % (lname, i, z, row))
 
                 pass
+            pass
+
+        #
+        # Adding the no on constraint in the border
+        #
+        for i in range(n_last, n):
+            row = {}
+            uim1 = self.block_onoff_cols[i-1]
+            ui = self.block_onoff_cols[i]
+            row[ui] = 1
+            row[uim1] = -1
+            lb = -inf
+            ub = 0
+            u_row = lp.add_row(row, name=lname, lb=lb, ub=ub)
+            self.block_onoff_rows[(i, z)] = u_row
+            lname = guid('to', uid, i)
+            logging.info('added no-on %s %s %s' % (lname, i, row))
             pass
         pass
 
