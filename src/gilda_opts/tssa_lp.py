@@ -15,6 +15,7 @@ class TSSALP:
         """Create the TSSALP instance."""
         self.block_onoff_cols = {}
         self.block_onoff_rows = {}
+        self.block_noon_rows = {}
 
         self.tssa = tssa
         self.system_lp = system_lp
@@ -110,9 +111,9 @@ class TSSALP:
             pass
 
         #
-        # Adding the no on constraint in the border
+        # Adding the no-on constraint in the border
         #
-        for i in range(n_last, n):
+        for i in range(max(n_last,1), n):
             row = {}
             uim1 = self.block_onoff_cols[i-1]
             ui = self.block_onoff_cols[i]
@@ -121,7 +122,7 @@ class TSSALP:
             lb = -inf
             ub = 0
             u_row = lp.add_row(row, name=lname, lb=lb, ub=ub)
-            self.block_onoff_rows[(i, z)] = u_row
+            self.block_noon_rows[i] = u_row
             lname = guid('to', uid, i)
             logging.info('added no-on %s %s %s' % (lname, i, row))
             pass

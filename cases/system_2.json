@@ -85,7 +85,7 @@
             "name": "lavado",
             "bus_uid": 1,
             "load": 3,
-            "on_period": 3
+            "on_period": 8
         }
     ]
 }

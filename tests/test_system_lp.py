@@ -192,15 +192,21 @@ def test_system_lp_3():
     assert lp.get_col_at(s1_lp.demands_lp[1].block_load_cols[2]) == 3
     assert lp.get_col_at(s1_lp.demands_lp[1].block_load_cols[3]) == 4
 
-    # assert lp.get_col_at(s1_lp.tssas_lp[1].block_onoff_cols[0]) == 1
-    # assert lp.get_col_at(s1_lp.tssas_lp[1].block_onoff_cols[1]) == 0
-    # assert lp.get_col_at(s1_lp.tssas_lp[1].block_onoff_cols[2]) == 0
-    # assert lp.get_col_at(s1_lp.tssas_lp[1].block_onoff_cols[3]) == 0
+    assert lp.get_col_at(s1_lp.tssas_lp[1].block_onoff_cols[0]) == 1
+    assert lp.get_col_at(s1_lp.tssas_lp[1].block_onoff_cols[1]) == 1
+    assert lp.get_col_at(s1_lp.tssas_lp[1].block_onoff_cols[2]) == 0
+    assert lp.get_col_at(s1_lp.tssas_lp[1].block_onoff_cols[3]) == 0
 
     injection_values = lp.get_col_sol(s1_lp.grids_lp[1].block_injection_cols)
     load_values = lp.get_col_sol(s1_lp.demands_lp[1].block_load_cols)
 
     assert (injection_values == load_values).all()
 
-    assert lp.get_col_at(s1_lp.grids_lp[1].pmax_col) == 3
-    # assert lp.get_obj() == 5000*3 + 11*(1+3) + 12*2 + 13*3 + 14*4
+    assert lp.get_col_at(s1_lp.grids_lp[1].pmax_col) == 5
+
+    assert lp.get_col_at(s1_lp.grids_lp[1].block_injection_cols[0]) == 1 + 3
+    assert lp.get_col_at(s1_lp.grids_lp[1].block_injection_cols[1]) == 2 + 3
+    assert lp.get_col_at(s1_lp.grids_lp[1].block_injection_cols[2]) == 3
+    assert lp.get_col_at(s1_lp.grids_lp[1].block_injection_cols[3]) == 4
+
+    assert lp.get_obj() == 5000*5 + 11*(1+3) + 12*(2+3) + 13*3 + 14*4
