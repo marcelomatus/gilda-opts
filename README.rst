@@ -6,8 +6,16 @@ Gilda-opts
     Gilda Optimization and Scheduling package.
 
 
-Note
-====
+Installation
+============
 
-This project has been set up using PyScaffold 4.5. For details and usage
-information on PyScaffold see https://pyscaffold.org/.
+Install the CBC binary from 
+
+https://www.coin-or.org/download/binary/Cbc/Cbc-master-win64-msvc15-mtd.zip
+
+Then clone the git repository and install it using pip in the root directory
+
+$ pip install .
+
+
+
