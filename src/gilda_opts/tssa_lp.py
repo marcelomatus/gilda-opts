@@ -76,6 +76,7 @@ class TSSALP:
             t_last += d[i]
             if t_last >= self.tssa.on_period:
                 break
+            pass
         n_last = i
         logging.info('n and n_last %d %d' % (n, n_last))
 
@@ -113,7 +114,7 @@ class TSSALP:
         #
         # Adding the no-on constraint in the border
         #
-        for i in range(max(n_last,1), n):
+        for i in range(max(n_last, 1), n):
             row = {}
             uim1 = self.block_onoff_cols[i-1]
             ui = self.block_onoff_cols[i]
@@ -126,6 +127,7 @@ class TSSALP:
             lname = guid('to', uid, i)
             logging.info('added no-on %s %s %s' % (lname, i, row))
             pass
+
         pass
 
     def get_sched(self):

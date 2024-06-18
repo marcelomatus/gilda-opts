@@ -1,6 +1,4 @@
 
-from gilda_opts.block import Block
-from gilda_opts.linear_problem import LinearProblem
 from gilda_opts.system import System
 from gilda_opts.system_lp import SystemLP
 
