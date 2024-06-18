@@ -1,0 +1,67 @@
+{
+    "name": "s2",
+    "uid": 1,
+    "blocks": [
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        }
+    ],
+    "buses": [
+        {
+            "uid": 1,
+            "name": "home"
+        }
+    ],
+    "demands": [
+        {
+            "name": "d1",
+            "uid": 1,
+            "bus_uid": 1,
+            "loads": [
+                1,
+                2,
+                3,
+                4
+            ]
+        }
+    ],
+    "grids": [
+        {
+            "name": "g1",
+            "uid": 1,
+            "bus_uid": 1,
+            "capacity": 30,
+            "energy_tariffs": [
+                11,
+                12,
+                13,
+                14
+            ],
+            "power_tariff": 5000,
+            "power_factors": [
+                0,
+                1,
+                1,
+                0
+            ]
+        }
+    ],
+    "tssas": [
+        {
+            "uid": 1,
+            "name": "lavado",
+            "bus_uid": 1,
+            "load": 3,
+            "on_period": 3
+        }
+    ]
+}
