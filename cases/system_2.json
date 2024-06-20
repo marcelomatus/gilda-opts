@@ -87,5 +87,15 @@
             "load": 3,
             "on_period": 8
         }
-    ]
+    ],
+    "besss": [
+        {
+            "uid": 1,
+            "name": "b1",
+            "bus_uid": 1,
+            "capacity": 20,
+            "max_flow": 2.5,
+            "efficiency": 0.9
+        }
+   ]
 }

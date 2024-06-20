@@ -2,12 +2,12 @@
 
 from dataclasses import dataclass, field
 from typing import List
-
 from dataclasses_json import DataClassJsonMixin
 
 from gilda_opts.demand_sched import DemandSched
 from gilda_opts.grid_sched import GridSched
 from gilda_opts.tssa_sched import TSSASched
+from gilda_opts.bess_sched import BESSSched
 
 
 @dataclass
@@ -29,3 +29,4 @@ class SystemSched(DataClassJsonMixin):
     grids: List[GridSched] = field(default_factory=lambda: [])
     demands: List[DemandSched] = field(default_factory=lambda: [])
     tssas: List[TSSASched] = field(default_factory=lambda: [])
+    besss: List[BESSSched] = field(default_factory=lambda: [])

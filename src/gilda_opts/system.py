@@ -2,7 +2,6 @@
 
 from dataclasses import dataclass, field
 from typing import List
-
 from dataclasses_json import DataClassJsonMixin
 
 from gilda_opts.block import Block
@@ -10,6 +9,7 @@ from gilda_opts.bus import Bus
 from gilda_opts.demand import Demand
 from gilda_opts.grid import Grid
 from gilda_opts.tssa import TSSA
+from gilda_opts.bess import BESS
 
 
 @dataclass
@@ -32,3 +32,4 @@ class System(DataClassJsonMixin):
     grids: List[Grid] = field(default_factory=lambda: [])
     demands: List[Demand] = field(default_factory=lambda: [])
     tssas: List[TSSA] = field(default_factory=lambda: [])
+    besss: List[BESS] = field(default_factory=lambda: [])
