@@ -80,6 +80,15 @@ class BESSLP:
 
     def post_blocks(self):
         """Close the LP formulation post the blocks formulation."""
+        lp : LinearProblem = self.system_lp.lp
+
+        #
+        # Set the efin value, or negative cost
+        #
+        ncols = len(self.block_efin_cols)
+        if ncols > 0:
+            lp.set_objc(self.block_efin_cols[ncols-1], -self.bess.efin_value)
+
         pass
 
     def get_sched(self):
