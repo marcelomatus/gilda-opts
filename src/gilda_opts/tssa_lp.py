@@ -87,7 +87,7 @@ class TSSALP:
                 if t_last >= self.tssa.on_period:
                     break
 
-            for z in range(i+1, ii+1):
+            for z in range(i+1, ii):
                 row = {}
                 uz = self.block_onoff_cols[z]
                 ui = self.block_onoff_cols[i]
