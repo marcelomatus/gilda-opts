@@ -31,7 +31,7 @@ class GridLP:
         lname = guid('gp', uid)
         pmax = self.grid.capacity
         pmax_col = system_lp.lp.add_col(name=lname, lb=0, ub=pmax, c=cvar)
-        logging.info('added pmax variable %s %s' % (lname, pmax_col))
+        logging.info('added pmax variable %s %s', lname, pmax_col)
         self.pmax_col = pmax_col
 
     def add_block(self, index: int, block: Block):
@@ -50,7 +50,7 @@ class GridLP:
             energy_cvar = 0
 
         try:
-            emission_cvar = self.grid.emission_factors[bid] * self.emission_cost
+            emission_cvar = self.grid.emission_factors[bid] * self.grid.emission_cost
         except IndexError:
             emission_cvar = 0
 
@@ -59,7 +59,7 @@ class GridLP:
         cvar = (energy_cvar + emission_cvar) * block.duration
 
         injection_col = lp.add_col(name=lname, lb=0, ub=pmax, c=cvar)
-        logging.info('added injection variable %s %s' % (lname, injection_col))
+        logging.info('added injection variable %s %s', lname, injection_col)
 
         self.block_injection_cols[bid] = injection_col
         bus_lp.add_block_load_col(bid, injection_col, coeff=-1)
@@ -82,12 +82,11 @@ class GridLP:
 
         if len(row) > 1:
             pmax_row = lp.add_row(name=lname, row=row, lb=0)
-            logging.info('added pmax constraint %s %s' % (lname, injection_col))
+            logging.info('added pmax constraint %s %s', lname, injection_col)
             self.block_pmax_rows[bid] = pmax_row
 
     def post_blocks(self):
         """Close the LP formulation post the blocks formulation."""
-        pass
 
     def get_sched(self):
         """Return the optimal grid schedule."""

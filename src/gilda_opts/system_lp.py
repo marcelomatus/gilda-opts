@@ -1,6 +1,7 @@
 """Contains the system_lp class."""
 from typing import List
 
+from gilda_opts.bess_lp import BESSLP
 from gilda_opts.block import Block
 from gilda_opts.bus_lp import BusLP
 from gilda_opts.demand_lp import DemandLP
@@ -9,7 +10,6 @@ from gilda_opts.linear_problem import LinearProblem
 from gilda_opts.system import System
 from gilda_opts.system_sched import SystemSched
 from gilda_opts.tssa_lp import TSSALP
-from gilda_opts.bess_lp import BESSLP
 
 
 class SystemLP:
@@ -42,8 +42,6 @@ class SystemLP:
         for index, block in enumerate(blocks):
             for olp in collection.values():
                 olp.add_block(index, block)
-                pass
-            pass
 
         for olp in collection.values():
             olp.post_blocks()

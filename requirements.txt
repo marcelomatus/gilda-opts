@@ -1,0 +1,7 @@
+scipy
+numpy<1.24
+pyomo
+logging
+pathlib
+dataclasses
+dataclasses-json

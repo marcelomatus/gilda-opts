@@ -38,7 +38,7 @@ class DemandLP:
         ub = self.demand.loads[bid]
         lb = 0 if cfail > 0 else ub
         load_col = lp.add_col(name=lname, lb=lb, ub=ub, c=0)
-        logging.info('added load variable %s %s' % (lname, load_col))
+        logging.info('added load variable %s %s', lname, load_col)
 
         self.block_load_cols[bid] = load_col
         bus_lp.add_block_load_col(bid, load_col)
@@ -51,7 +51,7 @@ class DemandLP:
 
         fname = guid('df', uid, bid)
         fail_col = lp.add_col(name=fname, lb=0, c=cfail)
-        logging.info('added fail variable %s %s' % (fname, fail_col))
+        logging.info('added fail variable %s %s', fname, fail_col)
         self.block_fail_cols[bid] = fail_col
 
         row = {}
@@ -60,11 +60,10 @@ class DemandLP:
 
         load_row = lp.add_rhs_row(name=lname, rhs=ub, row=row)
         self.block_load_rows[bid] = load_row
-        logging.info('added load + fail row %s %s' % (lname, load_row))
+        logging.info('added load + fail row %s %s', lname, load_row)
 
     def post_blocks(self):
         """Close the LP formulation post the blocks formulation."""
-        pass
 
     def get_sched(self):
         """Return the optimal demand schedule."""

@@ -35,7 +35,7 @@ class LinearProblem:
         self.solver = solver
         self.integer_mode = integer_mode
 
-        self.A = {}
+        self.A = {}  # pylint: disable=C0103
         self.c = {}
         self.clb = {}
         self.cub = {}
@@ -51,6 +51,9 @@ class LinearProblem:
 
         self.cols = 0
         self.rows = 0
+
+        self.model = None
+        self.result = None
 
     def numcols(self):
         """Return the number of columns or variables."""
@@ -73,7 +76,7 @@ class LinearProblem:
         self.cols += 1
         return j
 
-    def add_row(self, row={}, name=None, lb=-inf, ub=inf):
+    def add_row(self, row={}, name=None, lb=-inf, ub=inf):  # pylint: disable=W0102
         """Add one column or constraint to the LP problem."""
         i = self.rows
         for j, v in row.items():
@@ -87,7 +90,7 @@ class LinearProblem:
         self.rows += 1
         return i
 
-    def add_rhs_row(self, row={}, name=None, rhs=0):
+    def add_rhs_row(self, row={}, name=None, rhs=0):  # pylint: disable=W0102
         """Add one column or constraint to the LP problem providing the RHS."""
         return self.add_row(row, name=name, lb=rhs, ub=rhs)
 
@@ -108,18 +111,22 @@ class LinearProblem:
         self.cub[j] = cub
 
     def set_col(self, j, value):
+        """Set the column or variable value."""
         self.clb[j] = value
         self.cub[j] = value
 
     def get_row_rhs(self, i):
+        """Get the row RHS."""
         return self.rlb.get(i, 0)
 
     def set_row_rhs(self, i, v):
+        """Set the row RHS."""
         self.rlb[i] = v
         self.rub[i] = v
 
     def sparse_model(self):
-        A = dok_matrix((self.rows, self.cols))
+        """Calculate the sparse model."""
+        A = dok_matrix((self.rows, self.cols))  # pylint: disable=C0103
         for ij, v in self.A.items():
             if v != 0:
                 A[ij] = v
@@ -147,6 +154,7 @@ class LinearProblem:
         return A, rlb, rub, clb, cub, c
 
     def pyomo_model(self):
+        """Calculate the pyomo model."""
         m = pmo.block()
         m.rows = range(self.rows)
         m.cols = range(self.cols)
@@ -200,37 +208,46 @@ class LinearProblem:
         return self.result
 
     def get_col_ub(self, j):
+        """Get the column or variable upper bound."""
         return self.cub[j]
 
     def get_col_lb(self, j):
+        """Get the column or variable upperlow bound."""
         return self.clb[j]
 
     def get_status(self):
+        """Get the solver status."""
         return self.result.solver.status
 
     def get_time(self):
+        """Get the solution time."""
         return self.result.solver.time
 
-    def get_col_at(self, j):
-        return pyo.value(self.model.x[j])
+    def get_col_at(self, index):
+        """Get the solution value at the given index."""
+        return pyo.value(self.model.x[index])
 
-    def get_col_sol(self, jj):
-        x = np.ndarray(len(jj))
-        for k, j in enumerate(jj):
+    def get_col_sol(self, indexes):
+        """Get the solution values for a given indexes list."""
+        x = np.ndarray(len(indexes))
+        for k, j in enumerate(indexes):
             x[k] = self.get_col_at(j)
 
         return x
 
     def get_dual_at(self, i):
+        """Get the dual value at the given index."""
         return pyo.value(
             self.model.dual[self.model.constraints[i]]) * self.scale_obj
 
-    def get_dual_sol(self, ii):
-        y = np.ndarray(len(ii))
-        for k, i in enumerate(ii):
+    def get_dual_sol(self, indexes):
+        """Get the dual values for a given indexes list."""
+        y = np.ndarray(len(indexes))
+        for k, i in enumerate(indexes):
             y[k] = self.get_dual_at(i)
 
         return y
 
     def get_obj(self):
+        """Get the objective function value."""
         return float(pyo.value(self.model.obj) * self.scale_obj)

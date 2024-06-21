@@ -2,10 +2,10 @@
 
 import logging
 
-from gilda_opts.block import Block
-from gilda_opts.linear_problem import LinearProblem, guid
 from gilda_opts.bess import BESS
 from gilda_opts.bess_sched import BESSSched
+from gilda_opts.block import Block
+from gilda_opts.linear_problem import LinearProblem, guid
 
 
 class BESSLP:
@@ -35,7 +35,7 @@ class BESSLP:
         #
         lname = guid('bi', uid, bid)
         inflow_col = lp.add_col(name=lname, lb=0, ub=max_flow)
-        logging.info('added inflow variable %s %d' % (lname, inflow_col))
+        logging.info('added inflow variable %s %d', lname, inflow_col)
         self.block_inflow_cols[bid] = inflow_col
         bus_lp.add_block_load_col(bid, inflow_col, coeff=+1.0)
 
@@ -44,7 +44,7 @@ class BESSLP:
         #
         lname = guid('bo', uid, bid)
         outflow_col = lp.add_col(name=lname, lb=0, ub=max_flow)
-        logging.info('added outflow variable %s %d' % (lname, outflow_col))
+        logging.info('added outflow variable %s %d', lname, outflow_col)
         self.block_outflow_cols[bid] = outflow_col
         bus_lp.add_block_load_col(bid, outflow_col, coeff=-1.0)
 
@@ -54,7 +54,7 @@ class BESSLP:
         lname = guid('be', uid, bid)
         capacity = self.bess.capacity
         efin_col = lp.add_col(name=lname, lb=0, ub=capacity)
-        logging.info('added efin variable %s %d' % (lname, efin_col))
+        logging.info('added efin variable %s %d' , lname, efin_col)
         self.block_efin_cols[bid] = efin_col
 
         #
@@ -75,7 +75,7 @@ class BESSLP:
 
         lname = guid('br', uid, bid)
         efin_row = lp.add_row(row, name=lname, lb=lb, ub=ub)
-        logging.info('added efin row %s %d' % (lname, efin_row))
+        logging.info('added efin row %s %d', lname, efin_row)
         self.block_efin_rows[bid] = efin_row
 
     def post_blocks(self):
@@ -88,8 +88,6 @@ class BESSLP:
         ncols = len(self.block_efin_cols)
         if ncols > 0:
             lp.set_objc(self.block_efin_cols[ncols-1], -self.bess.efin_value)
-
-        pass
 
     def get_sched(self):
         """Return the optimal bess schedule."""
