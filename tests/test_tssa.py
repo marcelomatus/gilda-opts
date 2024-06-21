@@ -1,7 +1,9 @@
+"""Test tssa module."""
 from gilda_opts.tssa import TSSA
 
 
 def test_tssa_1():
+    """test tssa 1."""
     o1 = TSSA(name='base', uid=1, on_period=2, load=3)
 
     assert o1.name == 'base'

@@ -1,8 +1,9 @@
+"""Test system module."""
 from gilda_opts.system import System
 
 
 def test_system_1():
-
+    """Test system 1."""
     ds = '''{
       "name": "s1",
       "uid": 1,

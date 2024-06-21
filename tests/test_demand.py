@@ -1,7 +1,9 @@
+"""Test demand module."""
 from gilda_opts.demand import Demand
 
 
 def test_demand_1():
+    """Test demand 1."""
     o1 = Demand(name='base', uid=1, loads=[1, 2, 3])
 
     assert o1.name == 'base'

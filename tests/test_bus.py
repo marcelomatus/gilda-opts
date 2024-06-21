@@ -1,8 +1,12 @@
+"""Test bus module."""
+
 from gilda_opts.bus import Bus
 from gilda_opts.bus_lp import BusLP
 
 
 def test_bus_1():
+    """Test bus 1."""
+
     b1 = Bus(name='home', uid=1)
 
     assert b1.name == 'home'
@@ -15,6 +19,8 @@ def test_bus_1():
 
 
 def test_bus_2():
+    """Test bus 2."""
+
     data = '{"name": "home", "uid": 1}'
 
     b1 = Bus.from_json(data)
@@ -30,10 +36,12 @@ def test_bus_2():
 
 
 def test_bus_3():
+    """Test bus 3."""
+
     data = '{"name": "home", "uid": 1}'
 
     b1 = Bus.from_json(data)
 
     b1_lp = BusLP(bus=b1)
 
-    assert b1_lp == b1_lp
+    assert b1 == b1_lp.bus

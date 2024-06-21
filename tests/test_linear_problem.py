@@ -1,13 +1,14 @@
+"""Test linear problem."""
 from math import isclose
-
+from scipy.optimize import linprog
 import numpy as np
 import pyomo.environ as pyo
-from scipy.optimize import linprog
 
 from gilda_opts import linear_problem as lpm
 
 
 def test_lp_1():
+    """Test LP 1."""
     lp = lpm.LinearProblem(scale_obj=1.0, solver='cbc')
 
     x = lp.add_col("x", c=-1)
@@ -40,7 +41,7 @@ def test_lp_1():
     assert lp.cols == 2
     assert lp.rows == 3
 
-    A, rlb, rub, cul, cub, c = lp.sparse_model()
+    A, rlb, rub, cul, cub, c = lp.sparse_model()  # pylint: disable=C0103,W0612
 
     assert np.array_equal(A.toarray(), np.array([[2, 1], [-4, 5], [1, -2]]))
 

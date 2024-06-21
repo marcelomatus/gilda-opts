@@ -1,10 +1,10 @@
-
+"""Test system_lp."""
 from gilda_opts.system import System
 from gilda_opts.system_lp import SystemLP
 
 
 def test_system_lp_1():
-
+    """Test system_lp 1."""
     ds = '''{
       "name": "s1",
       "uid": 1,
@@ -41,7 +41,6 @@ def test_system_lp_1():
     assert s1.grids[0].capacity == 30
 
     s1_lp = SystemLP(s1)
-    assert s1_lp == s1_lp
 
     status = s1_lp.solve(keepfiles=False)
 
@@ -63,7 +62,7 @@ def test_system_lp_1():
 
 
 def test_system_lp_2():
-
+    """Test system lp 2."""
     ds = '''{
       "name": "s2",
       "uid": 1,
@@ -107,7 +106,6 @@ def test_system_lp_2():
     assert s1.grids[0].capacity == 30
 
     s1_lp = SystemLP(s1)
-    assert s1_lp == s1_lp
 
     status = s1_lp.solve(keepfiles=False)
 
@@ -134,6 +132,7 @@ def test_system_lp_2():
 
 
 def test_system_lp_3():
+    """Test system lp 3."""
 
     ds = '''{
       "name": "s2",
@@ -178,7 +177,6 @@ def test_system_lp_3():
     assert s1.grids[0].capacity == 30
 
     s1_lp = SystemLP(s1)
-    assert s1_lp == s1_lp
 
     status = s1_lp.solve(keepfiles=False)
 
@@ -211,6 +209,7 @@ def test_system_lp_3():
 
 
 def test_system_lp_4():
+    """Test system lp 4."""
 
     ds = '''{
       "name": "s2",
@@ -255,7 +254,6 @@ def test_system_lp_4():
     assert s1.grids[0].capacity == 30
 
     s1_lp = SystemLP(s1)
-    assert s1_lp == s1_lp
 
     status = s1_lp.solve(keepfiles=False)
 
@@ -282,6 +280,7 @@ def test_system_lp_4():
 
 
 def test_system_lp_5():
+    """Test system lp 5."""
 
     ds = '''{
       "name": "s2",
@@ -334,7 +333,6 @@ def test_system_lp_5():
     assert s1.grids[0].capacity == 30
 
     s1_lp = SystemLP(s1)
-    assert s1_lp == s1_lp
 
     status = s1_lp.solve(keepfiles=True)
 
