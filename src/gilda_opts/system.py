@@ -10,6 +10,7 @@ from gilda_opts.demand import Demand
 from gilda_opts.grid import Grid
 from gilda_opts.tssa import TSSA
 from gilda_opts.bess import BESS
+from gilda_opts.local_source import LocalSource
 
 
 @dataclass
@@ -33,3 +34,4 @@ class System(DataClassJsonMixin):
     demands: List[Demand] = field(default_factory=lambda: [])
     tssas: List[TSSA] = field(default_factory=lambda: [])
     besss: List[BESS] = field(default_factory=lambda: [])
+    local_sources: List[LocalSource] = field(default_factory=lambda: [])

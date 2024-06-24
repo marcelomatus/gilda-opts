@@ -21,6 +21,7 @@ class Grid(DataClassJsonMixin):
     power_factors:    List of power factor values [0..1]
     emission_factors: List of emission factors [gCO2/KWh]
     emission_cost:    Emission cost [$/gCO2]
+    energy_prices:     Energy purchase price [$/KWh]
     """
 
     uid: int = -1
@@ -32,3 +33,4 @@ class Grid(DataClassJsonMixin):
     power_factors: List[float] = field(default_factory=list)
     emission_factors: List[float] = field(default_factory=list)
     emission_cost: float = 0
+    energy_prices: List[float] = field(default_factory=list)

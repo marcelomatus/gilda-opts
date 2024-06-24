@@ -377,3 +377,77 @@ def test_system_lp_5():
     assert lp.get_col_at(s1_lp.grids_lp[1].block_injection_cols[3]) == 7
 
     assert lp.get_obj() == 5000*5.2 + 11*7 + 12*5.2 + 13*5.2 + 14*7
+
+
+def test_system_lp_6():
+    """Test system_lp 1."""
+    ds = '''{
+      "name": "s1",
+      "uid": 1,
+      "blocks": [{"duration": 1},
+                 {"duration": 1},
+                 {"duration": 1},
+                 {"duration": 1}],
+      "buses": [{"uid": 1,
+                 "name": "home"}],
+      "demands": [{"name": "d1",
+                  "uid": 1,
+                  "bus_uid": 1,
+                  "loads": [1, 2, 3, 4]}],
+      "grids": [{"name": "g1",
+                "uid": 1,
+                "bus_uid": 1,
+                "capacity": 30,
+                "energy_tariffs": [11, 12, 13, 14],
+                "power_tariff": 5000,
+                "power_factors": [0,1,1,0],
+                "energy_prices": [5, 6, 7, 8]}],
+      "local_sources": [{"name": "g1",
+                "uid": 1,
+                "bus_uid": 1,
+                "capacity": 20,
+                "gen_profile": [0, 1, 0, 0.5]}]
+    }'''
+
+    s1 : System = System.from_json(ds)
+
+    assert s1.name == 's1'
+    assert s1.uid == 1
+    assert s1.buses[0].name == 'home'
+    assert s1.buses[0].uid == 1
+
+    assert s1.demands[0].name == 'd1'
+    assert s1.demands[0].loads == [1, 2, 3, 4]
+
+    assert s1.grids[0].name == 'g1'
+    assert s1.grids[0].capacity == 30
+
+    s1_lp = SystemLP(s1)
+
+    status = s1_lp.solve(keepfiles=False)
+
+    assert status == 'ok'
+
+    lp = s1_lp.lp
+    assert lp.get_col_at(s1_lp.demands_lp[1].block_load_cols[0]) == 1
+    assert lp.get_col_at(s1_lp.demands_lp[1].block_load_cols[1]) == 2
+    assert lp.get_col_at(s1_lp.demands_lp[1].block_load_cols[2]) == 3
+    assert lp.get_col_at(s1_lp.demands_lp[1].block_load_cols[3]) == 4
+
+    assert lp.get_col_at(s1_lp.grids_lp[1].block_injection_cols[0]) == 1
+    assert lp.get_col_at(s1_lp.grids_lp[1].block_injection_cols[1]) == 0
+    assert lp.get_col_at(s1_lp.grids_lp[1].block_injection_cols[2]) == 3
+    assert lp.get_col_at(s1_lp.grids_lp[1].block_injection_cols[3]) == 0
+
+    assert lp.get_col_at(s1_lp.local_sources_lp[1].block_injection_cols[0]) == 0
+    assert lp.get_col_at(s1_lp.local_sources_lp[1].block_injection_cols[1]) == 20
+    assert lp.get_col_at(s1_lp.local_sources_lp[1].block_injection_cols[2]) == 0
+    assert lp.get_col_at(s1_lp.local_sources_lp[1].block_injection_cols[3]) == 10
+
+    injection_values = lp.get_col_sol(s1_lp.grids_lp[1].block_injection_cols)
+    load_values = lp.get_col_sol(s1_lp.demands_lp[1].block_load_cols)
+
+    assert (injection_values == load_values).all()
+
+    assert lp.get_col_at(s1_lp.grids_lp[1].pmax_col) == 3
+    assert lp.get_obj() == 5000*3 + 11*1 + 12*0 + 13*3 + 14*0 - 6*18 -8*6

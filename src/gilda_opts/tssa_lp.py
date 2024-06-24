@@ -28,7 +28,7 @@ class TSSALP:
         """Add TSSA equations to a block."""
         bid = index
         uid = self.tssa.uid
-        lp : LinearProblem = self.system_lp.lp
+        lp: LinearProblem = self.system_lp.lp
         bus_lp = self.system_lp.get_bus_lp(self.tssa.bus_uid)
 
         #
@@ -76,7 +76,7 @@ class TSSALP:
         # Adding the continuous operation constraints
         #
         t_last = 0.0
-        for i in range(n-1 , -1, -1):
+        for i in range(n-1, -1, -1):
             t_last += d[i]
             if t_last >= self.tssa.on_period:
                 break
@@ -86,7 +86,7 @@ class TSSALP:
 
         for i in range(0, n_last):
             t_last = 0.0
-            for ii in range(i+1 , n):
+            for ii in range(i+1, n):
                 t_last += d[ii]
                 if t_last >= self.tssa.on_period:
                     break

@@ -1,4 +1,4 @@
-"""BESS module represents a Time Shift-able Smart Appliance load."""
+"""BESS module represents a Battery Energy Storage System."""
 
 from dataclasses import dataclass
 from dataclasses_json import DataClassJsonMixin
@@ -7,7 +7,7 @@ from dataclasses_json import DataClassJsonMixin
 @dataclass
 class BESS(DataClassJsonMixin):
     """
-    BESS represents the Time Shift-able Smart Appliance load in the scheduling problem.
+    BESS represents the Time Shift-able Smart Appliance.
 
     Attributes:
     -----------
@@ -19,7 +19,7 @@ class BESS(DataClassJsonMixin):
     efficiency:   In&Out efficiency [0..1]
     eini:         Start energy stored [KWh]
     efin:         End energy stored [KWh]
-    efin_value:   Energy value at the end of the period [$/KWh]
+    efin_price:   Energy value at the end of the period [$/KWh]
     """
 
     uid: int = -1
@@ -30,4 +30,4 @@ class BESS(DataClassJsonMixin):
     efficiency: float = 1
     eini: float = 0
     efin: float = 0
-    efin_value: float = 0
+    efin_price: float = 0

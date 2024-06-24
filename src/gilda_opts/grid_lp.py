@@ -14,6 +14,7 @@ class GridLP:
     def __init__(self, grid: Grid, system_lp=None):
         """Create the GridLP instance."""
         self.block_injection_cols = {}
+        self.block_purchase_cols = {}
         self.block_pmax_rows = {}
         self.pmax_col = -1
 
@@ -65,6 +66,22 @@ class GridLP:
         bus_lp.add_block_load_col(bid, injection_col, coeff=-1)
 
         #
+        # adding the grid purchase variable
+        #
+        try:
+            pvar = self.grid.energy_prices[bid] * block.duration
+        except IndexError:
+            pvar = 0
+
+        if pvar > 0:
+            lname = guid('gp', uid, bid)
+            pmax = self.grid.capacity
+            purchase_col = lp.add_col(name=lname, lb=0, ub=pmax, c=-pvar)
+            logging.info('added purchase variable %s %s', lname, purchase_col)
+            self.block_purchase_cols[bid] = purchase_col
+            bus_lp.add_block_load_col(bid, purchase_col, coeff=1)
+
+        #
         # adding pmax constraint
         #
 
@@ -92,6 +109,8 @@ class GridLP:
         """Return the optimal grid schedule."""
         lp = self.system_lp.lp
         block_injection_values = lp.get_col_sol(self.block_injection_cols.values())
+        block_purchase_values = lp.get_col_sol(self.block_purchase_cols.values())
         return GridSched(uid=self.grid.uid,
                          name=self.grid.name,
-                         block_injection_values=block_injection_values)
+                         block_injection_values=block_injection_values,
+                         block_purchase_values=block_purchase_values)

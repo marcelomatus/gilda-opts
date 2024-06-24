@@ -25,7 +25,7 @@ class BESSLP:
         """Add BESS equations to a block."""
         bid = index
         uid = self.bess.uid
-        lp : LinearProblem = self.system_lp.lp
+        lp: LinearProblem = self.system_lp.lp
         bus_lp = self.system_lp.get_bus_lp(self.bess.bus_uid)
         max_flow = self.bess.max_flow
         efficiency = self.bess.efficiency
@@ -54,7 +54,7 @@ class BESSLP:
         lname = guid('be', uid, bid)
         capacity = self.bess.capacity
         efin_col = lp.add_col(name=lname, lb=0, ub=capacity)
-        logging.info('added efin variable %s %d' , lname, efin_col)
+        logging.info('added efin variable %s %d', lname, efin_col)
         self.block_efin_cols[bid] = efin_col
 
         #
@@ -80,14 +80,14 @@ class BESSLP:
 
     def post_blocks(self):
         """Close the LP formulation post the blocks formulation."""
-        lp : LinearProblem = self.system_lp.lp
+        lp: LinearProblem = self.system_lp.lp
 
         #
         # Set the efin value, or negative cost
         #
         ncols = len(self.block_efin_cols)
         if ncols > 0:
-            lp.set_objc(self.block_efin_cols[ncols-1], -self.bess.efin_value)
+            lp.set_objc(self.block_efin_cols[ncols-1], -self.bess.efin_price)
 
     def get_sched(self):
         """Return the optimal bess schedule."""

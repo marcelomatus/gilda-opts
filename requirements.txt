@@ -5,3 +5,4 @@ logging
 pathlib
 dataclasses
 dataclasses-json
+importlib-metadata

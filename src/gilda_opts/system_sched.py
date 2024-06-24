@@ -8,6 +8,7 @@ from gilda_opts.demand_sched import DemandSched
 from gilda_opts.grid_sched import GridSched
 from gilda_opts.tssa_sched import TSSASched
 from gilda_opts.bess_sched import BESSSched
+from gilda_opts.local_source_sched import LocalSourceSched
 
 
 @dataclass
@@ -30,3 +31,4 @@ class SystemSched(DataClassJsonMixin):
     demands: List[DemandSched] = field(default_factory=lambda: [])
     tssas: List[TSSASched] = field(default_factory=lambda: [])
     besss: List[BESSSched] = field(default_factory=lambda: [])
+    local_sources: List[LocalSourceSched] = field(default_factory=lambda: [])
