@@ -7,7 +7,7 @@ from dataclasses_json import DataClassJsonMixin
 @dataclass
 class SBTM(DataClassJsonMixin):
     """
-    SBTM represents the Time Shift-able Smart Appliance load in the scheduling problem.
+    SBTM represents the Simple Building Thermal Model load in the scheduling problem.
 
     Attributes:
     -----------
