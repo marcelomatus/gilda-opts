@@ -33,6 +33,7 @@ Contents
    Contributions & Help <contributing>
    License <license>
    Authors <authors>
+   Installation
    Changelog <changelog>
    Module Reference <axopi/modules>
 
