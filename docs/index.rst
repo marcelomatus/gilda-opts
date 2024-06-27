@@ -29,7 +29,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   Overview <readme>
+   Introduction <readme>
    Contributions & Help <contributing>
    License <license>
    Authors <authors>
