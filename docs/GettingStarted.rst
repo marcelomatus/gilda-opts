@@ -2,6 +2,7 @@
 Getting Started
 ***************
 
+===================
 System Requirements
 ===================
 
@@ -12,6 +13,7 @@ Phython libraries or packages:
 
 For the hardware requirements, please refer to the system requirements for the version of ``Python`` that you are using.
 
+============
 Installation
 ============
 
@@ -27,14 +29,17 @@ The sources for FESOP can be downloaded from the `Github repository`_.
 
 This is the preferred method to install ``gilda-opts``, as it will always install the most recent stable release.
 
+====================
 Running a Simulation
---------------------
+====================
 To run a simulation, you must follow three steps.
 
+^^^^^^^^^^^^^^^^^^^^^^^^^
 Preparing Case Input Data
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 The full details of the input data files are documented in Chapter x.
 
+^^^^^^^^^^^^^^^^
 Solving the Case
 ^^^^^^^^^^^^^^^^
 
