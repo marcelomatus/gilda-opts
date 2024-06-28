@@ -58,7 +58,16 @@ This should display the following ``gilda-opts`` options:
 |  -s SOLVER, --solver SOLVER               | Defines the solver to be used (default: cbc)
 +-------------------------------------------+-------------------------------------------------+
 
-
+=====  =====  ======
+   Inputs     Output
+------------  ------
+  A      B    A or B
+=====  =====  ======
+False  False  False
+True   False  True
+False  True   True
+True   True   True
+=====  =====  ======
 
   -h, --help                                show this help message and exit
 
