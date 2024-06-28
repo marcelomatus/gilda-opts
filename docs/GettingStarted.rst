@@ -32,12 +32,12 @@ This is the preferred method to install ``gilda-opts``, as it will always instal
 ====================
 Running a Simulation
 ====================
-To run a simulation, you must follow three steps.
+To run a simulation, you must follow three steps. First, prepare the input data to define all of the relevant system parameters. Then invoke the function to run the simulation. Finally, you can access the results saved in output data files.
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 Preparing Case Input Data
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-The full details of the input data files are documented in Chapter x.
+The full details of the input data files are documented in Chapter x. The GILDA-OPTS distribution also includes some examples described a bit further in Chapter Y.
 
 ^^^^^^^^^^^^^^^^
 Solving the Case
