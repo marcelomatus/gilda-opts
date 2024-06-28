@@ -40,47 +40,16 @@ Once installed, you can verify that ``gilda-opts`` is available by executing:
 
 This should display the following ``gilda-opts`` options:
 
-+-------------------------------------------+-------------------------------------------------+
-|  -h, --help                               | show this help message and exit
-+-------------------------------------------+-------------------------------------------------+
-| --version                                 | show program's version number and exit
-+-------------------------------------------+-------------------------------------------------+
-|  -i INFILE_NAME, --infile INFILE_NAME     | Json input file. Stdinp is used if not provided.
-+-------------------------------------------+-------------------------------------------------+
-|  -o OUTFILE_NAME, --outfile OUTFILE_NAME  | Json output file. Stdout is used if not provided.
-+-------------------------------------------+-------------------------------------------------+
-|  -v, --verbose                            | set loglevel to INFO
-+-------------------------------------------+-------------------------------------------------+
-|  -vv, --very-verbose                      | set loglevel to DEBUG
-+-------------------------------------------+-------------------------------------------------+
-|  -k, --keepfiles                          | If included, the solver keepfiles option is used
-+-------------------------------------------+-------------------------------------------------+
-|  -s SOLVER, --solver SOLVER               | Defines the solver to be used (default: cbc)
-+-------------------------------------------+-------------------------------------------------+
-
-=====  =====  ======
-False  False  False
-True   False  True
-False  True   True
-True   True   True
-=====  =====  ======
-
-  -h, --help                                show this help message and exit
-
- --version                                  show program's version number and exit
-
-  -i INFILE_NAME, --infile INFILE_NAME      Json input file. Stdinp is used if not provided.
-
-  -o OUTFILE_NAME, --outfile OUTFILE_NAME   Json output file. Stdout is used if not provided.
-
-  -v, --verbose                             set loglevel to INFO
-
-  -vv, --very-verbose                       set loglevel to DEBUG
-
-  -k, --keepfiles                           If included, the solver keepfiles option is used
-
-  -s SOLVER, --solver SOLVER                Defines the solver to be used (default: cbc)
-
+=======================================  ================================================= 
+-h, --help                               show this help message and exit
+--version                                show program's version number and exit
+-i INFILE_NAME, --infile INFILE_NAME     Json input file. Stdinp is used if not provided.
+-o OUTFILE_NAME, --outfile OUTFILE_NAME  Json output file. Stdout is used if not provided.
+-v, --verbose                            set loglevel to INFO
+-vv, --very-verbose                      set loglevel to DEBUG
+-k, --keepfiles                          If included, the solver keepfiles option is used
+-s SOLVER, --solver SOLVER               Defines the solver to be used (default: cbc)
+=======================================  =================================================
 
 ====================
 Running a Simulation
