@@ -29,11 +29,12 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   Introduction <readme>
+   Introduction <Intro>
    Contributions & Help <contributing>
-   License <license>
    Authors <authors>
    Getting Started <GettingStarted>
+   Modeling <Modeling>
+   Examples of use <Examples>
    Changelog <changelog>
    Module Reference <axopi/modules>
 
