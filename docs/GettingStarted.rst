@@ -42,8 +42,16 @@ The full details of the input data files are documented in Chapter x.
 ^^^^^^^^^^^^^^^^
 Solving the Case
 ^^^^^^^^^^^^^^^^
+The solver is invoked by calling the main simulation function ``gilda-opts`` followed by the name of the case file. For example, to run the system case defined through the ``demand_grid.json`` file, type at the command ``shell`` or ``prompt``:
 
-> gilda_opts -i cases/system_1.json
+> gilda_opts -i cases/demand_grid.json
+
+The following message will be generated:
+
+^^^^^^^^^^^^^^^^^^^^
+Accesing the Results
+^^^^^^^^^^^^^^^^^^^^
+The simulation results are saved to several output files located at the directory
 
 
 .. _Github repository: https://github.com/marcelomatus/gilda-opts
