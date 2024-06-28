@@ -21,10 +21,9 @@ The sources for FESOP can be downloaded from the `Github repository`_.
 
    ``>git clone https://github.com/marcelomatus/gilda-opts.git``
 
-2. Once you have a copy of the source, you can install it running this command in your
-terminal:
+2. Once you have a copy of the source, you can install it running this command in your terminal:
 
-``> pip install gilda-opts``
+   ``> pip install gilda-opts``
 
 This is the preferred method to install ``gilda-opts``, as it will always install the most recent stable release.
 
