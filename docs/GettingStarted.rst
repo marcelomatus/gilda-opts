@@ -10,12 +10,10 @@ To use Gilda-opts you will need:
 Phyton 3.11.9
 
 Phython libraries or packages:
-#. This is a numbered list.
-#. It has two items too.   
-   pip 24.0
-   Sphinx 7.3.7
-   pyomo
-   numpy
+  | pip 24.0
+  | Sphinx 7.3.7
+  | pyomo
+  | numpy
 
 A mixed integer linear programming solver (as CBC, Gurobi)
 
