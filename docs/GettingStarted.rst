@@ -1,6 +1,6 @@
-===============
+***************
 Getting Started
-===============
+***************
 
 System Requirements
 ===================
@@ -26,5 +26,19 @@ The sources for FESOP can be downloaded from the `Github repository`_.
    ``> pip install gilda-opts``
 
 This is the preferred method to install ``gilda-opts``, as it will always install the most recent stable release.
+
+Running a Simulation
+--------------------
+To run a simulation, you must follow three steps.
+
+Preparing Case Input Data
+^^^^^^^^^^^^^^^^^^^^^^^^^
+The full details of the input data files are documented in Chapter x.
+
+Solving the Case
+^^^^^^^^^^^^^^^^
+
+> gilda_opts -i cases/system_1.json
+
 
 .. _Github repository: https://github.com/marcelomatus/gilda-opts
