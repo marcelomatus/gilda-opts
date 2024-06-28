@@ -59,10 +59,6 @@ This should display the following ``gilda-opts`` options:
 +-------------------------------------------+-------------------------------------------------+
 
 =====  =====  ======
-   Inputs     Output
-------------  ------
-  A      B    A or B
-=====  =====  ======
 False  False  False
 True   False  True
 False  True   True
