@@ -7,9 +7,11 @@ System Requirements
 ===================
 
 To use Gilda-opts you will need:
-Phyton 3.9
+Phyton 3.11.9
 Phython libraries or packages:
-   pip 19.2.3
+   pip 24.0
+   Sphinx 7.3.7
+A mixed integer linear programming solver (as CBC, Gurobi)
 
 For the hardware requirements, please refer to the system requirements for the version of ``Python`` that you are using.
 
@@ -29,6 +31,22 @@ The sources for FESOP can be downloaded from the `Github repository`_.
 
 This is the preferred method to install ``gilda-opts``, as it will always install the most recent stable release.
 
+Once installed, you can verify that ``gilda-opts`` is available by executing:
+   ``> gilda_opts -h``
+
+This should display the following ``gilda-opts`` options:
+
+  -h, --help                            show this help message and exit
+  --version                             show program's version number and exit
+  -i INFILE_NAME, --infile INFILE_NAME  Json input file. Stdinp is used if not provided.
+  -o OUTFILE_NAME, --outfile OUTFILE_NAME
+                        Json output file. Stdout is used if not provided.
+  -v, --verbose         set loglevel to INFO
+  -vv, --very-verbose   set loglevel to DEBUG
+  -k, --keepfiles       If included, the solver keepfiles option is used
+  -s SOLVER, --solver SOLVER
+                        Defines the solver to be used (default: cbc)
+
 ====================
 Running a Simulation
 ====================
@@ -46,7 +64,7 @@ The solver is invoked by calling the main simulation function ``gilda-opts`` fol
 
 > gilda_opts -i cases/demand_grid.json
 
-The following message will be generated:
+The results of the simulation will be printed on the screen.
 
 ^^^^^^^^^^^^^^^^^^^^
 Accesing the Results
