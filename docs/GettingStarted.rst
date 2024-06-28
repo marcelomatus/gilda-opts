@@ -16,9 +16,9 @@ Python that you are using.
 Installation
 ============
 
-The sources for FESOP can be downloaded from the `Github_repository`_ 
+The sources for FESOP can be downloaded from the `Github_repository`_  
 1. You can either clone the public repository:
 
 or download the tarball
 
-.. _Github repository: https://github.com/marcelomatus/gilda-opts
+.. _Github_repository: https://github.com/marcelomatus/gilda-opts
