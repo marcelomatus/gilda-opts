@@ -8,7 +8,7 @@ GILDA-OPTS is ditributed under the Massachusetts Institute of Technology (MIT) l
 comes with no warranty conditions. The full text of the license can be found in the LICENSE
 file and reads as follows:
 
-Copyright (c) 2021, Marcelo Matus
+Copyright (c) 2024, Marcelo Matus
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
