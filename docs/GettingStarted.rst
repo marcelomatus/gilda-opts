@@ -8,7 +8,7 @@ System Requirements
 
 To use Gilda-opts you will need:
 
-Phyton 3.11.9
+Phyton 3.11.9\
 Phython libraries or packages:
   | pip 24.0
   | Sphinx 7.3.7
