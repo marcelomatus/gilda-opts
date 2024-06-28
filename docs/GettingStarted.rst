@@ -21,5 +21,4 @@ The sources for FESOP can be downloaded from the `Github_repository`_
 
 or download the tarball
 
-
-: _ Github repository: https://github.com/marcelomatus/gilda-opts
+.. _Github repository: https://github.com/marcelomatus/gilda-opts
