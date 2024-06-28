@@ -6,7 +6,7 @@ Getting Started
 System Requirements
 ===================
 
-To use Gilda-opts you will need:
+To use ``gilda-opts`` you will need:
 
 * Phyton 3.11.9
 * Phython libraries or packages:
@@ -24,7 +24,7 @@ For the hardware requirements, please refer to the system requirements for the v
 Installation
 ============
 
-The sources for Gilda_opts can be downloaded from the `Github repository`_.
+The sources for ``gilda-opts`` can be downloaded from the `Github repository`_.
 
 1. You can either clone the public repository:
 
@@ -61,7 +61,7 @@ To run a simulation, you must follow three steps. First, prepare the input data 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 Preparing Case Input Data
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-The full details of the input data files are documented in Chapter x. The GILDA-OPTS distribution also includes some examples described a bit further in Chapter Y.
+The full details of the input data files are documented in Chapter x. The ``gilda-opts`` distribution also includes some examples described a bit further in Chapter Y.
 
 ^^^^^^^^^^^^^^^^
 Solving the Case
