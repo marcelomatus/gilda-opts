@@ -24,7 +24,7 @@ For the hardware requirements, please refer to the system requirements for the v
 Installation
 ============
 
-The sources for FESOP can be downloaded from the `Github repository`_.
+The sources for Gilda_opts can be downloaded from the `Github repository`_.
 
 1. You can either clone the public repository:
 
@@ -37,6 +37,7 @@ The sources for FESOP can be downloaded from the `Github repository`_.
 This is the preferred method to install ``gilda-opts``, as it will always install the most recent stable release.
 
 Once installed, you can verify that ``gilda-opts`` is available by executing:
+
    ``> gilda_opts -h``
 
 This should display the following ``gilda-opts`` options:
