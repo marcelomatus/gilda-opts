@@ -16,7 +16,8 @@ Python that you are using.
 Installation
 ============
 
-The sources for FESOP can be downloaded from the `Github repository`_  
+The sources for FESOP can be downloaded from the `Github repository`_.
+
 1. You can either clone the public repository:
 
 or download the tarball
