@@ -8,7 +8,7 @@ Modeling
 Data Formats
 ============
 
-The data files used by ``gilda-opts`` are ``.json`` files which define and return a single structure.
+The data files used by ``gilda-opts`` are ``.json`` files which define and return a single structure. The json-file format is plain text and can be edited with any standard text editor.
 
 ===============================
 Configure the Planning Horizon
