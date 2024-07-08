@@ -4,9 +4,9 @@ Introduction
 
 Background
 -----------
-``GILDA-OPTS`` is the ``Python``-based platform platform designed to optimize the usage of household appliances. This open-source seeks to determine the optimal utilization of smart home devices over a planning period that can vary from a day to a week. The optimization is guided by external economic factors, such as energy and power prices, and environmental factors, including emissions factors and costs associated with CO2 emissions.
+``GILDA-OPTS`` is the ``Python``-based platform designed to optimize the usage of household appliances. This open-source seeks to optimize the overall energy production and consumption in homes by scheduling appliance usage over a planning period ranging from one day to a week. The optimization is guided by external economic factors, such as energy and power prices, and environmental factors, including emissions factors and costs associated with CO2 emissions.
 
-``GILDA-OPTS`` is flexible and allows begining with a basic setup and incrementally enhance it based or the user's requirements.
+``GILDA-OPTS`` is flexible and allows begining with a basic setup and incrementally enhance it based or the user's requirements. Devices that can be modeled include electric energy generation (such as wind and solar) and storage devices for self-consumption, time shiftable smart appliances, ventilation and air conditioning systems using a simplified thermal model, as well as the baseline demand from non-programmable devices.
 
 ========================
 License and Terms of Use
