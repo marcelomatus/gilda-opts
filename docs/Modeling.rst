@@ -1,4 +1,4 @@
-.. _Modeling
+.. _Modeling:
 
 *********
 Modeling
