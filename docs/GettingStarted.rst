@@ -6,7 +6,7 @@ Getting Started
 System Requirements
 ===================
 
-To use ``gilda-opts`` you will need:
+To use ``GILDA-OPTS`` you will need:
 
 * Phyton 3.11.9
 * Phython libraries or packages:
@@ -24,7 +24,7 @@ For the hardware requirements, please refer to the system requirements for the v
 Installation
 ============
 
-The sources for ``gilda-opts`` can be downloaded from the `Github repository`_.
+The sources for ``GILDA-OPTS`` can be downloaded from the `Github repository`_.
 
 1. You can either clone the public repository:
 
@@ -34,13 +34,13 @@ The sources for ``gilda-opts`` can be downloaded from the `Github repository`_.
 
    ``> pip install gilda-opts``
 
-This is the preferred method to install ``gilda-opts``, as it will always install the most recent stable release.
+This is the preferred method to install ``GILDA-OPTS``, as it will always install the most recent stable release.
 
-Once installed, you can verify that ``gilda-opts`` is available by executing:
+Once installed, you can verify that ``GILDA-OPTS`` is available by executing:
 
    ``> gilda_opts -h``
 
-This should display the following ``gilda-opts`` options:
+This should display the following ``GILDA-OPTS`` options:
 
 =======================================  ================================================= 
 -h, --help                               show this help message and exit
@@ -61,12 +61,12 @@ To run a simulation, you must follow three steps. First, prepare the input data 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 Preparing Case Input Data
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-The full details of the input data files are documented in Chapter x. The ``gilda-opts`` distribution also includes some examples described a bit further in Chapter Y.
+The full details of the input data files are documented in Modelling. The ``GILDA-OPTS`` distribution also includes some Examples that illustrate how to accurately input data to construct and simulate the system.
 
 ^^^^^^^^^^^^^^^^
 Solving the Case
 ^^^^^^^^^^^^^^^^
-The solver is invoked by calling the main simulation function ``gilda-opts`` followed by the name of the case file. For example, to run the system case defined through the ``demand_grid.json`` file, type at the command ``shell`` or ``prompt``:
+The solver is invoked by calling the main simulation function ``GILDA-OPTS`` followed by the name of the case file. For example, to run the system case defined through the ``demand_grid.json`` file, type at the command ``shell`` or ``prompt``:
 
 > gilda_opts -i cases/demand_grid.json
 
