@@ -61,7 +61,7 @@ To run a simulation, you must follow three steps. First, prepare the input data 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 Preparing Case Input Data
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-The full details of the input data files are documented in :DOC:`Modeling <Modeling>`. The ``GILDA-OPTS`` distribution also includes some :ref:`Examples` that illustrate how to accurately input data to construct and simulate the system.
+The full details of the input data files are documented in :doc:`Modeling <Modeling>`. The ``GILDA-OPTS`` distribution also includes some :ref:`Examples` that illustrate how to accurately input data to construct and simulate the system.
 
 
 ^^^^^^^^^^^^^^^^
