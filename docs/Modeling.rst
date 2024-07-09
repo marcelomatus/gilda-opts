@@ -25,6 +25,7 @@ The block parameters are depicted in Table :
 
 .. table:: ``Block`` input parameters
    :widths: auto
+   :align: center
 
    +----------+-------+-------+---------+--------------------------------------------------+
    |  field   | kind  | units | default |                description                       |
