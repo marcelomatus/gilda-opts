@@ -172,6 +172,24 @@ Battery Energy Storage System - (BESS)
 -------------
 Local Source
 -------------
+``Local_Source`` module contains the basic local energy source, such as PV or Wind. The attributes for the ``Local_Source`` element are showed below:
+
+.. table:: ``Local_Source`` input parameters
+   :widths: auto
+   :align: center
+
+   +-----------------+-------+---------+---------+-------------------------------------------------------------------+
+   |     field       | kind  | units   | default |                description                                        |
+   +=================+=======+=========+=========+===================================================================+
+   | uid             | int   |         |   -1    | LocalSource unique identifier                                     |
+   +-----------------+-------+---------+---------+-------------------------------------------------------------------+
+   | name            |  str  |         |         | LocalSource provider name                                         |   
+   +-----------------+-------+---------+---------+-------------------------------------------------------------------+
+   |capacity         | float |  KW     |   0     | Connection Capacity                                               |
+   +-----------------+-------+---------+---------+-------------------------------------------------------------------+
+   |gen_profile      | float |  p.u.   |    0    | Potential generation profile value,as a factor of the capacity    |
+   +-----------------+-------+---------+---------+-------------------------------------------------------------------+
+
 
 ------------------------------------------
 Simplified Building Thermal Model - (SBTM)
