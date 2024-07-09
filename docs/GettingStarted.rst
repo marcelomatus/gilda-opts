@@ -63,7 +63,6 @@ Preparing Case Input Data
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 The full details of the input data files are documented in :ref:`Modeling`. The ``GILDA-OPTS`` distribution also includes some :ref:`Examples` that illustrate how to accurately input data to construct and simulate the system.
 
-See :ref:`Modeling`
 
 ^^^^^^^^^^^^^^^^
 Solving the Case
