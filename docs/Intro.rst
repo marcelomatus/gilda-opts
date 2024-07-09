@@ -12,7 +12,7 @@ Background
 License and Terms of Use
 ========================
 
-GILDA-OPTS is ditributed under the Massachusetts Institute of Technology (MIT) license `MIT`_ and comes with no warranty conditions. The full text of the license can be found in the LICENSE file and reads as follows:
+`GILDA-OPTS` is ditributed under the Massachusetts Institute of Technology (MIT) license `MIT`_ and comes with no warranty conditions. The full text of the license can be found in the LICENSE file and reads as follows:
 
 Copyright (c) 2024, Marcelo Matus
 
@@ -20,6 +20,11 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 the following conditions:
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+========================
+Citing `GILDA-OPTS`
+========================
+While not required by the terms of the license, we do request that publications derived from the use of `GILDA-OPTS` explicitly acknowledge that fact by citing:
 
 
 .. _MIT: https://choosealicense.com/licenses/mit/
