@@ -23,7 +23,7 @@ The planning horizon is segmented into multiple independent time blocks, which c
 
 The block parameters are depicted in Table :
 
-.. table:: ``Block`` input parameters
+.. table:: *``Block`` input parameters*
    :widths: auto
    :align: center
 
