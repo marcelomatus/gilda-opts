@@ -194,3 +194,19 @@ Local Source
 ------------------------------------------
 Simplified Building Thermal Model - (SBTM)
 ------------------------------------------
+``SBTM`` module represents a Simple Building Thermal Model in the scheduling problem. The parameters for the ``SBTM`` element are showed below.
+
+.. table:: ``SBTM`` input parameters
+   :widths: auto
+   :align: center
+
+   +-----------------+-------+---------+---------+---------------------------------------------+
+   |     field       | kind  | units   | default |            description                      |
+   +=================+=======+=========+=========+=============================================+
+   | uid             | int   |         |   -1    | SBTM unique identifier                      |
+   +-----------------+-------+---------+---------+---------------------------------------------+
+   | name            |  str  |         |         | SBTM name                                   |   
+   +-----------------+-------+---------+---------+---------------------------------------------+
+   |bus_uid          |  int  |         |   -1    | Bus uid to be connected to                  |
+   +-----------------+-------+---------+---------+---------------------------------------------+
+
