@@ -19,9 +19,7 @@ The data files used by ``GILDA-OPTS`` are ``.json`` files which define and retur
 Configure the Planning Horizon
 ===============================
 
-The planning horizon is segmented into multiple independent time blocks, which can be as short as an hour or less, according to the temporal resolution.
-
-The ``block`` parameters are shown below:
+The planning horizon is segmented into multiple independent time blocks, which can be as short as an hour or less, according to the temporal resolution. The ``block`` parameters are shown below:
 
 .. table:: ``Block`` input parameters
    :widths: auto
@@ -43,9 +41,7 @@ System Elements
 -----
 Bus
 -----
-The ``bus`` element corresponds to the electric bus where the electric elements are connected.
-
-The ``bus`` parameters are depicted below :
+The ``bus`` element corresponds to the electric bus where the electric elements are connected. The ``bus`` parameters are depicted below :
 
 .. table:: ``Bus`` input parameters
    :widths: auto
@@ -63,6 +59,34 @@ The ``bus`` parameters are depicted below :
 ----
 Grid
 ----
+``Grid`` element contains the basic grid electric provider. The attributes for the ``Grid`` element are listed below:
+
+.. table:: ``Grid`` input parameters
+   :widths: auto
+   :align: center
+
+   +-----------------+-------+---------+---------+-----------------------------------------------+
+   |     field       | kind  | units   | default |                description                    |
+   +=================+=======+=========+=========+===============================================+
+   | uid             | int   |         |   -1    | Grid unique identifier                        |
+   +-----------------+-------+---------+---------+-----------------------------------------------+
+   | name            |  str  |         |    1    | Grid provider name                            |   
+   +-----------------+-------+---------+---------+-----------------------------------------------+
+   |capacity         | float |   kW    |    0    | Connection Capacity                           |
+   +-----------------+-------+---------+---------+-----------------------------------------------+
+   |energy_tariffs   | float | $/kWh   |         |  List of energy tariff values                 |
+   +-----------------+-------+---------+---------+-----------------------------------------------+
+   |power_tariff     | float | $/KW    |    0    | Power tariff                                  |
+   +-----------------+-------+---------+---------+-----------------------------------------------+
+   |power_factors    | float | p.u.    |         | List of power factor values                   |
+   +-----------------+-------+---------+---------+-----------------------------------------------+
+   |emission_factors | float | gCO2/KWh|         | List of emission factors                      |
+   +-----------------+-------+---------+---------+-----------------------------------------------+
+   | emission_cost   | float | $/gCO2  |    0    | Emission cost                                 |
+   +-----------------+-------+---------+---------+-----------------------------------------------+
+   | energy_prices   | float | $/KWh   |         | Energy purchase price                         |
+   +-----------------+-------+---------+---------+-----------------------------------------------+
+
 
 ------
 Demand
