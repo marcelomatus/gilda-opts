@@ -21,9 +21,9 @@ Configure the Planning Horizon
 
 The planning horizon is segmented into multiple independent time blocks, which can be as short as an hour or less, according to the temporal resolution.
 
-The block parameters are depicted in Table :
+The ``block`` parameters are shown below:
 
-.. table:: *``Block`` input parameters*
+.. table:: ``Block`` input parameters
    :widths: auto
    :align: center
 
@@ -36,7 +36,6 @@ The block parameters are depicted in Table :
    +----------+-------+-------+---------+--------------------------------------------------+
 
 
-
 ===============
 System Elements
 ===============
@@ -44,6 +43,22 @@ System Elements
 -----
 Bus
 -----
+The ``bus`` element corresponds to the electric bus where the electric elements are connected.
+
+The ``bus`` parameters are depicted below :
+
+.. table:: ``Bus`` input parameters
+   :widths: auto
+   :align: center
+
+   +----------+-------+-------+---------+--------------------------------------------------+
+   |  field   | kind  | units | default |                description                       |
+   +==========+=======+=======+=========+==================================================+
+   | uid      | int   |       |   -1    | Bus unique identifier                            |
+   +----------+-------+-------+---------+--------------------------------------------------+
+   | name     | str   |       |    1    | Bus name                                         |   
+   +----------+-------+-------+---------+--------------------------------------------------+
+
 
 ----
 Grid
