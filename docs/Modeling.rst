@@ -19,7 +19,7 @@ The data files used by ``GILDA-OPTS`` are ``.json`` files which define and retur
 Configure the Planning Horizon
 ===============================
 
-The planning horizon is segmented into multiple independent time blocks, which can be as short as an hour or less.
+The planning horizon is segmented into multiple independent time blocks, which can be as short as an hour or less, according to the temporal resolution.
 
 The block parameters are depicted in Table :
 
@@ -30,6 +30,12 @@ The block parameters are depicted in Table :
 +----------+-------+-------+---------+--------------------------------------------------+
 | discount | float | p.u.  |    1    | Discount factor to be used in the LP formulation |   
 +----------+-------+-------+---------+--------------------------------------------------+
+
+.. math::
+
+   (a + b)^2 = a^2 + 2ab + b^2
+
+   (a - b)^2 = a^2 - 2ab + b^2
 
 ===============
 System Elements
