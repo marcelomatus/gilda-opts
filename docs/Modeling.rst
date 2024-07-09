@@ -23,6 +23,9 @@ The planning horizon is segmented into multiple independent time blocks, which c
 
 The block parameters are depicted in Table :
 
+.. table:: ``Block`` input parameters
+   :widths: auto
+
 +----------+-------+-------+---------+--------------------------------------------------+
 |  field   | kind  | units | default |                description                       |
 +==========+=======+=======+=========+==================================================+
@@ -31,11 +34,7 @@ The block parameters are depicted in Table :
 | discount | float | p.u.  |    1    | Discount factor to be used in the LP formulation |   
 +----------+-------+-------+---------+--------------------------------------------------+
 
-.. math::
 
-   (a + b)^2 = a^2 + 2ab + b^2
-
-   (a - b)^2 = a^2 - 2ab + b^2
 
 ===============
 System Elements
