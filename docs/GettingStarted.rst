@@ -78,5 +78,10 @@ Accesing the Results
 ^^^^^^^^^^^^^^^^^^^^
 The simulation results are printed on the screen and saved to several output files located at the directory ??
 
+===============
+Documentation
+===============
+The primary source of documentation for ``GILDA-OPTS`` is this manual, which gives an overview of ``GILDA-OPTS``’s capabilities, describes the elements structure, modeling and formulations behind the code. It can be found in your ``GILDA-OPTS`` distribution from the `Github repository`_.
+
 
 .. _Github repository: https://github.com/marcelomatus/gilda-opts
