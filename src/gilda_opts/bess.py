@@ -7,7 +7,7 @@ from dataclasses_json import DataClassJsonMixin
 @dataclass
 class BESS(DataClassJsonMixin):
     """
-    BESS represents the Time Shift-able Smart Appliance.
+    BESS represents a Battery Energy Storage System.
 
     Attributes:
     -----------
