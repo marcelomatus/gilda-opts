@@ -34,7 +34,15 @@ The block parameters are depicted in Table :
 | discount | float | p.u.  |    1    | Discount factor to be used in the LP formulation |   
 +----------+-------+-------+---------+--------------------------------------------------+
 
+.. table:: Personnel
 
+   +----------+---------+
+   |Name      |Age      |
+   +==========+=========+
+   |Bill      |39       |
+   +----------+---------+
+   |Jane      |38       |
+   +----------+---------+
 
 ===============
 System Elements
