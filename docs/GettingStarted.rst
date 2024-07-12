@@ -32,7 +32,7 @@ The sources for ``GILDA-OPTS`` can be downloaded from the `Github repository`_.
 
 2. Once you have a copy of the source, you can install it running this command in your terminal:
 
-   ``> pip install gilda-opts``
+   ``> pip install .
 
 This is the preferred method to install ``GILDA-OPTS``, as it will always install the most recent stable release.
 
