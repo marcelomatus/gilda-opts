@@ -53,7 +53,7 @@
                 1,
                 0
             ],
-            "energy_prices": [
+            "energy_sell_prices": [
                 5,
                 6,
                 7,
@@ -67,7 +67,7 @@
             "uid": 1,
             "bus_uid": 1,
             "capacity": 20,
-            "gen_profile": [
+            "generation_profile": [
                 0,
                 1,
                 0,

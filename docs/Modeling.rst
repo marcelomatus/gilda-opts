@@ -3,7 +3,7 @@
 *********
 Modeling
 *********
-This chapter focus on the input data structures required to simulate any home energy system with ``GILDA-OPTS``. The simulation setup requires case definition files containing the parameters of the input elements. 
+This chapter focus on the input data structures required to simulate any home energy system with ``GILDA-OPTS``. The simulation setup requires case definition files containing the parameters of the input elements.
 
 ``GILDA-OPTS`` employs standard models typically used for household appliances. Comprehensive information about the element parameters, their definitions and models, the variables introduced by each element, and the output data types can be found in the following sections.
 
@@ -30,7 +30,7 @@ The planning horizon is segmented into multiple independent time blocks, which c
    +==========+=======+=======+=========+==================================================+
    | duration | float | hour  |    1    | Block time duration                              |
    +----------+-------+-------+---------+--------------------------------------------------+
-   | discount | float | p.u.  |    1    | Discount factor to be used in the LP formulation |   
+   | discount | float | p.u.  |    1    | Discount factor to be used in the LP formulation |
    +----------+-------+-------+---------+--------------------------------------------------+
 
 
@@ -52,7 +52,7 @@ The ``bus`` element corresponds to the electric bus where the electric elements 
    +==========+=======+=======+=========+==================================================+
    | uid      | int   |       |   -1    | Bus unique identifier                            |
    +----------+-------+-------+---------+--------------------------------------------------+
-   | name     | str   |       |    1    | Bus name                                         |   
+   | name     | str   |       |    1    | Bus name                                         |
    +----------+-------+-------+---------+--------------------------------------------------+
 
 
@@ -70,7 +70,7 @@ Grid
    +=================+=======+=========+=========+===============================================+
    | uid             | int   |         |   -1    | Grid unique identifier                        |
    +-----------------+-------+---------+---------+-----------------------------------------------+
-   | name            |  str  |         |    1    | Grid provider name                            |   
+   | name            |  str  |         |    1    | Grid provider name                            |
    +-----------------+-------+---------+---------+-----------------------------------------------+
    |capacity         | float |   KW    |    0    | Connection Capacity                           |
    +-----------------+-------+---------+---------+-----------------------------------------------+
@@ -84,7 +84,7 @@ Grid
    +-----------------+-------+---------+---------+-----------------------------------------------+
    | emission_cost   | float | $/gCO2  |    0    | Emission cost                                 |
    +-----------------+-------+---------+---------+-----------------------------------------------+
-   | energy_prices   | float | $/KWh   |         | Energy purchase price                         |
+   | energy_sell_prices   | float | $/KWh   |         | Energy purchase price                    |
    +-----------------+-------+---------+---------+-----------------------------------------------+
 
 
@@ -102,7 +102,7 @@ Demand
    +=================+=======+=========+=========+===============================================+
    | uid             | int   |         |   -1    | Load unique identifier                        |
    +-----------------+-------+---------+---------+-----------------------------------------------+
-   | name            |  str  |         |         | Load name                                     |   
+   | name            |  str  |         |         | Load name                                     |
    +-----------------+-------+---------+---------+-----------------------------------------------+
    |bus_uid          | int   |         |   -1    | Bus uid to be connected to                    |
    +-----------------+-------+---------+---------+-----------------------------------------------+
@@ -126,7 +126,7 @@ Time Shiftable Smart Appliances - (TSSA)
    +=================+=======+=========+=========+===================================================================+
    | uid             | int   |         |   -1    | TSSA unique identifier                                            |
    +-----------------+-------+---------+---------+-------------------------------------------------------------------+
-   | name            |  str  |         |         | TSSA name                                                         |   
+   | name            |  str  |         |         | TSSA name                                                         |
    +-----------------+-------+---------+---------+-------------------------------------------------------------------+
    |bus_uid          | int   |         |   -1    | Bus uid to be connected to                                        |
    +-----------------+-------+---------+---------+-------------------------------------------------------------------+
@@ -152,7 +152,7 @@ Battery Energy Storage System - (BESS)
    +=================+=======+=========+=========+===============================================+
    | uid             | int   |         |   -1    | BESS unique identifier                        |
    +-----------------+-------+---------+---------+-----------------------------------------------+
-   | name            |  str  |         |         | BESS name                                     |   
+   | name            |  str  |         |         | BESS name                                     |
    +-----------------+-------+---------+---------+-----------------------------------------------+
    |bus_uid          | int   |         |   -1    | Bus uid to be connected to                    |
    +-----------------+-------+---------+---------+-----------------------------------------------+
@@ -183,11 +183,11 @@ Local Source
    +=================+=======+=========+=========+===================================================================+
    | uid             | int   |         |   -1    | LocalSource unique identifier                                     |
    +-----------------+-------+---------+---------+-------------------------------------------------------------------+
-   | name            |  str  |         |         | LocalSource provider name                                         |   
+   | name            |  str  |         |         | LocalSource provider name                                         |
    +-----------------+-------+---------+---------+-------------------------------------------------------------------+
    |capacity         | float |  KW     |   0     | Connection Capacity                                               |
    +-----------------+-------+---------+---------+-------------------------------------------------------------------+
-   |gen_profile      | float |  p.u.   |    0    | Potential generation profile value,as a factor of the capacity    |
+   |generation_profile | float |  p.u. |    0    | Potential generation profile value,as a factor of the capacity    |
    +-----------------+-------+---------+---------+-------------------------------------------------------------------+
 
 
@@ -205,8 +205,7 @@ Simplified Building Thermal Model - (SBTM)
    +=================+=======+=========+=========+=============================================+
    | uid             | int   |         |   -1    | SBTM unique identifier                      |
    +-----------------+-------+---------+---------+---------------------------------------------+
-   | name            |  str  |         |         | SBTM name                                   |   
+   | name            |  str  |         |         | SBTM name                                   |
    +-----------------+-------+---------+---------+---------------------------------------------+
    |bus_uid          |  int  |         |   -1    | Bus uid to be connected to                  |
    +-----------------+-------+---------+---------+---------------------------------------------+
-

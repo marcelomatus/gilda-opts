@@ -43,7 +43,7 @@ class GridLP:
         bus_lp = self.system_lp.get_bus_lp(self.grid.bus_uid)
 
         #
-        # adding the grid injection  variable
+        # adding the grid buy (injection)  variable
         #
         try:
             energy_cvar = self.grid.energy_tariffs[bid]
@@ -56,27 +56,37 @@ class GridLP:
             emission_cvar = 0
 
         lname = guid('gb', uid, bid)
-        pmax = self.grid.capacity
+        wpmax = self.grid.capacity
+        try:
+            wpmax *= self.grid.withdrawn_profile[bid]
+        except IndexError:
+            pass
+
         cvar = (energy_cvar + emission_cvar) * block.duration
 
-        injection_col = lp.add_col(name=lname, lb=0, ub=pmax, c=cvar)
+        injection_col = lp.add_col(name=lname, lb=0, ub=wpmax, c=cvar)
         logging.info('added injection variable %s %s', lname, injection_col)
 
         self.block_injection_cols[bid] = injection_col
         bus_lp.add_block_load_col(bid, injection_col, coeff=-1)
 
         #
-        # adding the grid purchase variable
+        # adding the grid sell ()injection) variable
         #
         try:
-            pvar = self.grid.energy_prices[bid] * block.duration
+            pvar = self.grid.energy_sell_prices[bid] * block.duration
         except IndexError:
             pvar = 0
 
         if pvar > 0:
             lname = guid('gp', uid, bid)
-            pmax = self.grid.capacity
-            purchase_col = lp.add_col(name=lname, lb=0, ub=pmax, c=-pvar)
+            ipmax = self.grid.capacity
+            try:
+                ipmax *= self.grid.injection_profile[bid]
+            except IndexError:
+                pass
+
+            purchase_col = lp.add_col(name=lname, lb=0, ub=ipmax, c=-pvar)
             logging.info('added purchase variable %s %s', lname, purchase_col)
             self.block_purchase_cols[bid] = purchase_col
             bus_lp.add_block_load_col(bid, purchase_col, coeff=1)

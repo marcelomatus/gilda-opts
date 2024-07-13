@@ -13,15 +13,15 @@ class LocalSource(DataClassJsonMixin):
 
     Attributes:
     ----------
-    uid:              LocalSource unique id
-    name:             LocalSource provider name
-    capacity:         Connection Capacity [KW]
-    gen_profile:      Potential generation profile value,
-                      as a factor of the capacity [0..1]
+    uid:                LocalSource unique id
+    name:               LocalSource provider name
+    capacity:           Connection Capacity [KW]
+    generation_profile: Potential generation profile value, as a factor of the
+                        capacity [0..1]
     """
 
     uid: int = -1
     name: str = ''
     bus_uid: int = -1
     capacity: float = 0
-    gen_profile: List[float] = field(default_factory=list)
+    generation_profile: List[float] = field(default_factory=list)

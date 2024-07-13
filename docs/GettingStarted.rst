@@ -42,7 +42,7 @@ Once installed, you can verify that ``GILDA-OPTS`` is available by executing:
 
 This should display the following ``GILDA-OPTS`` options:
 
-=======================================  ================================================= 
+=======================================  =================================================
 -h, --help                               show this help message and exit
 --version                                show program's version number and exit
 -i INFILE_NAME, --infile INFILE_NAME     Json input file. Stdinp is used if not provided.

@@ -401,12 +401,12 @@ def test_system_lp_6():
                 "energy_tariffs": [11, 12, 13, 14],
                 "power_tariff": 5000,
                 "power_factors": [0,1,1,0],
-                "energy_prices": [5, 6, 7, 8]}],
+                "energy_sell_prices": [5, 6, 7, 8]}],
       "local_sources": [{"name": "g1",
                 "uid": 1,
                 "bus_uid": 1,
                 "capacity": 20,
-                "gen_profile": [0, 1, 0, 0.5]}]
+                "generation_profile": [0, 1, 0, 0.5]}]
     }'''
 
     s1 : System = System.from_json(ds)

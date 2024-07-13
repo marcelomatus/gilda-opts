@@ -33,9 +33,9 @@ class LocalSourceLP:
 
         lname = guid('lb', uid, bid)
         try:
-            gprof = self.local_source.gen_profile[bid]
+            gprof = self.local_source.generation_profile[bid]
         except IndexError:
-            gprof = 0
+            gprof = 1.0
 
         pmax = self.local_source.capacity*gprof
 
