@@ -1,7 +1,6 @@
 """Contains the demnand_lp class."""
 
 import logging
-from collections import defaultdict
 
 from gilda_opts.block import Block
 from gilda_opts.linear_problem import LinearProblem, guid
@@ -19,8 +18,9 @@ class CESALP:
         self.cesa = cesa
         self.system_lp = system_lp
 
+        self.on_period_rows = {}
         self.energy_rows = {}
-        self.cumulative_cols = defaultdict(list)
+        self.cumulative_cols = []
 
     def add_block(self, index: int, block: Block):
         """Add CESA equations to a block."""
@@ -32,26 +32,25 @@ class CESALP:
         #
         # adding the load variable
         #
-        ce_group = -1
+        cmask = 0
         try:
-            ce_group = self.cesa.cumulative_indexes[bid]
+            cmask = self.cesa.cumulative_masks[bid]
         except IndexError:
             pass
 
-        print("cesa %s", ce_group)
-        if ce_group < 0:
+        if cmask <= 0:
             return
 
         lname = guid("ceu", uid, bid)
-        load = self.cesa.load
-        onoff_col = lp.add_col(name=lname, lb=0, ub=1, ctype=1)
+        col_type = 1 if len(self.cesa.cumulative_on_periods) != 0 else 0
+        onoff_col = lp.add_col(name=lname, lb=0, ub=1, ctype=col_type)
         logging.info("added onoff variable %s %d", lname, onoff_col)
 
         self.block_onoff_cols[bid] = onoff_col
+        load = self.cesa.load
         bus_lp.add_block_load_col(bid, onoff_col, coeff=load)
 
-        self.cumulative_cols[ce_group].append((block.duration, onoff_col))
-        print("cc %s", self.cumulative_cols)
+        self.cumulative_cols.append((cmask, block.duration, onoff_col))
 
     def post_blocks(self):
         """Close the LP formulation post the blocks formulation."""
@@ -62,19 +61,34 @@ class CESALP:
         lp = self.system_lp.lp
 
         #
-        # Adding the ce group constraint
+        # Adding the cumulative on_period constraints
         #
-        print("pb %s", self.cumulative_cols)
-        for group, cols in self.cumulative_cols.items():
+        for i, on_period in enumerate(self.cesa.cumulative_on_periods):
+            emask = pow(2, i + 1)
             row = {}
-            for duration, col in cols:
-                row[col] = duration * self.cesa.load
+            for cmask, duration, onoff_col in self.cumulative_cols:
+                if emask ^ cmask != 0:
+                    row[onoff_col] = duration
 
-            lb = self.cesa.cumulative_energies[group]
-            lname = guid("ceg", uid)
-            energy_row = lp.add_row(row, name=lname, lb=lb)
-            logging.info("added period row %s %s %s", lname, energy_row, lb)
-            self.energy_rows[group] = energy_row
+            lname = guid("ceg", uid, i)
+            on_period_row = lp.add_row(row, name=lname, lb=on_period)
+            logging.info("added period row %s %s %s", lname, on_period_row, on_period)
+            self.on_period_rows[i] = on_period_row
+
+        #
+        # Adding the cumulative energy constraints
+        #
+        for i, energy in enumerate(self.cesa.cumulative_energies):
+            emask = pow(2, i + 1)
+            row = {}
+            for cmask, duration, onoff_col in self.cumulative_cols:
+                if emask ^ cmask != 0:
+                    row[onoff_col] = duration * self.cesa.load
+
+            lname = guid("ceg", uid, i)
+            energy_row = lp.add_row(row, name=lname, lb=energy)
+            logging.info("added period row %s %s %s", lname, energy_row, energy)
+            self.energy_rows[i] = energy_row
 
     def get_sched(self):
         """Return the optimal cesa schedule."""
