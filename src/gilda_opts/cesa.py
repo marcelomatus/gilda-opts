@@ -25,6 +25,14 @@ class CESA(BaseClassJson):
     cumulative_on_periods: Cumulative on periods [h]
     cumulative_energies: Cumulative energies [KWh]
 
+
+    CESA uses the mask concept to assign the on/off per block variables to the
+    cumulative on_period or energy constraints.
+
+    Usually you should provide one or the other. If the load only operates in a
+    on/off state, use on_period. If you provide on_periods, the on&off
+    variables will be binary.
+
     """
 
     uid: int = -1
