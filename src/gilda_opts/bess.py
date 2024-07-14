@@ -1,11 +1,11 @@
 """BESS module represents a Battery Energy Storage System."""
 
 from dataclasses import dataclass
-from dataclasses_json import DataClassJsonMixin
+from gilda_opts.baseclass_json import BaseClassJson
 
 
 @dataclass
-class BESS(DataClassJsonMixin):
+class BESS(BaseClassJson):
     """
     BESS represents a Battery Energy Storage System.
 
@@ -13,7 +13,7 @@ class BESS(DataClassJsonMixin):
     -----------
     uid:          BESS unique id
     name:         BESS name
-    bus_id:       Bus uid to be connected to
+    bus_uid:       Bus uid to be connected to
     capacity:     Storage capacity [KWh]
     max_flow:     Max In & Out flow [KW]
     efficiency:   In&Out efficiency [0..1]
@@ -23,7 +23,7 @@ class BESS(DataClassJsonMixin):
     """
 
     uid: int = -1
-    name: str = ''
+    name: str = ""
     bus_uid: int = -1
     capacity: float = 0
     max_flow: float = 0

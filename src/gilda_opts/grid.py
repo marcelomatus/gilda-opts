@@ -3,11 +3,11 @@
 from dataclasses import dataclass, field
 from typing import List
 
-from dataclasses_json import DataClassJsonMixin
+from gilda_opts.baseclass_json import BaseClassJson
 
 
 @dataclass
-class Grid(DataClassJsonMixin):
+class Grid(BaseClassJson):
     """
     A Grid represents the electric service from the grid company.
 
@@ -27,7 +27,7 @@ class Grid(DataClassJsonMixin):
     """
 
     uid: int = -1
-    name: str = ''
+    name: str = ""
     bus_uid: int = -1
     capacity: float = 0
     withdrawn_profile: List[float] = field(default_factory=list)

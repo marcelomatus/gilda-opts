@@ -3,11 +3,11 @@
 from dataclasses import dataclass, field
 from typing import List
 
-from dataclasses_json import DataClassJsonMixin
+from gilda_opts.baseclass_json import BaseClassJson
 
 
 @dataclass
-class BESSSched(DataClassJsonMixin):
+class BESSSched(BaseClassJson):
     """
     A BESSSched represents the bess schedule resulting from the optimization.
 
@@ -19,7 +19,7 @@ class BESSSched(DataClassJsonMixin):
     """
 
     uid: int = -1
-    name: str = ''
+    name: str = ""
     block_efin_values: List[float] = field(default_factory=list)
     block_inflow_values: List[float] = field(default_factory=list)
     block_outflow_values: List[float] = field(default_factory=list)

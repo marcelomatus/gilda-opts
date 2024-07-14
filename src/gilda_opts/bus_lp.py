@@ -20,12 +20,12 @@ class BusLP:
         """Add Bus equations to a block."""
         bid = index
         uid = self.bus.uid
-        name = guid('lb', uid, bid)
+        name = guid("lb", uid, bid)
         lp = self.system_lp.lp
         row = lp.add_rhs_row(name=name, rhs=0)
         self.block_load_rows[bid] = row
 
-        logging.info('added block load balance row %s %s', name, row)
+        logging.info("added block load balance row %s %s", name, row)
 
     def post_blocks(self):
         """Close the LP formulation post the blocks formulation."""

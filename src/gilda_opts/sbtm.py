@@ -1,11 +1,11 @@
 """SBTM module represents a Simple Building Thermal Model."""
 
 from dataclasses import dataclass
-from dataclasses_json import DataClassJsonMixin
+from gilda_opts.baseclass_json import BaseClassJson
 
 
 @dataclass
-class SBTM(DataClassJsonMixin):
+class SBTM(BaseClassJson):
     """
     SBTM represents the Simple Building Thermal Model load in the scheduling problem.
 
@@ -13,9 +13,9 @@ class SBTM(DataClassJsonMixin):
     -----------
     uid:          SBTM unique id
     name:         SBTM name
-    bus_id:       Bus uid to be connected to
+    bus_uid:      Bus uid to be connected to
     """
 
     uid: int = -1
-    name: str = ''
+    name: str = ""
     bus_uid: int = -1

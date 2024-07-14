@@ -1,4 +1,4 @@
-"""TSSASched module contains the TSSA schedule."""
+"""CESASched module contains the CESA schedule."""
 
 from dataclasses import dataclass, field
 from typing import List
@@ -7,15 +7,15 @@ from gilda_opts.baseclass_json import BaseClassJson
 
 
 @dataclass
-class TSSASched(BaseClassJson):
+class CESASched(BaseClassJson):
     """
-    A TSSASched represents the tssa schedule resulting from the optimization.
+    A CESASched represents the cesa schedule resulting from the optimization.
 
     Attributes:
     ----------
-    uid:          TSSA unique id
-    name:         TSSA provider name
-    onoff_values: TSSA optimal onoff values
+    uid:          CESA unique id
+    name:         CESA provider name
+    onoff_values: CESA optimal onoff values
     """
 
     uid: int = -1

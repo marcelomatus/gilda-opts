@@ -1,4 +1,5 @@
 """Test linear problem."""
+
 from math import isclose
 from scipy.optimize import linprog
 import numpy as np
@@ -9,7 +10,7 @@ from gilda_opts import linear_problem as lpm
 
 def test_lp_1():
     """Test LP 1."""
-    lp = lpm.LinearProblem(scale_obj=1.0, solver='cbc')
+    lp = lpm.LinearProblem(scale_obj=1.0, solver="cbc")
 
     x = lp.add_col("x", c=-1)
     assert x == 0
@@ -49,7 +50,7 @@ def test_lp_1():
 
     lp.solve(keepfiles=False)
 
-    assert lp.get_status() == 'ok'
+    assert lp.get_status() == "ok"
 
     rel_tol = 1e-6
     assert isclose(lp.get_obj(), -20.7142856, rel_tol=rel_tol)
@@ -65,24 +66,21 @@ def test_lp_1():
     lhs_ineq = [
         [2, 1],  # Red constraint left side
         [-4, 5],  # Blue constraint left side
-        [1, -2]
+        [1, -2],
     ]  # Yellow constraint left side
 
     rhs_ineq = [
         20,  # Red constraint right side
         10,  # Blue constraint right side
-        2
+        2,
     ]  # Yellow constraint right side
 
     bnd = [
         (0, float("inf")),  # Bounds of x
-        (0, float("inf"))
+        (0, float("inf")),
     ]  # Bounds of y
 
-    opt = linprog(c=obj,
-                  A_ub=lhs_ineq,
-                  b_ub=rhs_ineq,
-                  bounds=bnd)
+    opt = linprog(c=obj, A_ub=lhs_ineq, b_ub=rhs_ineq, bounds=bnd)
 
     assert isclose(lp.get_obj(), opt.fun, rel_tol=rel_tol)
 
@@ -93,9 +91,9 @@ def test_lp_1():
     assert isclose(pyo.value(m.x[1]), opt.x[1], rel_tol=rel_tol)
 
     assert len(m.constraints) == 3
-    assert isclose(pyo.value(m.dual[m.constraints[0]]),
-                   -0.928571428571429,
-                   rel_tol=rel_tol)
-    assert isclose(pyo.value(m.dual[m.constraints[1]]),
-                   -0.214285714285714,
-                   rel_tol=rel_tol)
+    assert isclose(
+        pyo.value(m.dual[m.constraints[0]]), -0.928571428571429, rel_tol=rel_tol
+    )
+    assert isclose(
+        pyo.value(m.dual[m.constraints[1]]), -0.214285714285714, rel_tol=rel_tol
+    )

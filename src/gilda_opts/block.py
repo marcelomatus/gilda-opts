@@ -2,11 +2,11 @@
 
 from dataclasses import dataclass
 
-from dataclasses_json import DataClassJsonMixin
+from gilda_opts.baseclass_json import BaseClassJson
 
 
 @dataclass
-class Block(DataClassJsonMixin):
+class Block(BaseClassJson):
     """
     Block represent time blocks used in the schedule problem formulation.
 

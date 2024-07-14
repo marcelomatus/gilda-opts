@@ -1,4 +1,5 @@
 """Contains the system_lp class."""
+
 from typing import List
 
 from gilda_opts.bess_lp import BESSLP
@@ -10,6 +11,7 @@ from gilda_opts.linear_problem import LinearProblem
 from gilda_opts.system import System
 from gilda_opts.system_sched import SystemSched
 from gilda_opts.tssa_lp import TSSALP
+from gilda_opts.cesa_lp import CESALP
 from gilda_opts.local_source_lp import LocalSourceLP
 
 
@@ -25,10 +27,12 @@ class SystemLP:
         self.buses_lp = self.create_collection(system.buses, BusLP)
         self.demands_lp = self.create_collection(system.demands, DemandLP)
         self.tssas_lp = self.create_collection(system.tssas, TSSALP)
+        self.cesas_lp = self.create_collection(system.cesas, CESALP)
         self.grids_lp = self.create_collection(system.grids, GridLP)
         self.besss_lp = self.create_collection(system.besss, BESSLP)
-        self.local_sources_lp = self.create_collection(system.local_sources,
-                                                       LocalSourceLP)
+        self.local_sources_lp = self.create_collection(
+            system.local_sources, LocalSourceLP
+        )
 
         self.add_blocks(self.system.blocks)
 
@@ -55,6 +59,7 @@ class SystemLP:
         self.add_blocks_to_collection(self.grids_lp, blocks)
         self.add_blocks_to_collection(self.demands_lp, blocks)
         self.add_blocks_to_collection(self.tssas_lp, blocks)
+        self.add_blocks_to_collection(self.cesas_lp, blocks)
         self.add_blocks_to_collection(self.besss_lp, blocks)
         self.add_blocks_to_collection(self.local_sources_lp, blocks)
 
@@ -71,16 +76,20 @@ class SystemLP:
         """Return the system sched."""
         demands_sched = [o.get_sched() for o in self.demands_lp.values()]
         tssas_sched = [o.get_sched() for o in self.tssas_lp.values()]
+        cesas_sched = [o.get_sched() for o in self.cesas_lp.values()]
         grids_sched = [o.get_sched() for o in self.grids_lp.values()]
         besss_sched = [o.get_sched() for o in self.besss_lp.values()]
         local_sources_sched = [o.get_sched() for o in self.local_sources_lp.values()]
 
-        return SystemSched(name=self.system.name,
-                           uid=self.system.uid,
-                           total_cost=self.lp.get_obj(),
-                           solver_time=self.lp.get_time(),
-                           grids=grids_sched,
-                           demands=demands_sched,
-                           tssas=tssas_sched,
-                           besss=besss_sched,
-                           local_sources=local_sources_sched)
+        return SystemSched(
+            name=self.system.name,
+            uid=self.system.uid,
+            total_cost=self.lp.get_obj(),
+            solver_time=self.lp.get_time(),
+            grids=grids_sched,
+            demands=demands_sched,
+            tssas=tssas_sched,
+            cesas=cesas_sched,
+            besss=besss_sched,
+            local_sources=local_sources_sched,
+        )

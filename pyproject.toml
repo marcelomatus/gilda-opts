@@ -8,6 +8,8 @@ build-backend = "setuptools.build_meta"
 # check out https://github.com/pypa/setuptools_scm
 version_scheme = "no-guess-dev"
 
+[ruff]
+max-complexity = 20
 
 [tool.mypy]
 python_version = "3.11"

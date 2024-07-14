@@ -31,8 +31,7 @@ _logger = logging.getLogger(__name__)
 def parse_args(args):
     """Parse command line parameters."""
     parser = argparse.ArgumentParser(
-        prog='gilda_opts',
-        description="Gilda Optimization Scheduler"
+        prog="gilda_opts", description="Gilda Optimization Scheduler"
     )
 
     parser.add_argument(
@@ -41,22 +40,22 @@ def parse_args(args):
         version=f"gilda-opts {__version__}",
     )
     parser.add_argument(
-        '-i',
-        '--infile',
+        "-i",
+        "--infile",
         dest="infile",
         help="Json input file. Stdinp is used if not provided.",
-        type=argparse.FileType('r'),
+        type=argparse.FileType("r"),
         metavar="INFILE_NAME",
-        default=sys.stdin
+        default=sys.stdin,
     )
     parser.add_argument(
-        '-o',
-        '--outfile',
+        "-o",
+        "--outfile",
         dest="outfile",
         help="Json output file. Stdout is used if not provided.",
-        type=argparse.FileType('w'),
+        type=argparse.FileType("w"),
         metavar="OUTFILE_NAME",
-        default=sys.stdout
+        default=sys.stdout,
     )
     parser.add_argument(
         "-v",
@@ -75,18 +74,19 @@ def parse_args(args):
         const=logging.DEBUG,
     )
     parser.add_argument(
-        '-k',
-        '--keepfiles',
-        action='store_true',
+        "-k",
+        "--keepfiles",
+        action="store_true",
         default=False,
-        help='If included, the solver keepfiles option is used'
+        help="If included, the solver keepfiles option is used",
     )
     parser.add_argument(
-        '-s',
-        '--solver',
+        "-s",
+        "--solver",
         type=str,
-        default='cbc',
-        help='Defines the solver to be used (default: cbc)')
+        default="cbc",
+        help="Defines the solver to be used (default: cbc)",
+    )
 
     return parser.parse_args(args)
 
@@ -113,16 +113,13 @@ def main(args):
     file_contents = args.infile.read()
     system = System.from_json(file_contents)
     system_lp = SystemLP(system)
-    status = system_lp.solve(
-        keepfiles=args.keepfiles,
-        solver=args.solver
-    )
+    status = system_lp.solve(keepfiles=args.keepfiles, solver=args.solver)
 
-    if status == 'ok':
+    if status == "ok":
         sched = system_lp.get_sched()
         str_sched = sched.to_json(indent=4)
         args.outfile.write(str_sched)
-        args.outfile.write('\n')
+        args.outfile.write("\n")
 
 
 def run():

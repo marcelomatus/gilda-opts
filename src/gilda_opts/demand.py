@@ -3,11 +3,11 @@
 from dataclasses import dataclass, field
 from typing import List
 
-from dataclasses_json import DataClassJsonMixin
+from gilda_opts.baseclass_json import BaseClassJson
 
 
 @dataclass
-class Demand(DataClassJsonMixin):
+class Demand(BaseClassJson):
     """
     Demand represents the base electric load in the scheduling problem.
 
@@ -20,7 +20,7 @@ class Demand(DataClassJsonMixin):
     """
 
     uid: int = -1
-    name: str = ''
+    name: str = ""
     bus_uid: int = -1
     loads: List[float] = field(default_factory=list)
     cfail: float = 0

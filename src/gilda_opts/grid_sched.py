@@ -3,11 +3,11 @@
 from dataclasses import dataclass, field
 from typing import List
 
-from dataclasses_json import DataClassJsonMixin
+from gilda_opts.baseclass_json import BaseClassJson
 
 
 @dataclass
-class GridSched(DataClassJsonMixin):
+class GridSched(BaseClassJson):
     """
     A GridSched represents the grid schedule resulting from the optimization.
 
@@ -16,10 +16,10 @@ class GridSched(DataClassJsonMixin):
     uid:              Grid unique id
     name:             Grid provider name
     injection_values: Grid optimal injection values
-    purchase_values:  Grid optimal purchase values
+    withdrawn_values: Grid optimal withdrawn values
     """
 
     uid: int = -1
-    name: str = ''
+    name: str = ""
     block_injection_values: List[float] = field(default_factory=list)
-    block_purchase_values: List[float] = field(default_factory=list)
+    block_withdrawn_values: List[float] = field(default_factory=list)

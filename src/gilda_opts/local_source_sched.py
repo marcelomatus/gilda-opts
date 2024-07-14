@@ -3,21 +3,20 @@
 from dataclasses import dataclass, field
 from typing import List
 
-from dataclasses_json import DataClassJsonMixin
+from gilda_opts.baseclass_json import BaseClassJson
 
 
 @dataclass
-class LocalSourceSched(DataClassJsonMixin):
-    """
-    A LocalSourceSched represents the local_source schedule resulting optimization.
+class LocalSourceSched(BaseClassJson):
+    """A LocalSourceSched represents the local_source schedule resulting optimization.
 
     Attributes:
     ----------
     uid:              LocalSource unique id
     name:             LocalSource provider name
-    injection_values: LocalSource optimal injection values
+    generation_values: LocalSource optimal generation values
     """
 
     uid: int = -1
-    name: str = ''
-    block_injection_values: List[float] = field(default_factory=list)
+    name: str = ""
+    block_generation_values: List[float] = field(default_factory=list)

@@ -1,4 +1,4 @@
-""" Init module."""
+"""Init module."""
 
 from importlib.metadata import PackageNotFoundError  # pragma: no cover
 from importlib.metadata import version

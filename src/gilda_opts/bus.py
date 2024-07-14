@@ -2,12 +2,12 @@
 
 from dataclasses import dataclass
 
-from dataclasses_json import DataClassJsonMixin
+from gilda_opts.baseclass_json import BaseClassJson
 
 
 @dataclass
-class Bus(DataClassJsonMixin):
+class Bus(BaseClassJson):
     """Bus class."""
 
     uid: int = -1
-    name: str = ''
+    name: str = ""

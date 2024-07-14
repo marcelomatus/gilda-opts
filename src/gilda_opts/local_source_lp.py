@@ -13,7 +13,7 @@ class LocalSourceLP:
 
     def __init__(self, local_source: LocalSource, system_lp=None):
         """Create the LocalSourceLP instance."""
-        self.block_injection_cols = {}
+        self.block_generation_cols = {}
         self.block_pmax_rows = {}
         self.pmax_col = -1
 
@@ -28,22 +28,22 @@ class LocalSourceLP:
         bus_lp = self.system_lp.get_bus_lp(self.local_source.bus_uid)
 
         #
-        # adding the local_source injection variable
+        # adding the local_source generation variable
         #
 
-        lname = guid('lb', uid, bid)
+        lname = guid("lb", uid, bid)
         try:
             gprof = self.local_source.generation_profile[bid]
         except IndexError:
             gprof = 1.0
 
-        pmax = self.local_source.capacity*gprof
+        pmax = self.local_source.capacity * gprof
 
-        injection_col = lp.add_col(name=lname, lb=0, ub=pmax)
-        logging.info('added injection variable %s %s', lname, injection_col)
+        generation_col = lp.add_col(name=lname, lb=0, ub=pmax)
+        logging.info("added generation variable %s %s", lname, generation_col)
 
-        self.block_injection_cols[bid] = injection_col
-        bus_lp.add_block_load_col(bid, injection_col, coeff=-1)
+        self.block_generation_cols[bid] = generation_col
+        bus_lp.add_block_load_col(bid, generation_col, coeff=-1)
 
     def post_blocks(self):
         """Close the LP formulation post the blocks formulation."""
@@ -51,7 +51,9 @@ class LocalSourceLP:
     def get_sched(self):
         """Return the optimal local_source schedule."""
         lp = self.system_lp.lp
-        block_injection_values = lp.get_col_sol(self.block_injection_cols.values())
-        return LocalSourceSched(uid=self.local_source.uid,
-                                name=self.local_source.name,
-                                block_injection_values=block_injection_values)
+        block_generation_values = lp.get_col_sol(self.block_generation_cols.values())
+        return LocalSourceSched(
+            uid=self.local_source.uid,
+            name=self.local_source.name,
+            block_generation_values=block_generation_values,
+        )

@@ -1,4 +1,5 @@
 """Contains the linear problem module."""
+
 import numpy as np
 import pyomo.environ as pyo
 import pyomo.kernel as pmo
@@ -7,9 +8,9 @@ from scipy.sparse import dok_matrix
 
 def guid(*uids):
     """Generate an uid valid for use as a LP name."""
-    g = ''
+    g = ""
     for i in uids:
-        g += ':' + str(i) if g else str(i)
+        g += ":" + str(i) if g else str(i)
     return g
 
 
@@ -29,7 +30,7 @@ class LinearProblem:
 
     inf = float("inf")
 
-    def __init__(self, scale_obj=1.0, solver='cbc', integer_mode=True):
+    def __init__(self, scale_obj=1.0, solver="cbc", integer_mode=True):
         """Construct a linear problem."""
         self.scale_obj = scale_obj
         self.solver = solver
@@ -162,8 +163,9 @@ class LinearProblem:
 
         m.x = pmo.variable_list()
         for j in m.cols:
-            dtype = (pmo.IntegerSet
-                     if self.integer_mode and self.ctypes[j] else pmo.RealSet)
+            dtype = (
+                pmo.IntegerSet if self.integer_mode and self.ctypes[j] else pmo.RealSet
+            )
             xj = pmo.variable(
                 lb=m.clb[j],
                 ub=m.cub[j],
@@ -176,8 +178,7 @@ class LinearProblem:
         m.constraints = pmo.matrix_constraint(m.A, lb=m.rlb, ub=m.rub, x=m.x)
 
         scale = 1.0 / self.scale_obj
-        m.obj = pmo.objective(expr=sum(
-            (scale * m.c[col]) * m.x[col] for col in m.cols))
+        m.obj = pmo.objective(expr=sum((scale * m.c[col]) * m.x[col] for col in m.cols))
 
         m.cnames = self.cnames
         m.rnames = self.rnames
@@ -196,14 +197,13 @@ class LinearProblem:
         """Solve the LP problem."""
         self.model = self.pyomo_model()
 
-        solver = solver if solver is not None \
-            else self.solver
+        solver = solver if solver is not None else self.solver
 
         self.solver = pmo.SolverFactory(solver)
         options_string = solver_options if solver_options is not None else ""
-        self.result = self.solver.solve(self.model,
-                                        options_string=options_string,
-                                        keepfiles=keepfiles)
+        self.result = self.solver.solve(
+            self.model, options_string=options_string, keepfiles=keepfiles
+        )
 
         return self.result
 
@@ -237,8 +237,7 @@ class LinearProblem:
 
     def get_dual_at(self, i):
         """Get the dual value at the given index."""
-        return pyo.value(
-            self.model.dual[self.model.constraints[i]]) * self.scale_obj
+        return pyo.value(self.model.dual[self.model.constraints[i]]) * self.scale_obj
 
     def get_dual_sol(self, indexes):
         """Get the dual values for a given indexes list."""

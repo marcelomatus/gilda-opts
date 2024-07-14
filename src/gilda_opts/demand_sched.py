@@ -3,11 +3,11 @@
 from dataclasses import dataclass, field
 from typing import List
 
-from dataclasses_json import DataClassJsonMixin
+from gilda_opts.baseclass_json import BaseClassJson
 
 
 @dataclass
-class DemandSched(DataClassJsonMixin):
+class DemandSched(BaseClassJson):
     """
     A DemandSched represents the demand schedule resulting from the optimization.
 
@@ -19,6 +19,6 @@ class DemandSched(DataClassJsonMixin):
     """
 
     uid: int = -1
-    name: str = ''
+    name: str = ""
     block_load_values: List[float] = field(default_factory=list)
     block_fail_values: List[float] = field(default_factory=list)

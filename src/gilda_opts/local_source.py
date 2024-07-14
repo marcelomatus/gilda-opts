@@ -3,11 +3,11 @@
 from dataclasses import dataclass, field
 from typing import List
 
-from dataclasses_json import DataClassJsonMixin
+from gilda_opts.baseclass_json import BaseClassJson
 
 
 @dataclass
-class LocalSource(DataClassJsonMixin):
+class LocalSource(BaseClassJson):
     """
     A LocalSource represents a local energy source .
 
@@ -21,7 +21,7 @@ class LocalSource(DataClassJsonMixin):
     """
 
     uid: int = -1
-    name: str = ''
+    name: str = ""
     bus_uid: int = -1
     capacity: float = 0
     generation_profile: List[float] = field(default_factory=list)
