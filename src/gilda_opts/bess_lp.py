@@ -46,7 +46,7 @@ class BESSLP:
         # flow_in col
         #
         flow_in_col = lp.add_col(lb=0, ub=bess.max_flow_in)
-        print("maxflow_in", bess.max_flow_in)
+
         #
         # flow_out col
         #
@@ -80,8 +80,6 @@ class BESSLP:
         else:
             lb, ub = 0, 0
             row[prev_efin_col] = -1
-
-        print("lb ub %s %s", lb, ub)
 
         efin_row = lp.add_row(row, lb=lb, ub=ub)
 
