@@ -36,11 +36,18 @@ def test_demanad_grid_tssas_electric_car():
         }],
       "electric_cars": [{
             "uid": 1,
-            "name": "b1",
+            "name": "ev1",
             "athome_bus_uid": 1,
-            "battery_capacity": 20,
-            "battery_max_flow": 3,
-            "battery_efficiency": 0.5
+            "battery": {
+              "capacity": 20,
+              "max_flow_in": 3,
+              "max_flow_out": 3,
+              "efficiency_in": 0.5,
+              "efficiency_out": 0.5
+            },
+           "engine": {
+              "energy_consumption": 0.125
+           }
         }]
     }"""
 
@@ -74,15 +81,15 @@ def test_demanad_grid_tssas_electric_car():
     assert lp.get_col_at(s1_lp.tssas_lp[1].onoff_cols[2]) == 1
     assert lp.get_col_at(s1_lp.tssas_lp[1].onoff_cols[3]) == 1
 
-    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_inflow_cols[0]) == 3
-    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_inflow_cols[1]) == 0.2
-    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_inflow_cols[2]) == 0
-    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_inflow_cols[3]) == 0
+    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_in_cols[0]) == 3
+    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_in_cols[1]) == 0.2
+    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_in_cols[2]) == 0
+    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_in_cols[3]) == 0
 
-    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_outflow_cols[0]) == 0
-    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_outflow_cols[1]) == 0
-    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_outflow_cols[2]) == 0.8
-    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_outflow_cols[3]) == 0.0
+    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_out_cols[0]) == 0
+    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_out_cols[1]) == 0
+    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_out_cols[2]) == 0.8
+    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_out_cols[3]) == 0.0
 
     assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_efin_cols[0]) == 1.5
     assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_efin_cols[1]) == 1.6

@@ -16,12 +16,12 @@ class BESSSched(BaseClassJson):
     uid:                 BESS unique id
     name:                BESS name
     efin_values:   efin_values
-    inflow_values: inflow_values
-    outflow_values: outflow_values
+    flow_in_values: flow_in_values
+    flow_out_values: flow_out_values
     """
 
     uid: int = -1
     name: str = ""
     block_efin_values: List[float] = field(default_factory=list)
-    block_inflow_values: List[float] = field(default_factory=list)
-    block_outflow_values: List[float] = field(default_factory=list)
+    block_flow_in_values: List[float] = field(default_factory=list)
+    block_flow_out_values: List[float] = field(default_factory=list)

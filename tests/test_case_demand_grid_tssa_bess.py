@@ -39,8 +39,10 @@ def test_demanad_grid_tssas_bess():
             "name": "b1",
             "bus_uid": 1,
             "capacity": 20,
-            "max_flow": 3,
-            "efficiency": 0.5
+            "max_flow_in": 3,
+            "max_flow_out": 3,
+            "efficiency_in": 0.5,
+            "efficiency_out": 0.5
         }]
     }"""
 
@@ -74,15 +76,15 @@ def test_demanad_grid_tssas_bess():
     assert lp.get_col_at(s1_lp.tssas_lp[1].onoff_cols[2]) == 1
     assert lp.get_col_at(s1_lp.tssas_lp[1].onoff_cols[3]) == 1
 
-    assert lp.get_col_at(s1_lp.besss_lp[1].inflow_cols[0]) == 3
-    assert lp.get_col_at(s1_lp.besss_lp[1].inflow_cols[1]) == 0.2
-    assert lp.get_col_at(s1_lp.besss_lp[1].inflow_cols[2]) == 0
-    assert lp.get_col_at(s1_lp.besss_lp[1].inflow_cols[3]) == 0
+    assert lp.get_col_at(s1_lp.besss_lp[1].flow_in_cols[0]) == 3
+    assert lp.get_col_at(s1_lp.besss_lp[1].flow_in_cols[1]) == 0.2
+    assert lp.get_col_at(s1_lp.besss_lp[1].flow_in_cols[2]) == 0
+    assert lp.get_col_at(s1_lp.besss_lp[1].flow_in_cols[3]) == 0
 
-    assert lp.get_col_at(s1_lp.besss_lp[1].outflow_cols[0]) == 0
-    assert lp.get_col_at(s1_lp.besss_lp[1].outflow_cols[1]) == 0
-    assert lp.get_col_at(s1_lp.besss_lp[1].outflow_cols[2]) == 0.8
-    assert lp.get_col_at(s1_lp.besss_lp[1].outflow_cols[3]) == 0.0
+    assert lp.get_col_at(s1_lp.besss_lp[1].flow_out_cols[0]) == 0
+    assert lp.get_col_at(s1_lp.besss_lp[1].flow_out_cols[1]) == 0
+    assert lp.get_col_at(s1_lp.besss_lp[1].flow_out_cols[2]) == 0.8
+    assert lp.get_col_at(s1_lp.besss_lp[1].flow_out_cols[3]) == 0.0
 
     assert lp.get_col_at(s1_lp.besss_lp[1].efin_cols[0]) == 1.5
     assert lp.get_col_at(s1_lp.besss_lp[1].efin_cols[1]) == 1.6

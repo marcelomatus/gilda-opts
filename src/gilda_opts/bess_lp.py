@@ -2,11 +2,12 @@
 
 import logging
 
-from gilda_opts.bus_lp import BusLP
 from gilda_opts.bess import BESS
 from gilda_opts.bess_sched import BESSSched
 from gilda_opts.block import Block
+from gilda_opts.bus_lp import BusLP
 from gilda_opts.linear_problem import LinearProblem, guid
+from gilda_opts.utils import get_number_at
 
 
 class BESSLP:
@@ -14,8 +15,8 @@ class BESSLP:
 
     def __init__(self, bess: BESS, system_lp=None):
         """Create the BESSLP instance."""
-        self.inflow_cols = {}
-        self.outflow_cols = {}
+        self.flow_in_cols = {}
+        self.flow_out_cols = {}
         self.efin_cols = {}
         self.efin_rows = {}
 
@@ -41,53 +42,50 @@ class BESSLP:
         :param bus_lp:
         :returns: the col and row indexes
         """
-        max_flow = bess.max_flow
-        efficiency = bess.efficiency
-        capacity = bess.capacity
-        eini = bess.eini
-        efin = bess.efin
-        discharge_cost = bess.discharge_cost
-
         #
-        # inflow col
+        # flow_in col
         #
-        inflow_col = lp.add_col(lb=0, ub=max_flow)
-
+        flow_in_col = lp.add_col(lb=0, ub=bess.max_flow_in)
+        print("maxflow_in", bess.max_flow_in)
         #
-        # outflow col
+        # flow_out col
         #
-        cvar = discharge_cost * block.duration
-        outflow_col = lp.add_col(lb=0, ub=max_flow, c=cvar)
+        cvar = bess.discharge_cost * block.duration
+        flow_out_col = lp.add_col(lb=0, ub=bess.max_flow_out, c=cvar)
 
         #
         # adding the flows to the bus
         #
         if bus_lp is not None:
-            bus_lp.add_block_load_col(bid, inflow_col, coeff=+1.0)
-            bus_lp.add_block_load_col(bid, outflow_col, coeff=-1.0)
+            bus_lp.add_block_load_col(bid, flow_in_col, coeff=+1.0)
+            bus_lp.add_block_load_col(bid, flow_out_col, coeff=-1.0)
 
         #
         # efin col
         #
-        efin_col = lp.add_col(lb=efin, ub=capacity)
+        lb = bess.capacity * get_number_at(bess.emin_profile, bid, 0)
+        ub = bess.capacity * get_number_at(bess.emax_profile, bid, 1)
+        efin_col = lp.add_col(lb=lb, ub=ub)
 
         #
         # efin row
         #
         row = {}
         row[efin_col] = 1
-        row[inflow_col] = -block.duration * efficiency
-        row[outflow_col] = block.duration / efficiency
+        row[flow_in_col] = -block.duration * bess.efficiency_in
+        row[flow_out_col] = block.duration / bess.efficiency_out
 
         if prev_efin_col < 0:
-            lb, ub = eini, eini
+            lb, ub = bess.eini, bess.eini
         else:
             lb, ub = 0, 0
             row[prev_efin_col] = -1
 
+        print("lb ub %s %s", lb, ub)
+
         efin_row = lp.add_row(row, lb=lb, ub=ub)
 
-        return inflow_col, outflow_col, efin_col, efin_row
+        return flow_in_col, flow_out_col, efin_col, efin_row
 
     def add_block(self, index: int, block: Block):
         """Add BESS equations to a block."""
@@ -96,7 +94,7 @@ class BESSLP:
         bus_lp = self.system_lp.get_bus_lp(self.bess.bus_uid)
         prev_efin_col = self.efin_cols[bid - 1] if bid > 0 else -1
 
-        inflow_col, outflow_col, efin_col, efin_row = BESSLP.add_block_i(
+        flow_in_col, flow_out_col, efin_col, efin_row = BESSLP.add_block_i(
             lp=lp,
             bid=bid,
             block=block,
@@ -105,15 +103,15 @@ class BESSLP:
             bus_lp=bus_lp,
         )
 
-        self.outflow_cols[bid] = outflow_col
-        self.inflow_cols[bid] = inflow_col
+        self.flow_out_cols[bid] = flow_out_col
+        self.flow_in_cols[bid] = flow_in_col
         self.efin_cols[bid] = efin_col
         self.efin_rows[bid] = efin_row
 
         uid = self.bess.uid
         lname = guid("bess", uid, bid)
-        logging.info("added inflow variable %s %d", lname, inflow_col)
-        logging.info("added outflow variable %s %d", lname, outflow_col)
+        logging.info("added flow_in variable %s %d", lname, flow_in_col)
+        logging.info("added flow_out variable %s %d", lname, flow_out_col)
         logging.info("added efin variable %s %d", lname, efin_col)
         logging.info("added efin row %s %d", lname, efin_row)
 
@@ -141,12 +139,12 @@ class BESSLP:
         """Return the optimal bess schedule."""
         lp = self.system_lp.lp
         efin_values = lp.get_col_sol(self.efin_cols.values())
-        inflow_values = lp.get_col_sol(self.inflow_cols.values())
-        outflow_values = lp.get_col_sol(self.outflow_cols.values())
+        flow_in_values = lp.get_col_sol(self.flow_in_cols.values())
+        flow_out_values = lp.get_col_sol(self.flow_out_cols.values())
         return BESSSched(
             uid=self.bess.uid,
             name=self.bess.name,
             block_efin_values=efin_values,
-            block_inflow_values=inflow_values,
-            block_outflow_values=outflow_values,
+            block_flow_in_values=flow_in_values,
+            block_flow_out_values=flow_out_values,
         )
