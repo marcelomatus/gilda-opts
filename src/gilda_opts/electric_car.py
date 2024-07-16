@@ -47,7 +47,7 @@ class ElectricCar(BaseClassJson):
     battery_final_charge: float = 0
     battery_discharge_cost: float = 0
     battery_cycle_life: float = 10000
-    battery_replacement_cost: float = 100
+    battery_replacement_cost: float = 0
 
     engine_max_float: float = float("inf")
 
