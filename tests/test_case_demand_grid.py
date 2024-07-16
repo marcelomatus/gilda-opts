@@ -1,10 +1,10 @@
-"""Test system_lp."""
+"""Test demand_grid_tssa."""
 
 from gilda_opts.system import System
 from gilda_opts.system_lp import SystemLP
 
 
-def test_system_lp_1():
+def test_demand_grid():
     """Test system_lp 1."""
     ds = """{
       "name": "s1",
@@ -25,7 +25,7 @@ def test_system_lp_1():
                 "capacity": 30,
                 "energy_tariffs": [11, 12, 13, 14],
                 "power_tariff": 5000,
-                "power_factors": {"1":1, "2":1}}]
+                "power_factors": [0,1,1,0]}]
     }"""
 
     s1: System = System.from_json(ds)

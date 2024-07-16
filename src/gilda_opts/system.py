@@ -12,6 +12,7 @@ from gilda_opts.tssa import TSSA
 from gilda_opts.cesa import CESA
 from gilda_opts.bess import BESS
 from gilda_opts.local_source import LocalSource
+from gilda_opts.electric_car import ElectricCar
 
 
 @dataclass
@@ -37,3 +38,4 @@ class System(BaseClassJson):
     cesas: List[CESA] = field(default_factory=lambda: [])
     besss: List[BESS] = field(default_factory=lambda: [])
     local_sources: List[LocalSource] = field(default_factory=lambda: [])
+    electric_cars: List[ElectricCar] = field(default_factory=lambda: [])

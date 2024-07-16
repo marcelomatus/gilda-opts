@@ -520,13 +520,13 @@ ignore-imports=yes
 ignore-signatures=yes
 
 # Minimum lines number of a similarity.
-min-similarity-lines=4
+min-similarity-lines=30
 
 
 [SPELLING]
 
 # Limits count of emitted suggestions for spelling mistakes.
-max-spelling-suggestions=4
+max-spelling-suggestions=1
 
 # Spelling dictionary name. No available dictionaries : You need to install
 # both the python package and the system dependency for enchant to work.

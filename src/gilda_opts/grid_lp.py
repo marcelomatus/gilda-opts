@@ -6,6 +6,7 @@ from gilda_opts.block import Block
 from gilda_opts.grid import Grid
 from gilda_opts.grid_sched import GridSched
 from gilda_opts.linear_problem import guid
+from gilda_opts.utils import get_number_at
 
 
 class GridLP:
@@ -21,9 +22,9 @@ class GridLP:
         system_lp : SystemLP
             The SystemLP where the GridLP will be included
         """
-        self.block_withdrawn_cols = {}
-        self.block_injection_cols = {}
-        self.block_pmax_rows = {}
+        self.withdrawn_cols = {}
+        self.injection_cols = {}
+        self.pmax_rows = {}
         self.pmax_col = -1
 
         self.grid = grid
@@ -50,80 +51,54 @@ class GridLP:
         :param block: block structure
 
         """
+        grid = self.grid
+
         bid = index
-        uid = self.grid.uid
+        uid = grid.uid
         lp = self.system_lp.lp
-        bus_lp = self.system_lp.get_bus_lp(self.grid.bus_uid)
+        bus_lp = self.system_lp.get_bus_lp(grid.bus_uid)
 
         #
         # adding the grid buy (withdrawn) variable
         #
-        try:
-            energy_cvar = self.grid.energy_tariffs[bid]
-        except IndexError:
-            energy_cvar = 0
-
-        try:
-            emission_cvar = self.grid.emission_factors[bid] * self.grid.emission_cost
-        except IndexError:
-            emission_cvar = 0
-
-        lname = guid("gb", uid, bid)
-        wpmax = self.grid.capacity
-        try:
-            wpmax *= self.grid.withdrawn_profile[bid]
-        except IndexError:
-            pass
-
+        energy_cvar = get_number_at(grid.energy_tariffs, bid, 0)
+        emission_factor = get_number_at(grid.emission_factors, bid, 0)
+        emission_cvar = grid.emission_cost * emission_factor
         cvar = (energy_cvar + emission_cvar) * block.duration
 
+        lname = guid("gb", uid, bid)
+        wpmax = grid.capacity * get_number_at(grid.withdrawn_profile, bid, 1)
         withdrawn_col = lp.add_col(name=lname, lb=0, ub=wpmax, c=cvar)
         logging.info("added withdrawn variable %s %s", lname, withdrawn_col)
 
-        self.block_withdrawn_cols[bid] = withdrawn_col
+        self.withdrawn_cols[bid] = withdrawn_col
         bus_lp.add_block_load_col(bid, withdrawn_col, coeff=-1)
 
         #
-        # adding the grid sell (withdrawn) variable
+        # adding the grid sell (injection) variable
         #
-        try:
-            pvar = self.grid.energy_sell_prices[bid] * block.duration
-        except IndexError:
-            pvar = 0
+        pvar = get_number_at(grid.energy_sell_prices, bid, 0) * block.duration
 
         if pvar > 0:
             lname = guid("gp", uid, bid)
-            ipmax = self.grid.capacity
-            try:
-                ipmax *= self.grid.withdrawn_profile[bid]
-            except IndexError:
-                pass
-
+            ipmax = grid.capacity * get_number_at(grid.injection_profile, bid, 1)
             injection_col = lp.add_col(name=lname, lb=0, ub=ipmax, c=-pvar)
             logging.info("added injection variable %s %s", lname, injection_col)
-            self.block_injection_cols[bid] = injection_col
+            self.injection_cols[bid] = injection_col
             bus_lp.add_block_load_col(bid, injection_col, coeff=1)
 
         #
         # adding pmax constraint
         #
+        pfact = get_number_at(grid.power_factors, bid, 0)
+        if self.pmax_col >= 0 and pfact > 0:
+            row = {}
+            row[self.pmax_col] = 1
+            row[withdrawn_col] = -pfact
 
-        if self.pmax_col < 0:
-            return
-
-        row = {}
-        try:
-            pfact = self.grid.power_factors[bid]
-            if pfact > 0:
-                row[self.pmax_col] = 1
-                row[withdrawn_col] = -pfact
-        except IndexError:
-            pass
-
-        if len(row) > 1:
             pmax_row = lp.add_row(name=lname, row=row, lb=0)
             logging.info("added pmax constraint %s %s", lname, withdrawn_col)
-            self.block_pmax_rows[bid] = pmax_row
+            self.pmax_rows[bid] = pmax_row
 
     def post_blocks(self):
         """Close the LP formulation post the blocks formulation."""
@@ -131,11 +106,11 @@ class GridLP:
     def get_sched(self):
         """Return the optimal grid schedule."""
         lp = self.system_lp.lp
-        block_withdrawn_values = lp.get_col_sol(self.block_withdrawn_cols.values())
-        block_injection_values = lp.get_col_sol(self.block_injection_cols.values())
+        withdrawn_values = lp.get_col_sol(self.withdrawn_cols.values())
+        injection_values = lp.get_col_sol(self.injection_cols.values())
         return GridSched(
             uid=self.grid.uid,
             name=self.grid.name,
-            block_withdrawn_values=block_withdrawn_values,
-            block_injection_values=block_injection_values,
+            block_withdrawn_values=withdrawn_values,
+            block_injection_values=injection_values,
         )

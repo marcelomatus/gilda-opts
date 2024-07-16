@@ -13,9 +13,11 @@ class BESSSched(BaseClassJson):
 
     Attributes:
     ----------
-    uid:          BESS unique id
-    name:         BESS provider name
-    onoff_values: BESS optimal onoff values
+    uid:                 BESS unique id
+    name:                BESS name
+    efin_values:   efin_values
+    inflow_values: inflow_values
+    outflow_values: outflow_values
     """
 
     uid: int = -1

@@ -20,6 +20,7 @@ class BESS(BaseClassJson):
     eini:         Start energy stored [KWh]
     efin:         End energy stored [KWh]
     efin_price:   Energy value at the end of the period [$/KWh]
+    discharge_cost: Discharge cost, related to the replacement cost [$/KWh]
     """
 
     uid: int = -1
@@ -31,3 +32,4 @@ class BESS(BaseClassJson):
     eini: float = 0
     efin: float = 0
     efin_price: float = 0
+    discharge_cost: float = 0

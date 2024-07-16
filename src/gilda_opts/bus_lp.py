@@ -12,7 +12,7 @@ class BusLP:
 
     def __init__(self, bus: Bus, system_lp=None):
         """Create the BusLP instance."""
-        self.block_load_rows = {}
+        self.load_rows = {}
         self.bus = bus
         self.system_lp = system_lp
 
@@ -23,7 +23,7 @@ class BusLP:
         name = guid("lb", uid, bid)
         lp = self.system_lp.lp
         row = lp.add_rhs_row(name=name, rhs=0)
-        self.block_load_rows[bid] = row
+        self.load_rows[bid] = row
 
         logging.info("added block load balance row %s %s", name, row)
 
@@ -32,6 +32,6 @@ class BusLP:
 
     def add_block_load_col(self, index, load_col, coeff=1):
         """Add load variable to load row in a block."""
-        i = self.block_load_rows[index]
+        i = self.load_rows[index]
         j = load_col
         self.system_lp.lp.set_coeff(i, j, coeff)

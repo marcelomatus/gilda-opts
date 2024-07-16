@@ -13,6 +13,7 @@ from gilda_opts.system_sched import SystemSched
 from gilda_opts.tssa_lp import TSSALP
 from gilda_opts.cesa_lp import CESALP
 from gilda_opts.local_source_lp import LocalSourceLP
+from gilda_opts.electric_car_lp import ElectricCarLP
 
 
 class SystemLP:
@@ -20,7 +21,7 @@ class SystemLP:
 
     def __init__(self, system: System, lp: LinearProblem = None):
         """Create the SystemLP instance."""
-        self.block_load_rows = {}
+        self.load_rows = {}
         self.system = system
         self.lp = lp if lp is not None else LinearProblem()
 
@@ -32,6 +33,9 @@ class SystemLP:
         self.besss_lp = self.create_collection(system.besss, BESSLP)
         self.local_sources_lp = self.create_collection(
             system.local_sources, LocalSourceLP
+        )
+        self.electric_cars_lp = self.create_collection(
+            system.electric_cars, ElectricCarLP
         )
 
         self.add_blocks(self.system.blocks)
@@ -62,6 +66,7 @@ class SystemLP:
         self.add_blocks_to_collection(self.cesas_lp, blocks)
         self.add_blocks_to_collection(self.besss_lp, blocks)
         self.add_blocks_to_collection(self.local_sources_lp, blocks)
+        self.add_blocks_to_collection(self.electric_cars_lp, blocks)
 
     def get_bus_lp(self, bus_uid):
         """Return the bus_lp element for the bus_uid."""
@@ -80,6 +85,7 @@ class SystemLP:
         grids_sched = [o.get_sched() for o in self.grids_lp.values()]
         besss_sched = [o.get_sched() for o in self.besss_lp.values()]
         local_sources_sched = [o.get_sched() for o in self.local_sources_lp.values()]
+        electric_cars_sched = [o.get_sched() for o in self.electric_cars_lp.values()]
 
         return SystemSched(
             name=self.system.name,
@@ -92,4 +98,5 @@ class SystemLP:
             cesas=cesas_sched,
             besss=besss_sched,
             local_sources=local_sources_sched,
+            electric_cars=electric_cars_sched,
         )

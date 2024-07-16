@@ -13,9 +13,9 @@ class DemandLP:
 
     def __init__(self, demand: Demand, system_lp=None):
         """Create the DemandLP instance."""
-        self.block_load_cols = {}
-        self.block_fail_cols = {}
-        self.block_load_rows = {}
+        self.load_cols = {}
+        self.fail_cols = {}
+        self.load_rows = {}
 
         self.demand = demand
         self.system_lp = system_lp
@@ -40,7 +40,7 @@ class DemandLP:
         load_col = lp.add_col(name=lname, lb=lb, ub=ub, c=0)
         logging.info("added load variable %s %s", lname, load_col)
 
-        self.block_load_cols[bid] = load_col
+        self.load_cols[bid] = load_col
         bus_lp.add_block_load_col(bid, load_col)
 
         #
@@ -52,14 +52,14 @@ class DemandLP:
         fname = guid("df", uid, bid)
         fail_col = lp.add_col(name=fname, lb=0, c=cfail)
         logging.info("added fail variable %s %s", fname, fail_col)
-        self.block_fail_cols[bid] = fail_col
+        self.fail_cols[bid] = fail_col
 
         row = {}
         row[load_col] = 1
         row[fail_col] = 1
 
         load_row = lp.add_rhs_row(name=lname, rhs=ub, row=row)
-        self.block_load_rows[bid] = load_row
+        self.load_rows[bid] = load_row
         logging.info("added load + fail row %s %s", lname, load_row)
 
     def post_blocks(self):
@@ -68,11 +68,11 @@ class DemandLP:
     def get_sched(self):
         """Return the optimal demand schedule."""
         lp = self.system_lp.lp
-        block_load_values = lp.get_col_sol(self.block_load_cols.values())
-        block_fail_values = lp.get_col_sol(self.block_fail_cols.values())
+        load_values = lp.get_col_sol(self.load_cols.values())
+        fail_values = lp.get_col_sol(self.fail_cols.values())
         return DemandSched(
             uid=self.demand.uid,
             name=self.demand.name,
-            block_load_values=block_load_values,
-            block_fail_values=block_fail_values,
+            block_load_values=load_values,
+            block_fail_values=fail_values,
         )

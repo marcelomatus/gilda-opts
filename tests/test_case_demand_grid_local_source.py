@@ -1,10 +1,10 @@
-"""Test system_lp."""
+"""Test demand_grid_tssa."""
 
 from gilda_opts.system import System
 from gilda_opts.system_lp import SystemLP
 
 
-def test_system_lp_1():
+def test_demand_grid_local_source():
     """Test system_lp 1."""
     ds = """{
       "name": "s1",
@@ -25,7 +25,13 @@ def test_system_lp_1():
                 "capacity": 30,
                 "energy_tariffs": [11, 12, 13, 14],
                 "power_tariff": 5000,
-                "power_factors": {"1":1, "2":1}}]
+                "power_factors": [0,1,1,0],
+                "energy_sell_prices": [5, 6, 7, 8]}],
+      "local_sources": [{"name": "g1",
+                "uid": 1,
+                "bus_uid": 1,
+                "capacity": 20,
+                "generation_profile": [0, 1, 0, 0.5]}]
     }"""
 
     s1: System = System.from_json(ds)
@@ -53,10 +59,20 @@ def test_system_lp_1():
     assert lp.get_col_at(s1_lp.demands_lp[1].load_cols[2]) == 3
     assert lp.get_col_at(s1_lp.demands_lp[1].load_cols[3]) == 4
 
+    assert lp.get_col_at(s1_lp.grids_lp[1].withdrawn_cols[0]) == 1
+    assert lp.get_col_at(s1_lp.grids_lp[1].withdrawn_cols[1]) == 0
+    assert lp.get_col_at(s1_lp.grids_lp[1].withdrawn_cols[2]) == 3
+    assert lp.get_col_at(s1_lp.grids_lp[1].withdrawn_cols[3]) == 0
+
+    assert lp.get_col_at(s1_lp.local_sources_lp[1].generation_cols[0]) == 0
+    assert lp.get_col_at(s1_lp.local_sources_lp[1].generation_cols[1]) == 20
+    assert lp.get_col_at(s1_lp.local_sources_lp[1].generation_cols[2]) == 0
+    assert lp.get_col_at(s1_lp.local_sources_lp[1].generation_cols[3]) == 10
+
     withdrawn_values = lp.get_col_sol(s1_lp.grids_lp[1].withdrawn_cols)
     load_values = lp.get_col_sol(s1_lp.demands_lp[1].load_cols)
 
     assert (withdrawn_values == load_values).all()
 
     assert lp.get_col_at(s1_lp.grids_lp[1].pmax_col) == 3
-    assert lp.get_obj() == 5000 * 3 + 11 * 1 + 12 * 2 + 13 * 3 + 14 * 4
+    assert lp.get_obj() == 5000 * 3 + 11 * 1 + 12 * 0 + 13 * 3 + 14 * 0 - 6 * 18 - 8 * 6

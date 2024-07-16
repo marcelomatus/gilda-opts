@@ -13,9 +13,9 @@ class TSSALP:
 
     def __init__(self, tssa: TSSA, system_lp=None):
         """Create the TSSALP instance."""
-        self.block_onoff_cols = {}
-        self.block_onoff_rows = {}
-        self.block_noon_rows = {}
+        self.onoff_cols = {}
+        self.onoff_rows = {}
+        self.noon_rows = {}
         self.period_row = None
 
         self.tssa = tssa
@@ -40,7 +40,7 @@ class TSSALP:
         onoff_col = lp.add_col(name=lname, lb=0, ub=1, ctype=1)
         logging.info("added onoff variable %s %d", lname, onoff_col)
 
-        self.block_onoff_cols[bid] = onoff_col
+        self.onoff_cols[bid] = onoff_col
         bus_lp.add_block_load_col(bid, onoff_col, coeff=load)
 
         #
@@ -61,12 +61,12 @@ class TSSALP:
         #
         # Adding the period constraint
         #
-        n = len(self.block_onoff_cols)
+        n = len(self.onoff_cols)
         d = [self.system_lp.system.blocks[i].duration for i in range(0, n)]
 
         row = {}
         for i in range(0, n):
-            row[self.block_onoff_cols[i]] = d[i]
+            row[self.onoff_cols[i]] = d[i]
         lb = self.tssa.on_period
         lname = guid("tp", uid)
         period_row = lp.add_row(row, name=lname, lb=lb)
@@ -94,15 +94,15 @@ class TSSALP:
 
             for z in range(i + 1, ii):
                 row = {}
-                uz = self.block_onoff_cols[z]
-                ui = self.block_onoff_cols[i]
+                uz = self.onoff_cols[z]
+                ui = self.onoff_cols[i]
                 if i == 0:
                     row[uz] = 1
                     row[ui] = -1
                     lb = -inf
                     ub = 0
                 else:
-                    uim1 = self.block_onoff_cols[i - 1]
+                    uim1 = self.onoff_cols[i - 1]
                     row[uz] = 1
                     row[ui] = -1
                     row[uim1] = 1
@@ -110,7 +110,7 @@ class TSSALP:
                     ub = inf
                 lname = guid("tu", uid, i, z)
                 u_row = lp.add_row(row, name=lname, lb=lb, ub=ub)
-                self.block_onoff_rows[(i, z)] = u_row
+                self.onoff_rows[(i, z)] = u_row
                 logging.info("added urow %s %d %d %s", lname, i, z, row)
 
         #
@@ -118,23 +118,23 @@ class TSSALP:
         #
         for i in range(max(n_last, 1), n):
             row = {}
-            uim1 = self.block_onoff_cols[i - 1]
-            ui = self.block_onoff_cols[i]
+            uim1 = self.onoff_cols[i - 1]
+            ui = self.onoff_cols[i]
             row[ui] = 1
             row[uim1] = -1
             lb = -inf
             ub = 0
             u_row = lp.add_row(row, name=lname, lb=lb, ub=ub)
-            self.block_noon_rows[i] = u_row
+            self.noon_rows[i] = u_row
             lname = guid("to", uid, i)
             logging.info("added no-on %s %s %s", lname, i, row)
 
     def get_sched(self):
         """Return the optimal tssa schedule."""
         lp = self.system_lp.lp
-        block_onoff_values = lp.get_col_sol(self.block_onoff_cols.values())
+        onoff_values = lp.get_col_sol(self.onoff_cols.values())
         return TSSASched(
             uid=self.tssa.uid,
             name=self.tssa.name,
-            block_onoff_values=block_onoff_values,
+            block_onoff_values=onoff_values,
         )

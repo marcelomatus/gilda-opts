@@ -6,6 +6,7 @@ from gilda_opts.block import Block
 from gilda_opts.linear_problem import LinearProblem, guid
 from gilda_opts.cesa import CESA
 from gilda_opts.cesa_sched import CESASched
+from gilda_opts.utils import get_number_at
 
 
 class CESALP:
@@ -13,14 +14,13 @@ class CESALP:
 
     def __init__(self, cesa: CESA, system_lp=None):
         """Create the CESALP instance."""
-        self.block_onoff_cols = {}
-
-        self.cesa = cesa
-        self.system_lp = system_lp
-
+        self.onoff_cols = {}
         self.on_period_rows = {}
         self.energy_rows = {}
         self.cumulative_cols = []
+
+        self.cesa = cesa
+        self.system_lp = system_lp
 
     def add_block(self, index: int, block: Block):
         """Add CESA equations to a block."""
@@ -32,11 +32,7 @@ class CESALP:
         #
         # adding the load variable
         #
-        cmask = 0
-        try:
-            cmask = self.cesa.cumulative_masks[bid]
-        except IndexError:
-            pass
+        cmask = get_number_at(self.cesa.cumulative_masks, bid, 0)
 
         if cmask <= 0:
             return
@@ -46,7 +42,7 @@ class CESALP:
         onoff_col = lp.add_col(name=lname, lb=0, ub=1, ctype=col_type)
         logging.info("added onoff variable %s %d", lname, onoff_col)
 
-        self.block_onoff_cols[bid] = onoff_col
+        self.onoff_cols[bid] = onoff_col
         load = self.cesa.load
         bus_lp.add_block_load_col(bid, onoff_col, coeff=load)
 
@@ -54,9 +50,6 @@ class CESALP:
 
     def post_blocks(self):
         """Close the LP formulation post the blocks formulation."""
-        #
-        # Adding onoff constraints
-        #
         uid = self.cesa.uid
         lp = self.system_lp.lp
 
@@ -93,9 +86,9 @@ class CESALP:
     def get_sched(self):
         """Return the optimal cesa schedule."""
         lp = self.system_lp.lp
-        block_onoff_values = lp.get_col_sol(self.block_onoff_cols.values())
+        onoff_values = lp.get_col_sol(self.onoff_cols.values())
         return CESASched(
             uid=self.cesa.uid,
             name=self.cesa.name,
-            block_onoff_values=block_onoff_values,
+            block_onoff_values=onoff_values,
         )

@@ -10,6 +10,7 @@ from gilda_opts.tssa_sched import TSSASched
 from gilda_opts.cesa_sched import CESASched
 from gilda_opts.bess_sched import BESSSched
 from gilda_opts.local_source_sched import LocalSourceSched
+from gilda_opts.electric_car_sched import ElectricCarSched
 
 
 @dataclass
@@ -34,3 +35,4 @@ class SystemSched(BaseClassJson):
     cesas: List[CESASched] = field(default_factory=lambda: [])
     besss: List[BESSSched] = field(default_factory=lambda: [])
     local_sources: List[LocalSourceSched] = field(default_factory=lambda: [])
+    electric_cars: List[ElectricCarSched] = field(default_factory=lambda: [])

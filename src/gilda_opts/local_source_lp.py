@@ -3,9 +3,10 @@
 import logging
 
 from gilda_opts.block import Block
+from gilda_opts.linear_problem import guid
 from gilda_opts.local_source import LocalSource
 from gilda_opts.local_source_sched import LocalSourceSched
-from gilda_opts.linear_problem import guid
+from gilda_opts.utils import get_number_at
 
 
 class LocalSourceLP:
@@ -13,8 +14,8 @@ class LocalSourceLP:
 
     def __init__(self, local_source: LocalSource, system_lp=None):
         """Create the LocalSourceLP instance."""
-        self.block_generation_cols = {}
-        self.block_pmax_rows = {}
+        self.generation_cols = {}
+        self.pmax_rows = {}
         self.pmax_col = -1
 
         self.local_source = local_source
@@ -32,17 +33,14 @@ class LocalSourceLP:
         #
 
         lname = guid("lb", uid, bid)
-        try:
-            gprof = self.local_source.generation_profile[bid]
-        except IndexError:
-            gprof = 1.0
+        gprof = get_number_at(self.local_source.generation_profile, bid, 1)
 
         pmax = self.local_source.capacity * gprof
 
         generation_col = lp.add_col(name=lname, lb=0, ub=pmax)
         logging.info("added generation variable %s %s", lname, generation_col)
 
-        self.block_generation_cols[bid] = generation_col
+        self.generation_cols[bid] = generation_col
         bus_lp.add_block_load_col(bid, generation_col, coeff=-1)
 
     def post_blocks(self):
@@ -51,9 +49,9 @@ class LocalSourceLP:
     def get_sched(self):
         """Return the optimal local_source schedule."""
         lp = self.system_lp.lp
-        block_generation_values = lp.get_col_sol(self.block_generation_cols.values())
+        generation_values = lp.get_col_sol(self.generation_cols.values())
         return LocalSourceSched(
             uid=self.local_source.uid,
             name=self.local_source.name,
-            block_generation_values=block_generation_values,
+            block_generation_values=generation_values,
         )
