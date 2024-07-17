@@ -6,7 +6,7 @@ from gilda_opts.block import Block
 from gilda_opts.linear_problem import LinearProblem, guid
 from gilda_opts.cesa import CESA
 from gilda_opts.cesa_sched import CESASched
-from gilda_opts.utils import get_number_at
+from gilda_opts.utils import get_value_at
 
 
 class CESALP:
@@ -32,7 +32,7 @@ class CESALP:
         #
         # adding the load variable
         #
-        cmask = get_number_at(self.cesa.cumulative_masks, bid, 0)
+        cmask = get_value_at(self.cesa.cumulative_masks, bid, 0)
 
         if cmask <= 0:
             return

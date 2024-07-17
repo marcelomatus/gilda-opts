@@ -153,7 +153,8 @@ def test_demanad_grid_tssas_electric_car_2():
               "efficiency_out": 0.5
             },
            "engine": {
-              "energy_consumption": 0.125
+              "energy_consumption": 0.125,
+              "efficiency": 1.0
            },
            "location_masks": [0,0,0,1],
            "onroad_distances": [0,0,0,16]
@@ -196,18 +197,18 @@ def test_demanad_grid_tssas_electric_car_2():
     assert lp.get_col_at(s1_lp.electric_cars_lp[1].engine_flow_cols[3]) == 2
 
     assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_in_cols[0]) == 3
-    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_in_cols[1]) == 0.4
+    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_in_cols[1]) == 1
     assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_in_cols[2]) == 0
-    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_in_cols[3]) == 3.0
+    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_in_cols[3]) == 0
 
     assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_out_cols[0]) == 0
     assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_out_cols[1]) == 0
-    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_out_cols[2]) == 0.6
-    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_out_cols[3]) == 0.0
+    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_out_cols[2]) == 0
+    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_out_cols[3]) == 0
 
     assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_efin_cols[0]) == 1.5
-    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_efin_cols[1]) == 1.7
-    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_efin_cols[2]) == 0.5
+    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_efin_cols[1]) == 2.0
+    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_efin_cols[2]) == 2.0
     assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_efin_cols[3]) == 0
 
     withdrawn_values = lp.get_col_sol(s1_lp.grids_lp[1].withdrawn_cols)
@@ -215,11 +216,11 @@ def test_demanad_grid_tssas_electric_car_2():
 
     assert (withdrawn_values == load_values).all()
 
-    assert lp.get_col_at(s1_lp.grids_lp[1].pmax_col) == 5.4
+    assert lp.get_col_at(s1_lp.grids_lp[1].pmax_col) == 6
 
     assert lp.get_col_at(s1_lp.grids_lp[1].withdrawn_cols[0]) == 7
-    assert lp.get_col_at(s1_lp.grids_lp[1].withdrawn_cols[1]) == 5.4
-    assert lp.get_col_at(s1_lp.grids_lp[1].withdrawn_cols[2]) == 5.4
+    assert lp.get_col_at(s1_lp.grids_lp[1].withdrawn_cols[1]) == 6
+    assert lp.get_col_at(s1_lp.grids_lp[1].withdrawn_cols[2]) == 6
     assert lp.get_col_at(s1_lp.grids_lp[1].withdrawn_cols[3]) == 7
 
     # assert lp.get_obj() == 5000 * 5.2 + 11 * 7 + 12 * 5.2 + 13 * 5.2 + 14 * 7

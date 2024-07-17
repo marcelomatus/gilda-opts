@@ -5,7 +5,7 @@ from gilda_opts.block import Block
 from gilda_opts.electric_car import ATHOME_MASK, ONROAD_MASK, PLUGGED_MASK, ElectricCar
 from gilda_opts.electric_car_sched import ElectricCarSched
 from gilda_opts.linear_problem import LinearProblem
-from gilda_opts.utils import get_number_at
+from gilda_opts.utils import get_value_at
 
 
 class ElectricCarLP:
@@ -27,7 +27,7 @@ class ElectricCarLP:
         lp: LinearProblem = self.system_lp.lp
         ec: ElectricCar = self.electric_car
 
-        location_mask = get_number_at(ec.location_masks, bid, ATHOME_MASK)
+        location_mask = get_value_at(ec.location_masks, bid, ATHOME_MASK)
         at_home = location_mask == ATHOME_MASK
         plugged = location_mask == PLUGGED_MASK
         onroad = location_mask == ONROAD_MASK
@@ -57,7 +57,7 @@ class ElectricCarLP:
         # engine flow col
         #
         if onroad:
-            distance = get_number_at(ec.onroad_distances, bid, 0)
+            distance = get_value_at(ec.onroad_distances, bid, 0)
             engine_flow = distance * ec.engine.energy_consumption / block.duration
             lb, ub = engine_flow, engine_flow
         else:

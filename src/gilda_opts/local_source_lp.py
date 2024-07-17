@@ -6,7 +6,7 @@ from gilda_opts.block import Block
 from gilda_opts.linear_problem import guid
 from gilda_opts.local_source import LocalSource
 from gilda_opts.local_source_sched import LocalSourceSched
-from gilda_opts.utils import get_number_at
+from gilda_opts.utils import get_value_at
 
 
 class LocalSourceLP:
@@ -33,7 +33,7 @@ class LocalSourceLP:
         #
 
         lname = guid("lb", uid, bid)
-        gprof = get_number_at(self.local_source.generation_profile, bid, 1)
+        gprof = get_value_at(self.local_source.generation_profile, bid, 1)
 
         pmax = self.local_source.capacity * gprof
 

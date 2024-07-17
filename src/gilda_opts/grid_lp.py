@@ -6,7 +6,7 @@ from gilda_opts.block import Block
 from gilda_opts.grid import Grid
 from gilda_opts.grid_sched import GridSched
 from gilda_opts.linear_problem import guid
-from gilda_opts.utils import get_number_at
+from gilda_opts.utils import get_value_at
 
 
 class GridLP:
@@ -61,13 +61,13 @@ class GridLP:
         #
         # adding the grid buy (withdrawn) variable
         #
-        energy_cvar = get_number_at(grid.energy_tariffs, bid, 0)
-        emission_factor = get_number_at(grid.emission_factors, bid, 0)
+        energy_cvar = get_value_at(grid.energy_tariffs, bid, 0)
+        emission_factor = get_value_at(grid.emission_factors, bid, 0)
         emission_cvar = grid.emission_cost * emission_factor
         cvar = (energy_cvar + emission_cvar) * block.duration
 
         lname = guid("gb", uid, bid)
-        wpmax = grid.capacity * get_number_at(grid.withdrawn_profile, bid, 1)
+        wpmax = grid.capacity * get_value_at(grid.withdrawn_profile, bid, 1)
         withdrawn_col = lp.add_col(name=lname, lb=0, ub=wpmax, c=cvar)
         logging.info("added withdrawn variable %s %s", lname, withdrawn_col)
 
@@ -77,11 +77,11 @@ class GridLP:
         #
         # adding the grid sell (injection) variable
         #
-        pvar = get_number_at(grid.energy_sell_prices, bid, 0) * block.duration
+        pvar = get_value_at(grid.energy_sell_prices, bid, 0) * block.duration
 
         if pvar > 0:
             lname = guid("gp", uid, bid)
-            ipmax = grid.capacity * get_number_at(grid.injection_profile, bid, 1)
+            ipmax = grid.capacity * get_value_at(grid.injection_profile, bid, 1)
             injection_col = lp.add_col(name=lname, lb=0, ub=ipmax, c=-pvar)
             logging.info("added injection variable %s %s", lname, injection_col)
             self.injection_cols[bid] = injection_col
@@ -90,7 +90,7 @@ class GridLP:
         #
         # adding pmax constraint
         #
-        pfact = get_number_at(grid.power_factors, bid, 0)
+        pfact = get_value_at(grid.power_factors, bid, 0)
         if self.pmax_col >= 0 and pfact > 0:
             row = {}
             row[self.pmax_col] = 1

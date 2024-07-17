@@ -7,7 +7,7 @@ from gilda_opts.bess_sched import BESSSched
 from gilda_opts.block import Block
 from gilda_opts.bus_lp import BusLP
 from gilda_opts.linear_problem import LinearProblem, guid
-from gilda_opts.utils import get_number_at
+from gilda_opts.utils import get_value_at
 
 
 class BESSLP:
@@ -45,13 +45,15 @@ class BESSLP:
         #
         # flow_in col
         #
-        flow_in_col = lp.add_col(lb=0, ub=bess.max_flow_in)
+        ub = bess.max_flow_in if bus_lp is not None else 0
+        flow_in_col = lp.add_col(lb=0, ub=ub)
 
         #
         # flow_out col
         #
         cvar = bess.discharge_cost * block.duration
-        flow_out_col = lp.add_col(lb=0, ub=bess.max_flow_out, c=cvar)
+        ub = bess.max_flow_out if bus_lp is not None else 0
+        flow_out_col = lp.add_col(lb=0, ub=ub, c=cvar)
 
         #
         # adding the flows to the bus
@@ -63,8 +65,8 @@ class BESSLP:
         #
         # efin col
         #
-        lb = bess.capacity * get_number_at(bess.emin_profile, bid, 0)
-        ub = bess.capacity * get_number_at(bess.emax_profile, bid, 1)
+        lb = bess.capacity * get_value_at(bess.emin_profile, bid, 0)
+        ub = bess.capacity * get_value_at(bess.emax_profile, bid, 1)
         efin_col = lp.add_col(lb=lb, ub=ub)
 
         #

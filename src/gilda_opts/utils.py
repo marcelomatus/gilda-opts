@@ -1,13 +1,13 @@
 """Utility functions and elements."""
 
 from numbers import Number
-from typing import List, Dict
+from typing import List, Dict, Any
 
-NumberSched = float | List[float] | Dict[str, float]
-IntSched = int | List[int] | Dict[str, int]
+NumberSched = float | List[float] | Dict[str | int, float]
+IntSched = int | List[int] | Dict[str | int, int]
 
 
-def get_number_at(var, index, def_value=None):
+def get_value_at(var: NumberSched | IntSched, index: int, def_value: Any | None = None):
     """Return the number value from the scalar or list.
 
     :param var: scalar or list
@@ -20,15 +20,22 @@ def get_number_at(var, index, def_value=None):
         return def_value
 
     if isinstance(var, list):
+        value = def_value
         try:
-            return var[index]
+            value = var[index]
         except IndexError:
-            return def_value
+            pass
+        return value
 
     if isinstance(var, dict):
+        value = def_value
         try:
-            return var[str(index)]
+            value = var[str(index)]
         except KeyError:
-            return def_value
+            try:
+                value = var[index]
+            except KeyError:
+                pass
+        return value
 
     return var if isinstance(var, Number) else def_value

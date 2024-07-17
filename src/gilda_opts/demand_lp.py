@@ -6,7 +6,7 @@ from gilda_opts.block import Block
 from gilda_opts.demand import Demand
 from gilda_opts.demand_sched import DemandSched
 from gilda_opts.linear_problem import guid
-from gilda_opts.utils import get_number_at
+from gilda_opts.utils import get_value_at
 
 
 class DemandLP:
@@ -36,7 +36,7 @@ class DemandLP:
         cfail *= block.duration * block.discount
 
         lname = guid("lb", uid, bid)
-        ub = get_number_at(self.demand.loads, bid, 0)
+        ub = get_value_at(self.demand.loads, bid, 0)
         lb = 0 if cfail > 0 else ub
         load_col = lp.add_col(name=lname, lb=lb, ub=ub, c=0)
         logging.info("added load variable %s %s", lname, load_col)
