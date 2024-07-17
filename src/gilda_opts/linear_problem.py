@@ -111,6 +111,10 @@ class LinearProblem:
         """Set the upper boundary for a given variable."""
         self.cub[j] = cub
 
+    def set_col_ctype(self, j, ctype):
+        """Set the col type."""
+        self.ctypes[j] = ctype
+
     def set_col(self, j, value):
         """Set the column or variable value."""
         self.clb[j] = value
@@ -132,23 +136,23 @@ class LinearProblem:
             if v != 0:
                 A[ij] = v
 
-        rlb = np.ndarray(self.rows, dtype=float)
+        rlb: np.ndarray = np.ndarray(self.rows, dtype=float)
         for k, v in self.rlb.items():
             rlb[k] = v
 
-        rub = np.ndarray(self.rows, dtype=float)
+        rub: np.ndarray = np.ndarray(self.rows, dtype=float)
         for k, v in self.rub.items():
             rub[k] = v
 
-        clb = np.ndarray(self.cols, dtype=float)
+        clb: np.ndarray = np.ndarray(self.cols, dtype=float)
         for k, v in self.clb.items():
             clb[k] = v
 
-        cub = np.ndarray(self.cols, dtype=float)
+        cub: np.ndarray = np.ndarray(self.cols, dtype=float)
         for k, v in self.cub.items():
             cub[k] = v
 
-        c = np.ndarray(self.cols, dtype=float)
+        c: np.ndarray = np.ndarray(self.cols, dtype=float)
         for k, v in self.c.items():
             c[k] = v
 
@@ -217,31 +221,38 @@ class LinearProblem:
 
     def get_status(self):
         """Get the solver status."""
-        return self.result.solver.status
+        return self.result.solver.status if self.result is not None else None
 
     def get_time(self):
         """Get the solution time."""
-        return self.result.solver.time
+        return self.result.solver.time if self.result is not None else None
 
     def get_col_at(self, index):
         """Get the solution value at the given index."""
-        return pyo.value(self.model.x[index])
+        return pyo.value(self.model.x[index]) if self.model is not None else None
 
     def get_col_sol(self, indexes):
         """Get the solution values for a given indexes list."""
-        x = np.ndarray(len(indexes))
+        if self.model is None:
+            return None
+
+        x: np.ndarray = np.ndarray(len(indexes))
         for k, j in enumerate(indexes):
-            x[k] = self.get_col_at(j)
+            x[k] = pyo.value(self.model.x[j])
 
         return x
 
     def get_dual_at(self, i):
         """Get the dual value at the given index."""
-        return pyo.value(self.model.dual[self.model.constraints[i]]) * self.scale_obj
+        return (
+            pyo.value(self.model.dual[self.model.constraints[i]]) * self.scale_obj
+            if self.model is not None
+            else None
+        )
 
     def get_dual_sol(self, indexes):
         """Get the dual values for a given indexes list."""
-        y = np.ndarray(len(indexes))
+        y: np.ndarray = np.ndarray(len(indexes))
         for k, i in enumerate(indexes):
             y[k] = self.get_dual_at(i)
 
@@ -249,4 +260,8 @@ class LinearProblem:
 
     def get_obj(self):
         """Get the objective function value."""
-        return float(pyo.value(self.model.obj) * self.scale_obj)
+        return (
+            pyo.value(self.model.obj) * self.scale_obj
+            if self.model is not None
+            else None
+        )

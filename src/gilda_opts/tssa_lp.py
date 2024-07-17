@@ -13,9 +13,9 @@ class TSSALP:
 
     def __init__(self, tssa: TSSA, system_lp=None):
         """Create the TSSALP instance."""
-        self.onoff_cols = {}
-        self.onoff_rows = {}
-        self.noon_rows = {}
+        self.onoff_cols: dict[int, int] = {}
+        self.onoff_rows: dict[tuple[int, int], int] = {}
+        self.noon_rows: dict[int, int] = {}
         self.period_row = None
 
         self.tssa = tssa
@@ -136,5 +136,5 @@ class TSSALP:
         return TSSASched(
             uid=self.tssa.uid,
             name=self.tssa.name,
-            block_onoff_values=onoff_values,
+            onoff_values=onoff_values,
         )

@@ -1,9 +1,9 @@
 """Base class for json dataclasses."""
 
-from dataclasses_json import DataClassJsonMixin, Undefined, config
+from dataclasses_json import Undefined, dataclass_json
+from dataclass_wizard import JSONWizard
 
 
-class BaseClassJson(DataClassJsonMixin):
+@dataclass_json(undefined=Undefined.RAISE)
+class BaseClassJson(JSONWizard):
     """Base Json Mixin."""
-
-    dataclass_json_config = config(undefined=Undefined.RAISE)["dataclasses_json"]

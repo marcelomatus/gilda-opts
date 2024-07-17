@@ -13,19 +13,16 @@ class Battery(BaseClassJson):
 
     Attributes:
     -----------
-    uid:          BESS unique id
-    name:         BESS name
-    bus_uid:       Bus uid to be connected to
-    capacity:     Storage capacity [KWh]
-    max_flow_in:   Max in  flow [KW]
-    max_flow_out:  Max out flow [KW]
-    efficiency:   In&Out efficiency [0..1]
-    eini:         Start energy stored [KWh]
-    efin:         End energy stored [KWh]
-    efin_price:   Energy value at the end of the period [$/KWh]
+    capacity:       Storage capacity [KWh]
+    max_flow_in:    Max in  flow [KW]
+    max_flow_out:   Max out flow [KW]
+    efficiency:     In&Out efficiency [0..1]
+    eini:           Start energy stored [KWh]
+    efin:           End energy stored [KWh]
+    efin_price:     Energy value at the end of the period [$/KWh]
     discharge_cost: Discharge cost, related to the replacement cost [$/KWh]
-    emin_profile:  Minimum energy as proportion of the capacity [0..1]
-    emax_profile:  Maximum energy as proportion of the capacity [0..1]
+    emin_profile:   Minimum energy as proportion of the capacity [0..1]
+    emax_profile:   Maximum energy as proportion of the capacity [0..1]
     """
 
     capacity: float = 0

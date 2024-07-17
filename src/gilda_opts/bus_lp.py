@@ -12,7 +12,8 @@ class BusLP:
 
     def __init__(self, bus: Bus, system_lp=None):
         """Create the BusLP instance."""
-        self.load_rows = {}
+        self.load_rows: dict[int, int] = {}
+
         self.bus = bus
         self.system_lp = system_lp
 

@@ -20,4 +20,4 @@ class CESASched(BaseClassJson):
 
     uid: int = -1
     name: str = ""
-    block_onoff_values: List[float] = field(default_factory=list)
+    onoff_values: List[float] = field(default_factory=list)

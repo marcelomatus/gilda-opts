@@ -2,7 +2,7 @@
 
 import logging
 
-from gilda_opts.bess import BESS
+from gilda_opts.bess import Battery, BESS
 from gilda_opts.bess_sched import BESSSched
 from gilda_opts.block import Block
 from gilda_opts.bus_lp import BusLP
@@ -15,10 +15,10 @@ class BESSLP:
 
     def __init__(self, bess: BESS, system_lp=None):
         """Create the BESSLP instance."""
-        self.flow_in_cols = {}
-        self.flow_out_cols = {}
-        self.efin_cols = {}
-        self.efin_rows = {}
+        self.flow_in_cols: dict[int, int] = {}
+        self.flow_out_cols: dict[int, int] = {}
+        self.efin_cols: dict[int, int] = {}
+        self.efin_rows: dict[int, int] = {}
 
         self.bess = bess
         self.system_lp = system_lp
@@ -29,8 +29,8 @@ class BESSLP:
         bid: int,
         block: Block,
         prev_efin_col: int,
-        bess: BESS,
-        bus_lp: BusLP = None,
+        bess: Battery,
+        bus_lp: BusLP | None = None,
     ):
         """Adding the block constraints to the LP.
 
@@ -70,7 +70,7 @@ class BESSLP:
         #
         # efin row
         #
-        row = {}
+        row: dict[int, float] = {}
         row[efin_col] = 1
         row[flow_in_col] = -block.duration * bess.efficiency_in
         row[flow_out_col] = block.duration / bess.efficiency_out
@@ -142,7 +142,7 @@ class BESSLP:
         return BESSSched(
             uid=self.bess.uid,
             name=self.bess.name,
-            block_efin_values=efin_values,
-            block_flow_in_values=flow_in_values,
-            block_flow_out_values=flow_out_values,
+            efin_values=efin_values,
+            flow_in_values=flow_in_values,
+            flow_out_values=flow_out_values,
         )

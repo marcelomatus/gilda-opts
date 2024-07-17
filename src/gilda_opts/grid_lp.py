@@ -22,9 +22,9 @@ class GridLP:
         system_lp : SystemLP
             The SystemLP where the GridLP will be included
         """
-        self.withdrawn_cols = {}
-        self.injection_cols = {}
-        self.pmax_rows = {}
+        self.withdrawn_cols: dict[int, int] = {}
+        self.injection_cols: dict[int, int] = {}
+        self.pmax_rows: dict[int, int] = {}
         self.pmax_col = -1
 
         self.grid = grid
@@ -111,6 +111,6 @@ class GridLP:
         return GridSched(
             uid=self.grid.uid,
             name=self.grid.name,
-            block_withdrawn_values=withdrawn_values,
-            block_injection_values=injection_values,
+            withdrawn_values=withdrawn_values,
+            injection_values=injection_values,
         )

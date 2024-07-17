@@ -1,9 +1,9 @@
 """Grid module contains the basic grid electric provider."""
 
-from dataclasses import dataclass, field
-from typing import List, Any
+from dataclasses import dataclass
 
 from gilda_opts.baseclass_json import BaseClassJson
+from gilda_opts.utils import NumberSched
 
 
 @dataclass
@@ -30,11 +30,11 @@ class Grid(BaseClassJson):
     name: str = ""
     bus_uid: int = -1
     capacity: float = 0
-    withdrawn_profile: List[float] = field(default_factory=list)
-    injection_profile: List[float] = field(default_factory=list)
-    energy_tariffs: List[float] = field(default_factory=list)
-    power_tariff: float = 0
-    power_factors: Any = None
-    emission_factors: List[float] = field(default_factory=list)
-    emission_cost: float = 0
-    energy_sell_prices: List[float] = field(default_factory=list)
+    withdrawn_profile: NumberSched = 1.0
+    injection_profile: NumberSched = 1.0
+    energy_tariffs: NumberSched = 0.0
+    power_tariff: float = 0.0
+    power_factors: NumberSched = 0.0
+    emission_factors: NumberSched = 0.0
+    emission_cost: float = 0.0
+    energy_sell_prices: NumberSched = 0.0

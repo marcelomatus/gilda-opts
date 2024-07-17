@@ -14,8 +14,8 @@ class LocalSourceLP:
 
     def __init__(self, local_source: LocalSource, system_lp=None):
         """Create the LocalSourceLP instance."""
-        self.generation_cols = {}
-        self.pmax_rows = {}
+        self.generation_cols: dict[int, int] = {}
+        self.pmax_rows: dict[int, int] = {}
         self.pmax_col = -1
 
         self.local_source = local_source
@@ -53,5 +53,5 @@ class LocalSourceLP:
         return LocalSourceSched(
             uid=self.local_source.uid,
             name=self.local_source.name,
-            block_generation_values=generation_values,
+            generation_values=generation_values,
         )

@@ -1,9 +1,9 @@
 """Demand module represents a base electric load."""
 
-from dataclasses import dataclass, field
-from typing import List
+from dataclasses import dataclass
 
 from gilda_opts.baseclass_json import BaseClassJson
+from gilda_opts.utils import NumberSched
 
 
 @dataclass
@@ -22,5 +22,5 @@ class Demand(BaseClassJson):
     uid: int = -1
     name: str = ""
     bus_uid: int = -1
-    loads: List[float] = field(default_factory=list)
-    cfail: float = 0
+    loads: NumberSched = 0.0
+    cfail: float = 0.0

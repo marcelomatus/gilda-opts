@@ -6,6 +6,7 @@ from gilda_opts.block import Block
 from gilda_opts.demand import Demand
 from gilda_opts.demand_sched import DemandSched
 from gilda_opts.linear_problem import guid
+from gilda_opts.utils import get_number_at
 
 
 class DemandLP:
@@ -13,9 +14,9 @@ class DemandLP:
 
     def __init__(self, demand: Demand, system_lp=None):
         """Create the DemandLP instance."""
-        self.load_cols = {}
-        self.fail_cols = {}
-        self.load_rows = {}
+        self.load_cols: dict[int, int] = {}
+        self.fail_cols: dict[int, int] = {}
+        self.load_rows: dict[int, int] = {}
 
         self.demand = demand
         self.system_lp = system_lp
@@ -27,7 +28,7 @@ class DemandLP:
         lp = self.system_lp.lp
         bus_lp = self.system_lp.get_bus_lp(self.demand.bus_uid)
 
-        row = {}
+        row: dict[int, int] = {}
         #
         # adding the load variable
         #
@@ -35,7 +36,7 @@ class DemandLP:
         cfail *= block.duration * block.discount
 
         lname = guid("lb", uid, bid)
-        ub = self.demand.loads[bid]
+        ub = get_number_at(self.demand.loads, bid, 0)
         lb = 0 if cfail > 0 else ub
         load_col = lp.add_col(name=lname, lb=lb, ub=ub, c=0)
         logging.info("added load variable %s %s", lname, load_col)
@@ -73,6 +74,6 @@ class DemandLP:
         return DemandSched(
             uid=self.demand.uid,
             name=self.demand.name,
-            block_load_values=load_values,
-            block_fail_values=fail_values,
+            load_values=load_values,
+            fail_values=fail_values,
         )

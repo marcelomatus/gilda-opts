@@ -19,9 +19,9 @@ from gilda_opts.electric_car_lp import ElectricCarLP
 class SystemLP:
     """Represents a Block in the LP formulation."""
 
-    def __init__(self, system: System, lp: LinearProblem = None):
+    def __init__(self, system: System, lp: LinearProblem | None = None):
         """Create the SystemLP instance."""
-        self.load_rows = {}
+        self.load_rows: dict[int, int] = {}
         self.system = system
         self.lp = lp if lp is not None else LinearProblem()
 

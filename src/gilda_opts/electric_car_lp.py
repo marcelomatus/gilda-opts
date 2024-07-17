@@ -13,11 +13,11 @@ class ElectricCarLP:
 
     def __init__(self, electric_car: ElectricCar, system_lp=None):
         """Create the ElectricCarLP instance."""
-        self.battery_flow_in_cols = {}
-        self.battery_flow_out_cols = {}
-        self.battery_efin_cols = {}
-        self.battery_efin_rows = {}
-        self.engine_flow_cols = {}
+        self.battery_flow_in_cols: dict[int, int] = {}
+        self.battery_flow_out_cols: dict[int, int] = {}
+        self.battery_efin_cols: dict[int, int] = {}
+        self.battery_efin_rows: dict[int, int] = {}
+        self.engine_flow_cols: dict[int, int] = {}
 
         self.electric_car = electric_car
         self.system_lp = system_lp
@@ -26,7 +26,6 @@ class ElectricCarLP:
         """Add ElectricCar equations to a block."""
         lp: LinearProblem = self.system_lp.lp
         ec: ElectricCar = self.electric_car
-        lp: LinearProblem = self.system_lp.lp
 
         location_mask = get_number_at(ec.location_masks, bid, ATHOME_MASK)
         at_home = location_mask == ATHOME_MASK
@@ -34,7 +33,7 @@ class ElectricCarLP:
         onroad = location_mask == ONROAD_MASK
 
         bus_uid = (
-            ec.athome_bus_uid if at_home else (ec.charger_bus_uid if plugged else None)
+            ec.athome_bus_uid if at_home else (ec.public_bus_uid if plugged else None)
         )
         bus_lp = self.system_lp.get_bus_lp(bus_uid) if not onroad else None
 
@@ -97,8 +96,8 @@ class ElectricCarLP:
         return ElectricCarSched(
             uid=self.electric_car.uid,
             name=self.electric_car.name,
-            block_battery_efin_values=battery_efin_values,
-            block_battery_flow_in_values=battery_flow_in_values,
-            block_battery_flow_out_values=battery_flow_out_values,
-            block_engine_flow_values=engine_flow_values,
+            battery_efin_values=battery_efin_values,
+            battery_flow_in_values=battery_flow_in_values,
+            battery_flow_out_values=battery_flow_out_values,
+            engine_flow_values=engine_flow_values,
         )

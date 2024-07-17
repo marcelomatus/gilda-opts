@@ -21,5 +21,5 @@ class GridSched(BaseClassJson):
 
     uid: int = -1
     name: str = ""
-    block_injection_values: List[float] = field(default_factory=list)
-    block_withdrawn_values: List[float] = field(default_factory=list)
+    injection_values: List[float] = field(default_factory=list)
+    withdrawn_values: List[float] = field(default_factory=list)

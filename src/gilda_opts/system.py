@@ -15,7 +15,7 @@ from gilda_opts.local_source import LocalSource
 from gilda_opts.electric_car import ElectricCar
 
 
-@dataclass
+@dataclass(frozen=True)
 class System(BaseClassJson):
     """
     System class.

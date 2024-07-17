@@ -20,5 +20,5 @@ class DemandSched(BaseClassJson):
 
     uid: int = -1
     name: str = ""
-    block_load_values: List[float] = field(default_factory=list)
-    block_fail_values: List[float] = field(default_factory=list)
+    load_values: List[float] = field(default_factory=list)
+    fail_values: List[float] = field(default_factory=list)

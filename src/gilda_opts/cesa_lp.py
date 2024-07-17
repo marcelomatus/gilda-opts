@@ -14,10 +14,10 @@ class CESALP:
 
     def __init__(self, cesa: CESA, system_lp=None):
         """Create the CESALP instance."""
-        self.onoff_cols = {}
-        self.on_period_rows = {}
-        self.energy_rows = {}
-        self.cumulative_cols = []
+        self.onoff_cols: dict[int, int] = {}
+        self.on_period_rows: dict[int, int] = {}
+        self.energy_rows: dict[int, int] = {}
+        self.cumulative_cols: list = []
 
         self.cesa = cesa
         self.system_lp = system_lp
@@ -38,8 +38,7 @@ class CESALP:
             return
 
         lname = guid("ceu", uid, bid)
-        col_type = 1 if len(self.cesa.cumulative_on_periods) != 0 else 0
-        onoff_col = lp.add_col(name=lname, lb=0, ub=1, ctype=col_type)
+        onoff_col = lp.add_col(name=lname, lb=0, ub=1)
         logging.info("added onoff variable %s %d", lname, onoff_col)
 
         self.onoff_cols[bid] = onoff_col
@@ -51,7 +50,7 @@ class CESALP:
     def post_blocks(self):
         """Close the LP formulation post the blocks formulation."""
         uid = self.cesa.uid
-        lp = self.system_lp.lp
+        lp: LinearProblem = self.system_lp.lp
 
         #
         # Adding the cumulative on_period constraints
@@ -62,6 +61,7 @@ class CESALP:
             for cmask, duration, onoff_col in self.cumulative_cols:
                 if emask ^ cmask != 0:
                     row[onoff_col] = duration
+                    lp.set_col_ctype(onoff_col, 1)
 
             lname = guid("ceg", uid, i)
             on_period_row = lp.add_row(row, name=lname, lb=on_period)
@@ -90,5 +90,5 @@ class CESALP:
         return CESASched(
             uid=self.cesa.uid,
             name=self.cesa.name,
-            block_onoff_values=onoff_values,
+            onoff_values=onoff_values,
         )

@@ -23,7 +23,7 @@ class ElectricCarSched(BaseClassJson):
 
     uid: int = -1
     name: str = ""
-    block_battery_efin_values: List[float] = field(default_factory=list)
-    block_battery_flow_in_values: List[float] = field(default_factory=list)
-    block_battery_flow_out_values: List[float] = field(default_factory=list)
-    block_engine_flow_values: List[float] = field(default_factory=list)
+    battery_efin_values: List[float] = field(default_factory=list)
+    battery_flow_in_values: List[float] = field(default_factory=list)
+    battery_flow_out_values: List[float] = field(default_factory=list)
+    engine_flow_values: List[float] = field(default_factory=list)

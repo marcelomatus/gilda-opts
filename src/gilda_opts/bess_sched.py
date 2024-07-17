@@ -22,6 +22,6 @@ class BESSSched(BaseClassJson):
 
     uid: int = -1
     name: str = ""
-    block_efin_values: List[float] = field(default_factory=list)
-    block_flow_in_values: List[float] = field(default_factory=list)
-    block_flow_out_values: List[float] = field(default_factory=list)
+    efin_values: List[float] = field(default_factory=list)
+    flow_in_values: List[float] = field(default_factory=list)
+    flow_out_values: List[float] = field(default_factory=list)

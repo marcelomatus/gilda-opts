@@ -19,4 +19,4 @@ class LocalSourceSched(BaseClassJson):
 
     uid: int = -1
     name: str = ""
-    block_generation_values: List[float] = field(default_factory=list)
+    generation_values: List[float] = field(default_factory=list)
