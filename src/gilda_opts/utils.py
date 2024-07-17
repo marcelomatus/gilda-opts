@@ -1,19 +1,10 @@
 """Utility functions and elements."""
 
-import sys
 from numbers import Number
+from typing import List, Dict
 
-
-if sys.version_info.minor >= 11:
-    from typing import List, Dict, Any
-
-    NumberSched = float | List[float] | Dict[str, float]
-    IntSched = int | List[int] | Dict[str, int]
-else:
-    from typing import Any
-
-    NumberSched = Any
-    IntSched = Any
+NumberSched = float | List[float] | Dict[str, float]
+IntSched = int | List[int] | Dict[str, int]
 
 
 def get_number_at(var, index, def_value=None):

@@ -32,10 +32,10 @@ def test_system_1():
 
 
 def test_system_2():
-    """Test system 1."""
+    """Test system with unknown key."""
     ds = """{
       "name": "s1",
-      "ppp": 1,
+      "unknown_key": 1,
       "uid": 1,
       "buses": [{"uid": 1,
                  "name": "home"},
