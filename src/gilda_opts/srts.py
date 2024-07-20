@@ -1,28 +1,17 @@
-"""SBTM module represents a Simple Building Thermal Model."""
+"""SRTS module represents a Simple Building Thermal Model."""
 
 from dataclasses import dataclass, field
 from math import sqrt
 
 from gilda_opts.baseclass_json import BaseClassJson
 from gilda_opts.utils import NumberSched
-
-
-@dataclass
-class ThermalUnit(BaseClassJson):
-    """heating Unit.
-
-    capacity:    Electric capacity [KW]
-    efficiency:  Efficiency KW heat/ KWh electricity [0..1]
-    """
-
-    capacity: float = 0
-    efficiency: float = 0
+from gilda_opts.thermal_unit import ThermalUnit
 
 
 @dataclass
 class SingleRoom(BaseClassJson):
     """
-    SingleRoom represents a .
+    SingleRoom represents single room.
 
     Attributes:
     -----------
@@ -33,11 +22,8 @@ class SingleRoom(BaseClassJson):
     air_density:                 Air density                          kg/m3
     air_specific_heat_capacity:  Specific heat capacity of air        kJ/kg K
     thermal_mass_parameter:      Thermal mass parameter (kappa value) kJ/m2K
-    heating_power:               Heating power                        kW
-    time_interval:               Time interval                        s
     initial_temperature:         Initial temperature                  C
     external_temperatures:       External temperature                 C
-    thermal_drift_cost:          Thermal drift cost                   $/C h
     """
 
     total_floor_area: float = 70
@@ -47,13 +33,10 @@ class SingleRoom(BaseClassJson):
     air_density: float = 1.225
     air_specific_heat_capacity: float = 1.005
     thermal_mass_parameter: float = 250.0
-    heating_power: float = 10
-    time_interval: float = 1800
     initial_temperature: float = 20
     external_temperatures: NumberSched = 20
-    thermal_drift_cost: NumberSched = 120000 / (20 * 24)
 
-    def temperature_coeff(self):
+    def temperature_coeff(self, duration: float):
         """Return the temperature coefficient."""
         #
         #  Temperature Coefficient
@@ -64,6 +47,7 @@ class SingleRoom(BaseClassJson):
         #      ESA = 4 * sqrt(area) * height + 2 * area
         #      TFA = area
         #
+        D_t = duration * 3600  # pylint: disable=C0103
 
         TMP = self.thermal_mass_parameter  # pylint: disable=C0103
         U = self.u_value / 1000.0  # pylint: disable=C0103
@@ -77,37 +61,35 @@ class SingleRoom(BaseClassJson):
 
         convective_loss = ACH * RoomVol * Rho_air * C_air / 3600.0
         conductive_loss = ESA * U
-        return (convective_loss + conductive_loss) / (TMP * TFA)
+        return D_t * (convective_loss + conductive_loss) / (TMP * TFA)
 
-    def q_coeff(self, thermal_unit: ThermalUnit):
+    def q_coeff(self, duration: float, thermal_capacity):
         """Return the thermal unit Q coefficient."""
         #  Thermal unit q coeff
         #      n_t * P_e * D_t / ( TMP * TFA )
         #
-        if thermal_unit is None:
-            return 0
+        D_t = duration * 3600  # pylint: disable=C0103
 
-        n_i = thermal_unit.efficiency
-        P_i = thermal_unit.capacity  # pylint: disable=C0103
+        P_i = thermal_capacity  # pylint: disable=C0103
         TMP = self.thermal_mass_parameter  # pylint: disable=C0103
         TFA = self.total_floor_area  # pylint: disable=C0103
 
-        return n_i * P_i / (TMP * TFA)
+        return D_t * P_i / (TMP * TFA)
 
 
 @dataclass
-class SBTM(BaseClassJson):
+class SRTS(BaseClassJson):
     """
-    SBTM represents the Simple Building Thermal Model load in the scheduling problem.
+    SRTS represents the Simple Building Thermal Model load in the scheduling problem.
 
     Attributes:
     -----------
-    uid:             SBTM unique id
-    name:            SBTM name
-    bus_uid:         Bus uid to be connected to
+    uid:  SRTS unique id
+    name: SRTS name
 
-    min_temperature: minimum temperature
-    max_temperature: maximum temperature
+    min_temperature:    Minimum temperature [C]
+    max_temperature:    Maximum temperature [C]
+    thermal_drift_cost: Thermal drift cost [$/C h]
     """
 
     uid: int = -1
@@ -120,3 +102,7 @@ class SBTM(BaseClassJson):
 
     min_temperature: NumberSched = 20
     max_temperature: NumberSched = 20
+    thermal_drift_cost: NumberSched = 160000 / (20 * 8)
+
+
+#  LocalWords:  IntSched uid

@@ -192,20 +192,20 @@ Local Source
 
 
 ------------------------------------------
-Simplified Building Thermal Model - (SBTM)
+Single Room Thermal System - (SRTS)
 ------------------------------------------
-``SBTM`` module represents a Simple Building Thermal Model in the scheduling problem. The parameters for the ``SBTM`` element are showed below.
+``SRTS`` module represents a Single Room Thermal System in the scheduling problem. The parameters for the ``SRTS`` element are showed below.
 
-.. table:: ``SBTM`` input parameters
+.. table:: ``SRTS`` input parameters
    :widths: auto
    :align: center
 
    +-----------------+-------+---------+---------+---------------------------------------------+
    |     field       | kind  | units   | default |            description                      |
    +=================+=======+=========+=========+=============================================+
-   | uid             | int   |         |   -1    | SBTM unique identifier                      |
+   | uid             | int   |         |   -1    | SRTS unique identifier                      |
    +-----------------+-------+---------+---------+---------------------------------------------+
-   | name            |  str  |         |         | SBTM name                                   |
+   | name            |  str  |         |         | SRTS name                                   |
    +-----------------+-------+---------+---------+---------------------------------------------+
    |bus_uid          |  int  |         |   -1    | Bus uid to be connected to                  |
    +-----------------+-------+---------+---------+---------------------------------------------+

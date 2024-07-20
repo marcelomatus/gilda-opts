@@ -3,9 +3,10 @@
 from pytest import approx
 from gilda_opts.system import System
 from gilda_opts.system_lp import SystemLP
+from gilda_opts.system_sched import SystemSched
 
 
-def test_sbtm_grid_1():
+def test_srts_grid_1():
     """Test system_lp 1."""
     ds = """{
       "name": "s1",
@@ -16,9 +17,8 @@ def test_sbtm_grid_1():
                  {"duration": 1}],
       "buses": [{"uid": 1,
                  "name": "home"}],
-      "sbtms": [{"name": "home",
+      "srtss": [{"name": "home",
                   "uid": 1,
-                  "bus_uid": 1,
                   "single_room": {
                       "total_floor_area": 70,
                       "height": 2.5,
@@ -27,11 +27,8 @@ def test_sbtm_grid_1():
                       "air_density": 1.225,
                       "air_specific_heat_capacity": 1.005,
                       "thermal_mass_parameter": 250.0,
-                      "heating_power": 10,
-                      "time_interval": 1800,
                       "initial_temperature": 20,
-                      "external_temperatures": 20,
-                      "thermal_drift_cost": 500}
+                      "external_temperatures": 20}
                  }],
       "grids": [{"name": "g1",
                 "uid": 1,
@@ -49,7 +46,7 @@ def test_sbtm_grid_1():
     assert s1.buses[0].name == "home"
     assert s1.buses[0].uid == 1
 
-    assert s1.sbtms[0].name == "home"
+    assert s1.srtss[0].name == "home"
 
     assert s1.grids[0].name == "g1"
     assert s1.grids[0].capacity == 30
@@ -62,13 +59,13 @@ def test_sbtm_grid_1():
 
     lp = s1_lp.lp
 
-    assert lp.get_col_at(s1_lp.sbtms_lp[1].tfin_cols[0]) == 20
-    assert lp.get_col_at(s1_lp.sbtms_lp[1].tfin_cols[1]) == 20
-    assert lp.get_col_at(s1_lp.sbtms_lp[1].tfin_cols[2]) == 20
-    assert lp.get_col_at(s1_lp.sbtms_lp[1].tfin_cols[3]) == 20
+    assert lp.get_col_at(s1_lp.srtss_lp[1].tfin_cols[0]) == 20
+    assert lp.get_col_at(s1_lp.srtss_lp[1].tfin_cols[1]) == 20
+    assert lp.get_col_at(s1_lp.srtss_lp[1].tfin_cols[2]) == 20
+    assert lp.get_col_at(s1_lp.srtss_lp[1].tfin_cols[3]) == 20
 
 
-def test_sbtm_grid_2():
+def test_srts_grid_2():
     """Test system_lp 1."""
     ds = """{
       "name": "s1",
@@ -79,9 +76,8 @@ def test_sbtm_grid_2():
                  {"duration": 0.5}],
       "buses": [{"uid": 1,
                  "name": "home"}],
-      "sbtms": [{"name": "home",
+      "srtss": [{"name": "home",
                   "uid": 1,
-                  "bus_uid": 1,
                   "single_room": {
                       "total_floor_area": 70,
                       "height": 2.5,
@@ -90,11 +86,8 @@ def test_sbtm_grid_2():
                       "air_density": 1.225,
                       "air_specific_heat_capacity": 1.005,
                       "thermal_mass_parameter": 250.0,
-                      "heating_power": 10,
-                      "time_interval": 1800,
                       "initial_temperature": 20,
-                      "external_temperatures": 30,
-                      "thermal_drift_cost": 500}
+                      "external_temperatures": 30}
                  }],
       "grids": [{"name": "g1",
                 "uid": 1,
@@ -112,7 +105,7 @@ def test_sbtm_grid_2():
     assert s1.buses[0].name == "home"
     assert s1.buses[0].uid == 1
 
-    assert s1.sbtms[0].name == "home"
+    assert s1.srtss[0].name == "home"
 
     assert s1.grids[0].name == "g1"
     assert s1.grids[0].capacity == 30
@@ -124,11 +117,11 @@ def test_sbtm_grid_2():
     assert status == "ok"
 
     lp = s1_lp.lp
-    assert lp.get_col_at(s1_lp.sbtms_lp[1].tfin_cols[0]) == approx(20.490891)
-    assert lp.get_col_at(s1_lp.sbtms_lp[1].tfin_cols[1]) == approx(20.957685)
+    assert lp.get_col_at(s1_lp.srtss_lp[1].tfin_cols[0]) == approx(20.490891)
+    assert lp.get_col_at(s1_lp.srtss_lp[1].tfin_cols[1]) == approx(20.957685)
 
 
-def test_sbtm_grid_3():
+def test_srts_grid_3():
     """Test system_lp 1."""
     ds = """{
       "name": "s1",
@@ -139,9 +132,8 @@ def test_sbtm_grid_3():
                  {"duration": 0.5}],
       "buses": [{"uid": 1,
                  "name": "home"}],
-      "sbtms": [{"name": "home",
+      "srtss": [{"name": "home",
                   "uid": 1,
-                  "bus_uid": 1,
                   "single_room": {
                       "total_floor_area": 70,
                       "height": 2.5,
@@ -150,11 +142,8 @@ def test_sbtm_grid_3():
                       "air_density": 1.225,
                       "air_specific_heat_capacity": 1.005,
                       "thermal_mass_parameter": 250.0,
-                      "heating_power": 10,
-                      "time_interval": 1800,
                       "initial_temperature": 20,
-                      "external_temperatures": 10,
-                      "thermal_drift_cost": 500}
+                      "external_temperatures": 10}
                  }],
       "grids": [{"name": "g1",
                 "uid": 1,
@@ -172,7 +161,7 @@ def test_sbtm_grid_3():
     assert s1.buses[0].name == "home"
     assert s1.buses[0].uid == 1
 
-    assert s1.sbtms[0].name == "home"
+    assert s1.srtss[0].name == "home"
 
     assert s1.grids[0].name == "g1"
     assert s1.grids[0].capacity == 30
@@ -184,11 +173,11 @@ def test_sbtm_grid_3():
     assert status == "ok"
 
     lp = s1_lp.lp
-    assert lp.get_col_at(s1_lp.sbtms_lp[1].tfin_cols[0]) == approx(19.509109)
-    assert lp.get_col_at(s1_lp.sbtms_lp[1].tfin_cols[1]) == approx(19.042315)
+    assert lp.get_col_at(s1_lp.srtss_lp[1].tfin_cols[0]) == approx(19.509109)
+    assert lp.get_col_at(s1_lp.srtss_lp[1].tfin_cols[1]) == approx(19.042315)
 
 
-def test_sbtm_grid_4():
+def test_srts_grid_4():
     """Test system_lp 1."""
     ds = """{
       "name": "s1",
@@ -201,9 +190,15 @@ def test_sbtm_grid_4():
                  {"duration": 0.5}],
       "buses": [{"uid": 1,
                  "name": "home"}],
-      "sbtms": [{"name": "home",
+      "thermal_units": [{"uid": 1,
+                        "name": "heater",
+                        "bus_uid": 1,
+                        "srts_uid": 1,
+                        "capacity": 20,
+                        "heating_efficiency": 1.0,
+                        "active_mode": 1}],
+      "srtss": [{"name": "home",
                   "uid": 1,
-                  "bus_uid": 1,
                   "single_room": {
                       "total_floor_area": 70,
                       "height": 2.5,
@@ -212,12 +207,9 @@ def test_sbtm_grid_4():
                       "air_density": 1.225,
                       "air_specific_heat_capacity": 1.005,
                       "thermal_mass_parameter": 250.0,
-                      "heating_power": 10,
-                      "time_interval": 1800,
                       "initial_temperature": 20,
-                      "external_temperatures": 10,
-                      "thermal_drift_cost": 5000},
-                   "heating_unit": { "capacity": 20, "efficiency": 1.0},
+                      "external_temperatures": 10},
+                   "thermal_drift_cost": 5000,
                    "min_temperature": 24
                  }],
       "grids": [{"name": "g1",
@@ -234,7 +226,7 @@ def test_sbtm_grid_4():
     assert s1.buses[0].name == "home"
     assert s1.buses[0].uid == 1
 
-    assert s1.sbtms[0].name == "home"
+    assert s1.srtss[0].name == "home"
 
     assert s1.grids[0].name == "g1"
     assert s1.grids[0].capacity == 30
@@ -247,16 +239,22 @@ def test_sbtm_grid_4():
 
     lp = s1_lp.lp
 
-    assert lp.get_col_at(s1_lp.sbtms_lp[1].onoff_heat_cols[0]) == 1
-    assert lp.get_col_at(s1_lp.sbtms_lp[1].onoff_heat_cols[1]) == 1
-    assert lp.get_col_at(s1_lp.sbtms_lp[1].onoff_heat_cols[2]) == 1
-    assert lp.get_col_at(s1_lp.sbtms_lp[1].onoff_heat_cols[3]) == 1
-    assert lp.get_col_at(s1_lp.sbtms_lp[1].onoff_heat_cols[4]) == 0
-    assert lp.get_col_at(s1_lp.sbtms_lp[1].onoff_heat_cols[5]) == 0
+    assert lp.get_col_at(s1_lp.thermal_units_lp[1].onoff_cols[0]) == 1
+    assert lp.get_col_at(s1_lp.thermal_units_lp[1].onoff_cols[1]) == 1
+    assert lp.get_col_at(s1_lp.thermal_units_lp[1].onoff_cols[2]) == 1
+    assert lp.get_col_at(s1_lp.thermal_units_lp[1].onoff_cols[3]) == 1
+    assert lp.get_col_at(s1_lp.thermal_units_lp[1].onoff_cols[4]) == 0
+    assert lp.get_col_at(s1_lp.thermal_units_lp[1].onoff_cols[5]) == 0
 
-    assert lp.get_col_at(s1_lp.sbtms_lp[1].tfin_cols[0]) == approx(21.566252)
-    assert lp.get_col_at(s1_lp.sbtms_lp[1].tfin_cols[1]) == approx(23.055618)
-    assert lp.get_col_at(s1_lp.sbtms_lp[1].tfin_cols[2]) == approx(24.471872)
-    assert lp.get_col_at(s1_lp.sbtms_lp[1].tfin_cols[3]) == approx(25.818604)
-    assert lp.get_col_at(s1_lp.sbtms_lp[1].tfin_cols[4]) == approx(25.042083)
-    assert lp.get_col_at(s1_lp.sbtms_lp[1].tfin_cols[5]) == approx(24.30368)
+    assert lp.get_col_at(s1_lp.srtss_lp[1].tfin_cols[0]) == approx(21.566252)
+    assert lp.get_col_at(s1_lp.srtss_lp[1].tfin_cols[1]) == approx(23.055618)
+    assert lp.get_col_at(s1_lp.srtss_lp[1].tfin_cols[2]) == approx(24.471872)
+    assert lp.get_col_at(s1_lp.srtss_lp[1].tfin_cols[3]) == approx(25.818604)
+    assert lp.get_col_at(s1_lp.srtss_lp[1].tfin_cols[4]) == approx(25.042083)
+    assert lp.get_col_at(s1_lp.srtss_lp[1].tfin_cols[5]) == approx(24.30368)
+
+    s1_sched: SystemSched = s1_lp.get_sched()
+
+    assert s1_sched.name == s1.name
+    assert s1_sched.srtss[0].tfin_values[0] == approx(21.566252)
+    assert s1_sched.thermal_units[0].onoff_values[0] == 1
