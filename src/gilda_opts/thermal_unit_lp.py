@@ -79,7 +79,6 @@ class ThermalUnitLP:
 
         tfin_col, tfin_row = srts_lp.get_tfin_colrow(bid)
 
-        print("srts, bus", srts_lp.srts.uid, bus_lp.bus.uid)
         onoff_col, onoff_row = ThermalUnitLP.add_block_i(
             lp=lp,
             bid=bid,
