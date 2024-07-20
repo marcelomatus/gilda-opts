@@ -2,7 +2,7 @@
 
 from gilda_opts.bess_lp import BESSLP
 from gilda_opts.block import Block
-from gilda_opts.electric_car import ATHOME_MASK, ONROAD_MASK, PLUGGED_MASK, ElectricCar
+from gilda_opts.electric_car import HOME_MASK, ONROAD_MASK, PLUGGED_MASK, ElectricCar
 from gilda_opts.electric_car_sched import ElectricCarSched
 from gilda_opts.linear_problem import LinearProblem
 from gilda_opts.utils import get_value_at
@@ -27,13 +27,13 @@ class ElectricCarLP:
         lp: LinearProblem = self.system_lp.lp
         ec: ElectricCar = self.electric_car
 
-        location_mask = get_value_at(ec.location_masks, bid, ATHOME_MASK)
-        at_home = location_mask == ATHOME_MASK
+        location_mask = get_value_at(ec.location_masks, bid, HOME_MASK)
+        at_home = location_mask == HOME_MASK
         plugged = location_mask == PLUGGED_MASK
         onroad = location_mask == ONROAD_MASK
 
         bus_uid = (
-            ec.athome_bus_uid if at_home else (ec.public_bus_uid if plugged else None)
+            ec.home_bus_uid if at_home else (ec.public_bus_uid if plugged else None)
         )
         bus_lp = self.system_lp.get_bus_lp(bus_uid) if not onroad else None
 

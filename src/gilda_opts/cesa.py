@@ -3,7 +3,9 @@
 from dataclasses import dataclass, field
 from typing import List
 
+
 from gilda_opts.baseclass_json import BaseClassJson
+from gilda_opts.utils import IntSched
 
 
 @dataclass
@@ -39,6 +41,6 @@ class CESA(BaseClassJson):
     name: str = ""
     bus_uid: int = -1
     load: float = 0
-    cumulative_masks: List[int] = field(default_factory=list)
+    cumulative_masks: IntSched = 0
     cumulative_on_periods: List[float] = field(default_factory=list)
     cumulative_energies: List[float] = field(default_factory=list)

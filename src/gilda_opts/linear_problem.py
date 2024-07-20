@@ -53,7 +53,7 @@ class LinearProblem:
         self.cols = 0
         self.rows = 0
 
-        self.model = None
+        self.model: pyo.Block | None = None
         self.result = None
 
     def numcols(self):

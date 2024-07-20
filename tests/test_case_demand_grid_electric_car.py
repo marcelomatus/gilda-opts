@@ -37,7 +37,7 @@ def test_demanad_grid_tssas_electric_car_1():
       "electric_cars": [{
             "uid": 1,
             "name": "ev1",
-            "athome_bus_uid": 1,
+            "home_bus_uid": 1,
             "battery": {
               "capacity": 20,
               "max_flow_in": 3,
@@ -144,7 +144,7 @@ def test_demanad_grid_tssas_electric_car_2():
       "electric_cars": [{
             "uid": 1,
             "name": "ev1",
-            "athome_bus_uid": 1,
+            "home_bus_uid": 1,
             "battery": {
               "capacity": 20,
               "max_flow_in": 3,
@@ -223,4 +223,4 @@ def test_demanad_grid_tssas_electric_car_2():
     assert lp.get_col_at(s1_lp.grids_lp[1].withdrawn_cols[2]) == 6
     assert lp.get_col_at(s1_lp.grids_lp[1].withdrawn_cols[3]) == 7
 
-    # assert lp.get_obj() == 5000 * 5.2 + 11 * 7 + 12 * 5.2 + 13 * 5.2 + 14 * 7
+    assert lp.get_obj() == 5000 * 6 + 11 * 7 + 12 * 6 + 13 * 6 + 14 * 7

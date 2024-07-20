@@ -9,8 +9,8 @@ def test_utils_1():
     assert get_value_at([3], 0) == 3
     assert get_value_at([3], 1, 0) == 0
 
+    assert get_value_at({"3": 1.0}, 3) == 1.0
+    assert get_value_at({"3": 1}, 2, 3) == 3
+
     assert get_value_at({3: 1}, 3) == 1
     assert get_value_at({3: 1}, 2, 3) == 3
-
-    assert get_value_at({"3": 1}, 3) == 1
-    assert get_value_at({"3": 1}, 2, 3) == 3

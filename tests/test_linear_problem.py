@@ -84,7 +84,7 @@ def test_lp_1():
 
     assert isclose(lp.get_obj(), opt.fun, rel_tol=rel_tol)
 
-    m = lp.model
+    m: pyo.Block = lp.model
 
     assert len(m.x) == 2
     assert isclose(pyo.value(m.x[0]), opt.x[0], rel_tol=rel_tol)

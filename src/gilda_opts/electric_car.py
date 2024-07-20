@@ -7,7 +7,7 @@ from gilda_opts.baseclass_json import BaseClassJson
 from gilda_opts.bess import Battery
 
 
-ATHOME_MASK = 0
+HOME_MASK = 0
 ONROAD_MASK = 1
 PLUGGED_MASK = 2
 
@@ -35,16 +35,8 @@ class Engine(BaseClassJson):
     efficiency:           Transfer efficiency out of the battery to the engine [0..1]
     """
 
-    energy_consumption: float = 0
-    efficiency: float = 1
-
-
-def default_engine():
-    """Return the default battery for an electric_car."""
-    return Engine(
-        energy_consumption=1.0 / 6.0,
-        efficiency=0.95,
-    )
+    energy_consumption: float = 1.0 / 5.0
+    efficiency: float = 0.95
 
 
 @dataclass
@@ -68,11 +60,11 @@ class ElectricCar(BaseClassJson):
 
     uid: int = -1
     name: str = ""
-    athome_bus_uid: int = -1
+    home_bus_uid: int = -1
     public_bus_uid: int = -1
 
     battery: Battery = field(default_factory=default_battery)
-    engine: Engine = field(default_factory=default_engine)
+    engine: Engine = field(default_factory=Engine)
 
     location_masks: List[int] = field(default_factory=list)
     onroad_distances: List[float] = field(default_factory=list)

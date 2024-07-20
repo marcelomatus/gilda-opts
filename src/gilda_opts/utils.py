@@ -3,8 +3,8 @@
 from numbers import Number
 from typing import List, Dict, Any
 
-NumberSched = float | List[float] | Dict[str | int, float]
-IntSched = int | List[int] | Dict[str | int, int]
+NumberSched = float | int | List | Dict
+IntSched = int | List | Dict | Dict
 
 
 def get_value_at(var: NumberSched | IntSched, index: int, def_value: Any | None = None):

@@ -3,6 +3,7 @@
 from typing import List
 
 from gilda_opts.bess_lp import BESSLP
+from gilda_opts.sbtm_lp import SBTMLP
 from gilda_opts.block import Block
 from gilda_opts.bus_lp import BusLP
 from gilda_opts.demand_lp import DemandLP
@@ -31,6 +32,7 @@ class SystemLP:
         self.cesas_lp = self.create_collection(system.cesas, CESALP)
         self.grids_lp = self.create_collection(system.grids, GridLP)
         self.besss_lp = self.create_collection(system.besss, BESSLP)
+        self.sbtms_lp = self.create_collection(system.sbtms, SBTMLP)
         self.local_sources_lp = self.create_collection(
             system.local_sources, LocalSourceLP
         )
@@ -65,6 +67,7 @@ class SystemLP:
         self.add_blocks_to_collection(self.tssas_lp, blocks)
         self.add_blocks_to_collection(self.cesas_lp, blocks)
         self.add_blocks_to_collection(self.besss_lp, blocks)
+        self.add_blocks_to_collection(self.sbtms_lp, blocks)
         self.add_blocks_to_collection(self.local_sources_lp, blocks)
         self.add_blocks_to_collection(self.electric_cars_lp, blocks)
 
@@ -84,6 +87,7 @@ class SystemLP:
         cesas_sched = [o.get_sched() for o in self.cesas_lp.values()]
         grids_sched = [o.get_sched() for o in self.grids_lp.values()]
         besss_sched = [o.get_sched() for o in self.besss_lp.values()]
+        sbtms_sched = [o.get_sched() for o in self.sbtms_lp.values()]
         local_sources_sched = [o.get_sched() for o in self.local_sources_lp.values()]
         electric_cars_sched = [o.get_sched() for o in self.electric_cars_lp.values()]
 
@@ -97,6 +101,7 @@ class SystemLP:
             tssas=tssas_sched,
             cesas=cesas_sched,
             besss=besss_sched,
+            sbtms=sbtms_sched,
             local_sources=local_sources_sched,
             electric_cars=electric_cars_sched,
         )

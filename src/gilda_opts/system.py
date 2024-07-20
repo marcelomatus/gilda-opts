@@ -11,6 +11,7 @@ from gilda_opts.grid import Grid
 from gilda_opts.tssa import TSSA
 from gilda_opts.cesa import CESA
 from gilda_opts.bess import BESS
+from gilda_opts.sbtm import SBTM
 from gilda_opts.local_source import LocalSource
 from gilda_opts.electric_car import ElectricCar
 
@@ -37,5 +38,6 @@ class System(BaseClassJson):
     tssas: List[TSSA] = field(default_factory=lambda: [])
     cesas: List[CESA] = field(default_factory=lambda: [])
     besss: List[BESS] = field(default_factory=lambda: [])
+    sbtms: List[SBTM] = field(default_factory=lambda: [])
     local_sources: List[LocalSource] = field(default_factory=lambda: [])
     electric_cars: List[ElectricCar] = field(default_factory=lambda: [])
