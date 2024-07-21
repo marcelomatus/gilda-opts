@@ -13,7 +13,7 @@ class DemandLP:
         """Create the DemandLP instance."""
         self.load_cols: dict[int, int] = {}
         self.fail_cols: dict[int, int] = {}
-        self.load_rows: dict[int, int] = {}
+        self.fail_rows: dict[int, int] = {}
 
         self.demand = demand
         self.system_lp = system_lp
@@ -48,8 +48,8 @@ class DemandLP:
         row[load_col] = 1
         row[fail_col] = 1
 
-        load_row = lp.add_rhs_row(rhs=ub, row=row)
-        self.load_rows[bid] = load_row
+        fail_row = lp.add_rhs_row(row=row, rhs=ub)
+        self.fail_rows[bid] = fail_row
 
     def post_blocks(self):
         """Close the LP formulation post the blocks formulation."""

@@ -76,3 +76,9 @@ def test_demand_grid_local_source():
 
     assert lp.get_col_at(s1_lp.grids_lp[1].pmax_col) == 3
     assert lp.get_obj() == 5000 * 3 + 11 * 1 + 12 * 0 + 13 * 3 + 14 * 0 - 6 * 18 - 8 * 6
+
+    s1_sched = s1_lp.get_sched()
+
+    assert s1_sched.name == s1.name
+
+    assert s1_sched.local_sources[0].generation_values[1] == 20

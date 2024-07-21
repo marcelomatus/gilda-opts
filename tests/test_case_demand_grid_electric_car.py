@@ -224,3 +224,8 @@ def test_demanad_grid_tssas_electric_car_2():
     assert lp.get_col_at(s1_lp.grids_lp[1].withdrawn_cols[3]) == 7
 
     assert lp.get_obj() == 5000 * 6 + 11 * 7 + 12 * 6 + 13 * 6 + 14 * 7
+
+    s1_sched = s1_lp.get_sched()
+
+    assert s1_sched.name == s1.name
+    assert s1_sched.electric_cars[0].battery_efin_values[0] == 1.5

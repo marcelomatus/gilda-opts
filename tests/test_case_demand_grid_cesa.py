@@ -159,3 +159,9 @@ def test_demand_grid_cesa_2():
     assert (withdrawn_values == load_values).all()
 
     assert lp.get_col_at(s1_lp.grids_lp[1].pmax_col) == 3
+
+    s1_sched = s1_lp.get_sched()
+
+    assert s1_sched.name == s1.name
+
+    assert s1_sched.cesas[0].onoff_values[0] == 1
