@@ -27,7 +27,7 @@ class LocalSourceLP:
         # adding the local_source generation variable
         #
 
-        gprof = get_value_at(self.local_source.generation_profile, bid, 1)
+        gprof = get_value_at(self.local_source.generation_profile_sched, bid, 1)
 
         pmax = self.local_source.capacity * gprof
 

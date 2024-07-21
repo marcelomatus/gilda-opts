@@ -1,6 +1,6 @@
 """Contains the srts_lp class."""
 
-from gilda_opts.srts import SRTS
+from gilda_opts.srts import SRTS, MIN_TEMPERATURE, MAX_TEMPERATURE
 from gilda_opts.srts_sched import SRTSSched
 from gilda_opts.block import Block
 from gilda_opts.linear_problem import LinearProblem
@@ -26,26 +26,18 @@ class SRTSLP:
         prev_tfin_col: int,
         srts: SRTS,
     ):
-        """Adding the block constraints to the LP.
-
-        :param lp:
-        :param bid:
-        :param block:
-        :param prev_efin_col:
-        :param srts:
-        :returns: the tfin col and row indexes
-        """
+        """Adding the block constraints to the LP."""
         single_room = srts.single_room
         t_coeff = single_room.temperature_coeff(block.duration)
 
         #
         # tfin col
         #
-        lb, ub = -30, 50
+        lb, ub = MIN_TEMPERATURE, MAX_TEMPERATURE
         tfin_col = lp.add_col(lb=lb, ub=ub)
 
         tini = single_room.initial_temperature
-        text = get_value_at(single_room.external_temperatures, bid, tini)
+        text = get_value_at(single_room.external_temperature_sched, bid, tini)
 
         #
         # tfin row
@@ -67,7 +59,7 @@ class SRTSLP:
         lp: LinearProblem = self.system_lp.lp
         prev_tfin_col = self.tfin_cols[bid - 1] if bid > 0 else -1
 
-        (tfin_col, tfin_row) = SRTSLP.add_block_i(
+        tfin_col, tfin_row = SRTSLP.add_block_i(
             lp=lp,
             bid=bid,
             block=block,

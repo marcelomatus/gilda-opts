@@ -1,7 +1,7 @@
 """BESS module represents a Battery Energy Storage System."""
 
 from dataclasses import dataclass
-from typing import Any
+from gilda_opts.utils import NumberSched
 
 from gilda_opts.baseclass_json import BaseClassJson
 
@@ -21,8 +21,8 @@ class Battery(BaseClassJson):
     efin:           End energy stored [KWh]
     efin_price:     Energy value at the end of the period [$/KWh]
     discharge_cost: Discharge cost, related to the replacement cost [$/KWh]
-    emin_profile:   Minimum energy as proportion of the capacity [0..1]
-    emax_profile:   Maximum energy as proportion of the capacity [0..1]
+    emin_profile_sched:   Minimum energy as proportion of the capacity [0..1]
+    emax_profile_sched:   Maximum energy as proportion of the capacity [0..1]
     """
 
     capacity: float = 0
@@ -34,8 +34,8 @@ class Battery(BaseClassJson):
     efin: float = 0
     efin_price: float = 0
     discharge_cost: float = 0
-    emin_profile: Any = 0
-    emax_profile: Any = 1
+    emin_profile_sched: NumberSched = 0
+    emax_profile_sched: NumberSched = 1
 
 
 @dataclass

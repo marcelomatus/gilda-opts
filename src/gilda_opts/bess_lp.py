@@ -63,8 +63,8 @@ class BESSLP:
         #
         # efin col
         #
-        lb = bess.capacity * get_value_at(bess.emin_profile, bid, 0)
-        ub = bess.capacity * get_value_at(bess.emax_profile, bid, 1)
+        lb = bess.capacity * get_value_at(bess.emin_profile_sched, bid, 0)
+        ub = bess.capacity * get_value_at(bess.emax_profile_sched, bid, 1)
         efin_col = lp.add_col(lb=lb, ub=ub)
 
         #

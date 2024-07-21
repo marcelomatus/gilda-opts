@@ -56,9 +56,9 @@ class SystemLP:
 
     def add_blocks_to_collection(self, collection, blocks):
         """Add blocks to a collections."""
-        for index, block in enumerate(blocks):
+        for bid, block in enumerate(blocks):
             for olp in collection.values():
-                olp.add_block(index, block)
+                olp.add_block(bid, block)
 
         for olp in collection.values():
             olp.post_blocks()

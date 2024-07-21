@@ -29,7 +29,7 @@ class DemandLP:
         #
         cfail = block.energy_cost(self.demand.cfail)
 
-        ub = get_value_at(self.demand.loads, bid, 0)
+        ub = get_value_at(self.demand.load_sched, bid, 0)
         lb = 0 if cfail >= 0 else ub
         load_col = lp.add_col(lb=lb, ub=ub, c=0)
 

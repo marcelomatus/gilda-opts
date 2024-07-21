@@ -54,12 +54,12 @@ class GridLP:
         #
         # adding the grid buy (withdrawn) variable
         #
-        energy_cvar = get_value_at(grid.energy_tariffs, bid, 0)
-        emission_factor = get_value_at(grid.emission_factors, bid, 0)
+        energy_cvar = get_value_at(grid.energy_tariff_sched, bid, 0)
+        emission_factor = get_value_at(grid.emission_factor_sched, bid, 0)
         emission_cvar = grid.emission_cost * emission_factor
         cvar = block.energy_cost(energy_cvar + emission_cvar)
 
-        wpmax = grid.capacity * get_value_at(grid.withdrawn_profile, bid, 1)
+        wpmax = grid.capacity * get_value_at(grid.withdrawn_profile_sched, bid, 1)
         withdrawn_col = lp.add_col(lb=0, ub=wpmax, c=cvar)
 
         self.withdrawn_cols[bid] = withdrawn_col
@@ -68,10 +68,10 @@ class GridLP:
         #
         # adding the grid sell (injection) variable
         #
-        pvar = block.energy_cost(get_value_at(grid.energy_sell_prices, bid, 0))
+        pvar = block.energy_cost(get_value_at(grid.energy_sell_price_sched, bid, 0))
 
         if pvar > 0:
-            ipmax = grid.capacity * get_value_at(grid.injection_profile, bid, 1)
+            ipmax = grid.capacity * get_value_at(grid.injection_profile_sched, bid, 1)
             injection_col = lp.add_col(lb=0, ub=ipmax, c=-pvar)
             self.injection_cols[bid] = injection_col
             bus_lp.add_block_load_col(bid, injection_col, coeff=1)
@@ -79,7 +79,7 @@ class GridLP:
         #
         # adding pmax constraint
         #
-        pfact = get_value_at(grid.power_factors, bid, 0)
+        pfact = get_value_at(grid.power_factor_sched, bid, 0)
         if self.pmax_col >= 0 and pfact > 0:
             row = {}
             row[self.pmax_col] = 1

@@ -15,26 +15,35 @@ class Grid(BaseClassJson):
     ----------
     uid:              Grid unique id
     name:             Grid provider name
-    capacity:         Connection Capacity [KW]
-    withdrawn_profile: Withdrawn profile value, as a factor of the capacity [0..1]
-    injection_profile: Injection profile value, as a factor of the capacity [0..1]
-    energy_tariffs:   List of energy buy(withdrawn) tariff values [$/KWh]
-    power_tariff:     Power tariff [$/KW]
-    power_factors:    List of power factor values [0..1]
-    emission_factors: List of emission factors [gCO2/KWh]
-    emission_cost:    Emission cost [$/gCO2]
-    energy_sell_prices:    Energy sell(injection) price [$/KWh]
+    bus_uid:          Bus uid
+
+    capacity:                Connection Capacity [KW]
+    withdrawn_profile_sched: Withdrawn profile schedule, as a factor of capacity [0..1]
+    injection_profile_sched: Injection profile schedule, as a factor of capacity [0..1]
+
+    energy_tariff_sched:     Energy tariff schedule (withdrawn) [$/KWh]
+    energy_sell_price_sched: Energy sell price schedule (injection) [$/KWh]
+
+    power_tariff:       Power tariff [$/KW]
+    power_factor_sched: Power factor schedule [0..1]
+
+    emission_cost:         Emission cost [$/gCO2]
+    emission_factor_sched: Emission factor schedule [gCO2/KWh]
     """
 
     uid: int = -1
     name: str = ""
     bus_uid: int = -1
+
     capacity: float = 0
-    withdrawn_profile: NumberSched = 1.0
-    injection_profile: NumberSched = 1.0
-    energy_tariffs: NumberSched = 0.0
-    power_tariff: float = 0.0
-    power_factors: NumberSched = 0.0
-    emission_factors: NumberSched = 0.0
+    withdrawn_profile_sched: NumberSched = 1.0
+    injection_profile_sched: NumberSched = 1.0
+
+    energy_tariff_sched: NumberSched = 0.0
+    energy_sell_price_sched: NumberSched = 0.0
+
     emission_cost: float = 0.0
-    energy_sell_prices: NumberSched = 0.0
+    emission_factor_sched: NumberSched = 0.0
+
+    power_tariff: float = 0.0
+    power_factor_sched: NumberSched = 0.0

@@ -18,20 +18,20 @@ def test_demand_grid_local_source():
       "demands": [{"name": "d1",
                   "uid": 1,
                   "bus_uid": 1,
-                  "loads": [1, 2, 3, 4]}],
+                  "load_sched": [1, 2, 3, 4]}],
       "grids": [{"name": "g1",
                 "uid": 1,
                 "bus_uid": 1,
                 "capacity": 30,
-                "energy_tariffs": [11, 12, 13, 14],
+                "energy_tariff_sched": [11, 12, 13, 14],
                 "power_tariff": 5000,
-                "power_factors": [0,1,1,0],
-                "energy_sell_prices": [5, 6, 7, 8]}],
+                "power_factor_sched": [0,1,1,0],
+                "energy_sell_price_sched": [5, 6, 7, 8]}],
       "local_sources": [{"name": "g1",
                 "uid": 1,
                 "bus_uid": 1,
                 "capacity": 20,
-                "generation_profile": [0, 1, 0, 0.5]}]
+                "generation_profile_sched": [0, 1, 0, 0.5]}]
     }"""
 
     s1: System = System.from_json(ds)
@@ -42,7 +42,7 @@ def test_demand_grid_local_source():
     assert s1.buses[0].uid == 1
 
     assert s1.demands[0].name == "d1"
-    assert s1.demands[0].loads == [1, 2, 3, 4]
+    assert s1.demands[0].load_sched == [1, 2, 3, 4]
 
     assert s1.grids[0].name == "g1"
     assert s1.grids[0].capacity == 30

@@ -21,11 +21,11 @@ class ThermalUnit(BaseClassJson):
 
     electric_capacity:  electric consumption capacity [KW]
     thermal_capacity:   thermal capacity [KW]
-    thermal_cost:       thermal cost additional to the electricity cost [$/KWh]
+    thermal_cost_sched:       thermal cost additional to the electricity cost [$/KWh]
     heating_efficiency: how much thermal energy is transferred to the room [0..1]
     cooling_efficiency: how much thermal energy is transferred to the room [0..1]
 
-    active_mode:        active mode list: 1: heating, 0: disconnected, -1: cooling
+    active_mode_sched:        active mode list: 1: heating, 0: disconnected, -1: cooling
     """
 
     uid: int = -1
@@ -38,12 +38,15 @@ class ThermalUnit(BaseClassJson):
     cooling_efficiency: float = 0
 
     thermal_capacity: float = 0
-    thermal_cost: NumberSched = 0
-    active_mode: IntSched = 1
+    thermal_cost_sched: NumberSched = 0
+    active_mode_sched: IntSched = 1
 
+    #
+    # public methods
+    #
     def get_thermal_capacity(self, bid: int):
         """Return thermal capacity."""
-        active_mode = get_value_at(self.active_mode, bid, 0)
+        active_mode = get_value_at(self.active_mode_sched, bid, 0)
         if active_mode == 0:
             return 0, 0, 0
 
@@ -52,7 +55,9 @@ class ThermalUnit(BaseClassJson):
         )
 
         thermal_capacity = efficiency * self.capacity + self.thermal_capacity
-        thermal_cost = get_value_at(self.thermal_cost, bid, 0) * self.thermal_capacity
+        thermal_cost = (
+            get_value_at(self.thermal_cost_sched, bid, 0) * self.thermal_capacity
+        )
         return thermal_capacity, thermal_cost, active_mode
 
 

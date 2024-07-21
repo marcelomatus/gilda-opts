@@ -7,9 +7,9 @@ from gilda_opts.baseclass_json import BaseClassJson
 from gilda_opts.bess import Battery
 
 
-HOME_MASK = 0
-ONROAD_MASK = 1
-PLUGGED_MASK = 2
+HOME_LOCATION = 0
+ONROAD_LOCATION = 1
+PLUGGED_LOCATION = 2
 
 
 def default_battery():
@@ -19,8 +19,8 @@ def default_battery():
         max_flow_in=50,
         max_flow_out=0,
         efficiency_in=0.95,
-        emin_profile=0.2,
-        emax_profile=0.9,
+        emin_profile_sched=0.2,
+        emax_profile_sched=0.9,
     )
 
 
@@ -52,10 +52,10 @@ class ElectricCar(BaseClassJson):
     charger_bus_uid:        Bus uid to be connected to on public charger
 
     battery:                Storage system [Battery]
-    engine:        Electric engine [Engine]
+    engine:                 Electric engine [Engine]
 
-    location_masks:         at_home=0, on_street=1,2,4,...
-    onroad_distances:       Traveled distances while on the street [Km]
+    location_sched:         Location sched: home=0, onroad=1, parked=2
+    onroad_distance_sched:       Traveled distances while on the street [Km]
     """
 
     uid: int = -1
@@ -66,5 +66,5 @@ class ElectricCar(BaseClassJson):
     battery: Battery = field(default_factory=default_battery)
     engine: Engine = field(default_factory=Engine)
 
-    location_masks: List[int] = field(default_factory=list)
-    onroad_distances: List[float] = field(default_factory=list)
+    location_sched: List[int] = field(default_factory=list)
+    onroad_distance_sched: List[float] = field(default_factory=list)

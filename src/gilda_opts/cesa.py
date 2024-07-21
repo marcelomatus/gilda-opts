@@ -23,7 +23,7 @@ class CESA(BaseClassJson):
     name:         CESA name
     bus_uid:      Bus uid to be connected to
     load:         Load value [KW]
-    cumulative_masks:  Mask array for each block
+    cumulative_mask_sched:  Mask array for each block
     cumulative_on_periods: Cumulative on periods [h]
     cumulative_energies: Cumulative energies [KWh]
 
@@ -41,6 +41,6 @@ class CESA(BaseClassJson):
     name: str = ""
     bus_uid: int = -1
     load: float = 0
-    cumulative_masks: IntSched = 0
+    cumulative_mask_sched: IntSched = 0
     cumulative_on_periods: List[float] = field(default_factory=list)
     cumulative_energies: List[float] = field(default_factory=list)

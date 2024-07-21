@@ -29,7 +29,7 @@ class CESALP:
         #
         # adding the load variable
         #
-        cmask = get_value_at(self.cesa.cumulative_masks, bid, 0)
+        cmask = get_value_at(self.cesa.cumulative_mask_sched, bid, 0)
 
         if cmask <= 0:
             return

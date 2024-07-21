@@ -74,17 +74,17 @@ Grid
    +-----------------+-------+---------+---------+-----------------------------------------------+
    |capacity         | float |   KW    |    0    | Connection Capacity                           |
    +-----------------+-------+---------+---------+-----------------------------------------------+
-   |energy_tariffs   | float | $/KWh   |         |  List of energy tariff values                 |
+   |energy_tariff_sched   | float | $/KWh   |         |  List of energy tariff values                 |
    +-----------------+-------+---------+---------+-----------------------------------------------+
    |power_tariff     | float | $/KW    |    0    | Power tariff                                  |
    +-----------------+-------+---------+---------+-----------------------------------------------+
-   |power_factors    | float | p.u.    |         | List of power factor values                   |
+   |power_factor_sched    | float | p.u.    |         | List of power factor values                   |
    +-----------------+-------+---------+---------+-----------------------------------------------+
-   |emission_factors | float | gCO2/KWh|         | List of emission factors                      |
+   |emission_factor_sched | float | gCO2/KWh|         | List of emission factors                      |
    +-----------------+-------+---------+---------+-----------------------------------------------+
    | emission_cost   | float | $/gCO2  |    0    | Emission cost                                 |
    +-----------------+-------+---------+---------+-----------------------------------------------+
-   | energy_sell_prices   | float | $/KWh   |         | Energy purchase price                    |
+   | energy_sell_price_sched   | float | $/KWh   |         | Energy purchase price                    |
    +-----------------+-------+---------+---------+-----------------------------------------------+
 
 
@@ -187,7 +187,7 @@ Local Source
    +-----------------+-------+---------+---------+-------------------------------------------------------------------+
    |capacity         | float |  KW     |   0     | Connection Capacity                                               |
    +-----------------+-------+---------+---------+-------------------------------------------------------------------+
-   |generation_profile | float |  p.u. |    0    | Potential generation profile value,as a factor of the capacity    |
+   |generation_profile_sched | float |  p.u. |    0    | Potential generation profile value,as a factor of the capacity    |
    +-----------------+-------+---------+---------+-------------------------------------------------------------------+
 
 

@@ -18,14 +18,14 @@ def test_demand_grid():
       "demands": [{"name": "d1",
                   "uid": 1,
                   "bus_uid": 1,
-                  "loads": [1, 2, 3, 4]}],
+                  "load_sched": [1, 2, 3, 4]}],
       "grids": [{"name": "g1",
                 "uid": 1,
                 "bus_uid": 1,
                 "capacity": 30,
-                "energy_tariffs": [11, 12, 13, 14],
+                "energy_tariff_sched": [11, 12, 13, 14],
                 "power_tariff": 5000,
-                "power_factors": [0,1,1,0]}]
+                "power_factor_sched": [0,1,1,0]}]
     }"""
 
     s1: System = System.from_json(ds)
@@ -36,7 +36,7 @@ def test_demand_grid():
     assert s1.buses[0].uid == 1
 
     assert s1.demands[0].name == "d1"
-    assert s1.demands[0].loads == [1, 2, 3, 4]
+    assert s1.demands[0].load_sched == [1, 2, 3, 4]
 
     assert s1.grids[0].name == "g1"
     assert s1.grids[0].capacity == 30

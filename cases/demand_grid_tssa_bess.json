@@ -38,7 +38,7 @@
             "name": "d1",
             "uid": 1,
             "bus_uid": 1,
-            "loads": [
+            "load_sched": [
                 1,
                 2,
                 3,
@@ -56,7 +56,7 @@
             "uid": 1,
             "bus_uid": 1,
             "capacity": 30,
-            "energy_tariffs": [
+            "energy_tariff_sched": [
                 1,
                 2,
                 3,
@@ -67,7 +67,7 @@
                 8
             ],
             "power_tariff": 5000,
-            "power_factors": [
+            "power_factor_sched": [
                 0,
                 0,
                 0,

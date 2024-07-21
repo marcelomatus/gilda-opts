@@ -13,14 +13,14 @@ class Demand(BaseClassJson):
 
     Attributes:
     -----------
-    uid:     Load unique id
-    name:    Load name
-    bus_uid: Bus uid to be connected to
-    loads:   List of load values [KW]
+    uid:         Load unique id
+    name:        Load name
+    bus_uid:     Bus uid to be connected to
+    load_sched:  Load schedule [KW]
     """
 
     uid: int = -1
     name: str = ""
     bus_uid: int = -1
-    loads: NumberSched = 0.0
+    load_sched: NumberSched = 0.0
     cfail: float = -1

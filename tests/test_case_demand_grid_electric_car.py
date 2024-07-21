@@ -19,14 +19,14 @@ def test_demanad_grid_tssas_electric_car_1():
       "demands": [{"name": "d1",
                   "uid": 1,
                   "bus_uid": 1,
-                  "loads": [1, 2, 3, 4]}],
+                  "load_sched": [1, 2, 3, 4]}],
       "grids": [{"name": "g1",
                 "uid": 1,
                 "bus_uid": 1,
                 "capacity": 30,
-                "energy_tariffs": [11, 12, 13, 14],
+                "energy_tariff_sched": [11, 12, 13, 14],
                 "power_tariff": 5000,
-                "power_factors": [0,1,1,0]}],
+                "power_factor_sched": [0,1,1,0]}],
       "tssas": [{
             "uid": 1,
             "name": "lavado",
@@ -59,7 +59,7 @@ def test_demanad_grid_tssas_electric_car_1():
     assert s1.buses[0].uid == 1
 
     assert s1.demands[0].name == "d1"
-    assert s1.demands[0].loads == [1, 2, 3, 4]
+    assert s1.demands[0].load_sched == [1, 2, 3, 4]
 
     assert s1.grids[0].name == "g1"
     assert s1.grids[0].capacity == 30
@@ -126,14 +126,14 @@ def test_demanad_grid_tssas_electric_car_2():
       "demands": [{"name": "d1",
                   "uid": 1,
                   "bus_uid": 1,
-                  "loads": [1, 2, 3, 4]}],
+                  "load_sched": [1, 2, 3, 4]}],
       "grids": [{"name": "g1",
                 "uid": 1,
                 "bus_uid": 1,
                 "capacity": 30,
-                "energy_tariffs": [11, 12, 13, 14],
+                "energy_tariff_sched": [11, 12, 13, 14],
                 "power_tariff": 5000,
-                "power_factors": [0,1,1,0]}],
+                "power_factor_sched": [0,1,1,0]}],
       "tssas": [{
             "uid": 1,
             "name": "lavado",
@@ -156,8 +156,8 @@ def test_demanad_grid_tssas_electric_car_2():
               "energy_consumption": 0.125,
               "efficiency": 1.0
            },
-           "location_masks": [0,0,0,1],
-           "onroad_distances": [0,0,0,16]
+           "location_sched": [0,0,0,1],
+           "onroad_distance_sched": [0,0,0,16]
         }]
     }"""
 
@@ -169,7 +169,7 @@ def test_demanad_grid_tssas_electric_car_2():
     assert s1.buses[0].uid == 1
 
     assert s1.demands[0].name == "d1"
-    assert s1.demands[0].loads == [1, 2, 3, 4]
+    assert s1.demands[0].load_sched == [1, 2, 3, 4]
 
     assert s1.grids[0].name == "g1"
     assert s1.grids[0].capacity == 30

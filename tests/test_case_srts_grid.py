@@ -28,15 +28,15 @@ def test_srts_grid_1():
                       "air_specific_heat_capacity": 1.005,
                       "thermal_mass_parameter": 250.0,
                       "initial_temperature": 20,
-                      "external_temperatures": 20}
+                      "external_temperature_sched": 20}
                  }],
       "grids": [{"name": "g1",
                 "uid": 1,
                 "bus_uid": 1,
                 "capacity": 30,
-                "energy_tariffs": [11, 12, 13, 14],
+                "energy_tariff_sched": [11, 12, 13, 14],
                 "power_tariff": 5000,
-                "power_factors": [0,1,1,0]}]
+                "power_factor_sched": [0,1,1,0]}]
     }"""
 
     s1: System = System.from_json(ds)
@@ -87,15 +87,15 @@ def test_srts_grid_2():
                       "air_specific_heat_capacity": 1.005,
                       "thermal_mass_parameter": 250.0,
                       "initial_temperature": 20,
-                      "external_temperatures": 30}
+                      "external_temperature_sched": 30}
                  }],
       "grids": [{"name": "g1",
                 "uid": 1,
                 "bus_uid": 1,
                 "capacity": 30,
-                "energy_tariffs": [11, 12, 13, 14],
+                "energy_tariff_sched": [11, 12, 13, 14],
                 "power_tariff": 5000,
-                "power_factors": [0,1,1,0]}]
+                "power_factor_sched": [0,1,1,0]}]
     }"""
 
     s1: System = System.from_json(ds)
@@ -143,15 +143,15 @@ def test_srts_grid_3():
                       "air_specific_heat_capacity": 1.005,
                       "thermal_mass_parameter": 250.0,
                       "initial_temperature": 20,
-                      "external_temperatures": 10}
+                      "external_temperature_sched": 10}
                  }],
       "grids": [{"name": "g1",
                 "uid": 1,
                 "bus_uid": 1,
                 "capacity": 30,
-                "energy_tariffs": [11, 12, 13, 14],
+                "energy_tariff_sched": [11, 12, 13, 14],
                 "power_tariff": 5000,
-                "power_factors": [0,1,1,0]}]
+                "power_factor_sched": [0,1,1,0]}]
     }"""
 
     s1: System = System.from_json(ds)
@@ -196,7 +196,7 @@ def test_srts_grid_4():
                         "srts_uid": 1,
                         "capacity": 20,
                         "heating_efficiency": 1.0,
-                        "active_mode": 1}],
+                        "active_mode_sched": 1}],
       "srtss": [{"name": "home",
                   "uid": 1,
                   "single_room": {
@@ -208,15 +208,15 @@ def test_srts_grid_4():
                       "air_specific_heat_capacity": 1.005,
                       "thermal_mass_parameter": 250.0,
                       "initial_temperature": 20,
-                      "external_temperatures": 10},
-                   "thermal_drift_cost": 5000,
-                   "min_temperature": 24
+                      "external_temperature_sched": 10},
+                   "thermal_drift_cost_sched": 5000,
+                   "min_temperature_sched": 24
                  }],
       "grids": [{"name": "g1",
                 "uid": 1,
                 "bus_uid": 1,
                 "capacity": 30,
-                "energy_tariffs": 150}]
+                "energy_tariff_sched": 150}]
     }"""
 
     s1: System = System.from_json(ds)
