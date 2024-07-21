@@ -21,7 +21,7 @@ class Grid(BaseClassJson):
     withdrawn_profile_sched: Withdrawn profile schedule, as a factor of capacity [0..1]
     injection_profile_sched: Injection profile schedule, as a factor of capacity [0..1]
 
-    energy_tariff_sched:     Energy tariff schedule (withdrawn) [$/KWh]
+    energy_buy_price_sched:     Energy tariff schedule (withdrawn) [$/KWh]
     energy_sell_price_sched: Energy sell price schedule (injection) [$/KWh]
 
     power_tariff:       Power tariff [$/KW]
@@ -39,7 +39,7 @@ class Grid(BaseClassJson):
     withdrawn_profile_sched: NumberSched = 1.0
     injection_profile_sched: NumberSched = 1.0
 
-    energy_tariff_sched: NumberSched = 0.0
+    energy_buy_price_sched: NumberSched = 0.0
     energy_sell_price_sched: NumberSched = 0.0
 
     emission_cost: float = 0.0

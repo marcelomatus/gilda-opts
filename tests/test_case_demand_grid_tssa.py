@@ -23,7 +23,7 @@ def test_demand_grid_tssa_1():
                 "uid": 1,
                 "bus_uid": 1,
                 "capacity": 30,
-                "energy_tariff_sched": [11, 12, 13, 14],
+                "energy_buy_price_sched": [11, 12, 13, 14],
                 "power_tariff": 5000,
                 "power_factor_sched": [0,1,1,0]}],
       "tssas": [{
@@ -94,7 +94,7 @@ def test_demand_grid_tssa_2():
                 "uid": 1,
                 "bus_uid": 1,
                 "capacity": 30,
-                "energy_tariff_sched": [11, 12, 13, 14],
+                "energy_buy_price_sched": [11, 12, 13, 14],
                 "power_tariff": 5000,
                 "power_factor_sched": [0,1,1,0]}],
       "tssas": [{
@@ -171,7 +171,7 @@ def test_demand_grid_tssa_3():
                 "uid": 1,
                 "bus_uid": 1,
                 "capacity": 30,
-                "energy_tariff_sched": [11, 12, 13, 14],
+                "energy_buy_price_sched": [11, 12, 13, 14],
                 "power_tariff": 5000,
                 "power_factor_sched": [0,1,1,0]}],
       "tssas": [{

@@ -24,7 +24,7 @@ def test_demanad_grid_tssas_bess():
                 "uid": 1,
                 "bus_uid": 1,
                 "capacity": 30,
-                "energy_tariff_sched": [11, 12, 13, 14],
+                "energy_buy_price_sched": [11, 12, 13, 14],
                 "power_tariff": 5000,
                 "power_factor_sched": [0,1,1,0]}],
       "tssas": [{

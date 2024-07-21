@@ -63,7 +63,7 @@
             "uid": 1,
             "bus_uid": 1,
             "capacity": 30,
-            "energy_tariff_sched": 150
+            "energy_buy_price_sched": 150
         }
     ]
 }

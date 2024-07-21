@@ -54,7 +54,7 @@ class GridLP:
         #
         # adding the grid buy (withdrawn) variable
         #
-        energy_cvar = get_value_at(grid.energy_tariff_sched, bid, 0)
+        energy_cvar = get_value_at(grid.energy_buy_price_sched, bid, 0)
         emission_factor = get_value_at(grid.emission_factor_sched, bid, 0)
         emission_cvar = grid.emission_cost * emission_factor
         cvar = block.energy_cost(energy_cvar + emission_cvar)
