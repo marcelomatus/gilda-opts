@@ -28,6 +28,9 @@ class BusLP:
 
     def add_block_load_col(self, bid, load_col, coeff=1):
         """Add load variable to load row in a block."""
+        if coeff == 0:
+            return
+
         i = self.load_rows[bid]
         j = load_col
         self.system_lp.lp.set_coeff(i, j, coeff)

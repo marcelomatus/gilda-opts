@@ -61,8 +61,8 @@ class BESSLP:
         #
         # efin row
         #
-        row: dict[int, float] = {}
-        row[efin_col] = 1
+        row = {}
+        row[efin_col] = 1.0
         row[flow_in_col] = -block.duration * bess.efficiency_in
         row[flow_out_col] = block.duration / bess.efficiency_out
 

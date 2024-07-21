@@ -42,7 +42,7 @@ class SRTSLP:
         #
         # tfin row
         #
-        row: dict[int, float] = {}
+        row = {}
         row[tfin_col] = 1
 
         if prev_tfin_col >= 0:
@@ -69,9 +69,17 @@ class SRTSLP:
 
         self.tfin_cols[bid], self.tfin_rows[bid] = tfin_col, tfin_row
 
-    def get_tfin_colrow(self, bid: int):
+    def get_tfin_col(self, bid: int):
         """Return tfin col and row."""
-        return self.tfin_cols[bid], self.tfin_rows[bid]
+        return self.tfin_cols[bid]
+
+    def add_block_q_col(self, bid, q_col, q_coeff):
+        """Add a heat flow to the room temperature."""
+        if q_coeff == 0:
+            return
+
+        lp: LinearProblem = self.system_lp.lp
+        lp.set_coeff(self.tfin_rows[bid], q_col, -q_coeff)
 
     def post_blocks(self):
         """Close the LP formulation post the blocks formulation."""

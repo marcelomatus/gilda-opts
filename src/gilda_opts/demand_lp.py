@@ -23,7 +23,6 @@ class DemandLP:
         lp = self.system_lp.lp
         bus_lp = self.system_lp.get_bus_lp(self.demand.bus_uid)
 
-        row: dict[int, int] = {}
         #
         # adding the load variable
         #

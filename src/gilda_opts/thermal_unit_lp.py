@@ -31,8 +31,7 @@ class ThermalUnitLP:
         block: Block,
         srts: SRTS,
         thermal_unit: ThermalUnit,
-        tfin_col: int,
-        tfin_row: int,
+        srts_lp: SRTSLP,
     ):
         """Add thermal unit constraints to block."""
         #
@@ -50,6 +49,7 @@ class ThermalUnitLP:
             tcost = block.energy_cost(thermal_cost_sched)
             ctype = block.intvar_type
             onoff_col = lp.add_col(lb=0, ub=1, c=tcost, ctype=ctype)
+            srts_lp.add_block_q_col(bid, onoff_col, q_coeff)
 
             epcost = block.energy_cost(
                 get_value_at(srts.thermal_drift_cost_sched, bid, 0)
@@ -65,14 +65,13 @@ class ThermalUnitLP:
             tref = get_value_at(tref_sched, bid, single_room.initial_temperature)
 
             row = {}
+            tfin_col = srts_lp.get_tfin_col(bid)
             row[tfin_col] = heat_direction
             row[ep_col] = 1
             row[en_col] = -1
             lb = ub = heat_direction * tref
-
             onoff_row = lp.add_row(row, lb=lb, ub=ub)
 
-            lp.set_coeff(tfin_row, onoff_col, -q_coeff)
         else:
             onoff_col = lp.add_col(lb=0, ub=0)
             onoff_row = -1
@@ -82,21 +81,20 @@ class ThermalUnitLP:
     def add_block(self, bid: int, block: Block):
         """Add thermal units equation to a block."""
         lp: LinearProblem = self.system_lp.lp
-        bus_lp: BusLP = self.system_lp.get_bus_lp(self.thermal_unit.bus_uid)
         srts_lp: SRTSLP = self.system_lp.get_srts_lp(self.thermal_unit.srts_uid)
 
-        tfin_col, tfin_row = srts_lp.get_tfin_colrow(bid)
         onoff_col, onoff_row = ThermalUnitLP.add_block_i(
             lp=lp,
             bid=bid,
             block=block,
             srts=srts_lp.srts,
             thermal_unit=self.thermal_unit,
-            tfin_col=tfin_col,
-            tfin_row=tfin_row,
+            srts_lp=srts_lp,
         )
 
-        if onoff_col >= 0:
+        bus_id = self.thermal_unit.bus_uid
+        if bus_id >= 0 and onoff_row >= 0:
+            bus_lp: BusLP = self.system_lp.get_bus_lp(bus_id)
             bus_lp.add_block_load_col(bid, onoff_col, coeff=self.thermal_unit.capacity)
 
         self.onoff_cols[bid], self.onoff_rows[bid] = onoff_col, onoff_row
