@@ -71,8 +71,10 @@ class LinearProblem:
         self.cub[j] = ub
         self.c[j] = c
         self.ctypes[j] = ctype
-        self.cnames[j] = name
-        self.cpos[name] = j
+
+        if name is not None:
+            self.cnames[j] = name
+            self.cpos[name] = j
 
         self.cols += 1
         return j
@@ -85,8 +87,10 @@ class LinearProblem:
 
         self.rlb[i] = lb
         self.rub[i] = ub
-        self.rnames[i] = name
-        self.rpos[name] = i
+
+        if name is not None:
+            self.rnames[i] = name
+            self.rpos[name] = i
 
         self.rows += 1
         return i

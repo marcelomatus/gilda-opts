@@ -52,7 +52,7 @@ class ThermalUnit(BaseClassJson):
         )
 
         thermal_capacity = efficiency * self.capacity + self.thermal_capacity
-        thermal_cost = get_value_at(self.thermal_cost, bid, 0)
+        thermal_cost = get_value_at(self.thermal_cost, bid, 0) * self.thermal_capacity
         return thermal_capacity, thermal_cost, active_mode
 
 

@@ -62,8 +62,8 @@ class ElectricCarLP:
             lb, ub = engine_flow, engine_flow
         else:
             lb, ub = 0, 0
-        cvar = ec.battery.discharge_cost * block.duration
-        engine_flow_col = lp.add_col(lb=lb, ub=ub, c=cvar)
+        ecost = block.energy_cost(ec.battery.discharge_cost)
+        engine_flow_col = lp.add_col(lb=lb, ub=ub, c=ecost)
 
         lp.set_coeff(
             battery_efin_row,

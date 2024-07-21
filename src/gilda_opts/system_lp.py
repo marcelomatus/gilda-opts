@@ -93,6 +93,7 @@ class SystemLP:
 
     def get_sched(self):
         """Return the system sched."""
+        buses_sched = [o.get_sched() for o in self.buses_lp.values()]
         demands_sched = [o.get_sched() for o in self.demands_lp.values()]
         tssas_sched = [o.get_sched() for o in self.tssas_lp.values()]
         cesas_sched = [o.get_sched() for o in self.cesas_lp.values()]
@@ -109,6 +110,7 @@ class SystemLP:
             total_cost=self.lp.get_obj(),
             solver_time=self.lp.get_time(),
             grids=grids_sched,
+            buses=buses_sched,
             demands=demands_sched,
             tssas=tssas_sched,
             cesas=cesas_sched,

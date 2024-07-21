@@ -1,10 +1,9 @@
 """Contains the srts_lp class."""
 
-import logging
 from gilda_opts.srts import SRTS
 from gilda_opts.srts_sched import SRTSSched
 from gilda_opts.block import Block
-from gilda_opts.linear_problem import LinearProblem, guid
+from gilda_opts.linear_problem import LinearProblem
 from gilda_opts.utils import get_value_at
 
 
@@ -77,11 +76,6 @@ class SRTSLP:
         )
 
         self.tfin_cols[bid], self.tfin_rows[bid] = tfin_col, tfin_row
-
-        uid = self.srts.uid
-        lname = guid("srts", uid, bid)
-        logging.info("added tfin col %s %d", lname, tfin_col)
-        logging.info("added tfin row %s %d", lname, tfin_row)
 
     def get_tfin_colrow(self, bid: int):
         """Return tfin col and row."""

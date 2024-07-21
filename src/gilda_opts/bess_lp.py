@@ -1,12 +1,10 @@
 """Contains the demnand_lp class."""
 
-import logging
-
 from gilda_opts.bess import Battery, BESS
 from gilda_opts.bess_sched import BESSSched
 from gilda_opts.block import Block
 from gilda_opts.bus_lp import BusLP
-from gilda_opts.linear_problem import LinearProblem, guid
+from gilda_opts.linear_problem import LinearProblem
 from gilda_opts.utils import get_value_at
 
 
@@ -51,7 +49,7 @@ class BESSLP:
         #
         # flow_out col
         #
-        cvar = bess.discharge_cost * block.duration
+        cvar = block.energy_cost(bess.discharge_cost)
         ub = bess.max_flow_out if bus_lp is not None else 0
         flow_out_col = lp.add_col(lb=0, ub=ub, c=cvar)
 
@@ -87,10 +85,9 @@ class BESSLP:
 
         return flow_in_col, flow_out_col, efin_col, efin_row
 
-    def add_block(self, index: int, block: Block):
+    def add_block(self, bid: int, block: Block):
         """Add BESS equations to a block."""
         lp: LinearProblem = self.system_lp.lp
-        bid = index
         bus_lp = self.system_lp.get_bus_lp(self.bess.bus_uid)
         prev_efin_col = self.efin_cols[bid - 1] if bid > 0 else -1
 
@@ -107,13 +104,6 @@ class BESSLP:
         self.flow_in_cols[bid] = flow_in_col
         self.efin_cols[bid] = efin_col
         self.efin_rows[bid] = efin_row
-
-        uid = self.bess.uid
-        lname = guid("bess", uid, bid)
-        logging.info("added flow_in variable %s %d", lname, flow_in_col)
-        logging.info("added flow_out variable %s %d", lname, flow_out_col)
-        logging.info("added efin variable %s %d", lname, efin_col)
-        logging.info("added efin row %s %d", lname, efin_row)
 
     @staticmethod
     def post_blocks_i(

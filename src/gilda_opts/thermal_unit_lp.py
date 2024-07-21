@@ -44,10 +44,11 @@ class ThermalUnitLP:
         q_coeff = heat_direction * single_room.q_coeff(block.duration, thermal_capacity)
 
         if q_coeff != 0:
-            tcost = block.duration * thermal_cost * thermal_capacity
-            onoff_col = lp.add_col(lb=0, ub=1, c=tcost, ctype=1)
+            tcost = block.energy_cost(thermal_cost)
+            ctype = block.intvar_type
+            onoff_col = lp.add_col(lb=0, ub=1, c=tcost, ctype=ctype)
 
-            epcost = block.duration * get_value_at(srts.thermal_drift_cost, bid, 0)
+            epcost = block.energy_cost(get_value_at(srts.thermal_drift_cost, bid, 0))
             ep_col = lp.add_col(lb=0, c=epcost)
             en_col = lp.add_col(lb=0, c=0)
 

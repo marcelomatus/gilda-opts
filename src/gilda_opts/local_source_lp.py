@@ -1,9 +1,6 @@
 """Contains the demnand_lp class."""
 
-import logging
-
 from gilda_opts.block import Block
-from gilda_opts.linear_problem import guid
 from gilda_opts.local_source import LocalSource
 from gilda_opts.local_source_sched import LocalSourceSched
 from gilda_opts.utils import get_value_at
@@ -21,10 +18,8 @@ class LocalSourceLP:
         self.local_source = local_source
         self.system_lp = system_lp
 
-    def add_block(self, index: int, block: Block):  # pylint: disable=W0613
+    def add_block(self, bid: int, block: Block):  # pylint: disable=W0613
         """Add LocalSource equations to a block."""
-        bid = index
-        uid = self.local_source.uid
         lp = self.system_lp.lp
         bus_lp = self.system_lp.get_bus_lp(self.local_source.bus_uid)
 
@@ -32,14 +27,11 @@ class LocalSourceLP:
         # adding the local_source generation variable
         #
 
-        lname = guid("lb", uid, bid)
         gprof = get_value_at(self.local_source.generation_profile, bid, 1)
 
         pmax = self.local_source.capacity * gprof
 
-        generation_col = lp.add_col(name=lname, lb=0, ub=pmax)
-        logging.info("added generation variable %s %s", lname, generation_col)
-
+        generation_col = lp.add_col(lb=0, ub=pmax)
         self.generation_cols[bid] = generation_col
         bus_lp.add_block_load_col(bid, generation_col, coeff=-1)
 

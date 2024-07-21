@@ -14,7 +14,17 @@ class Block(BaseClassJson):
     ----------
     duration: Block time duration [hours]
     discount: Discount factor to be used in the LP formulation
+    intvar_type:  Integer variable type= 1:integers, 0: reals
     """
 
     duration: float = 1.0
     discount: float = 1.0
+    intvar_type: int = 1
+
+    def energy_cost(self, cost):
+        """Return energy cost value, which depends of the block duration."""
+        return self.duration * self.power_cost(cost)
+
+    def power_cost(self, cost):
+        """Return the power cost value."""
+        return cost * self.discount
