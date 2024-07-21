@@ -233,7 +233,7 @@ def test_srts_grid_4():
 
     s1_lp = SystemLP(s1)
 
-    status = s1_lp.solve(keepfiles=True)
+    status = s1_lp.solve(keepfiles=False)
 
     assert status == "ok"
 
@@ -256,5 +256,12 @@ def test_srts_grid_4():
     s1_sched: SystemSched = s1_lp.get_sched()
 
     assert s1_sched.name == s1.name
+
     assert s1_sched.srtss[0].tfin_values[0] == approx(21.566252)
+
     assert s1_sched.thermal_units[0].onoff_values[0] == 1
+    assert s1_sched.thermal_units[0].onoff_values[1] == 1
+    assert s1_sched.thermal_units[0].onoff_values[2] == 1
+    assert s1_sched.thermal_units[0].onoff_values[3] == 1
+    assert s1_sched.thermal_units[0].onoff_values[4] == 0
+    assert s1_sched.thermal_units[0].onoff_values[5] == 0

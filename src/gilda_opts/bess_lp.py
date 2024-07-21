@@ -30,16 +30,7 @@ class BESSLP:
         bess: Battery,
         bus_lp: BusLP | None = None,
     ):
-        """Adding the block constraints to the LP.
-
-        :param lp:
-        :param bid:
-        :param block:
-        :param prev_efin_col:
-        :param bess:
-        :param bus_lp:
-        :returns: the col and row indexes
-        """
+        """Adding the block constraints to the LP."""
         #
         # flow_in col
         #
