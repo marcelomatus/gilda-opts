@@ -94,8 +94,10 @@
             "name": "b1",
             "bus_uid": 1,
             "capacity": 20,
-            "max_flow": 2.5,
-            "efficiency": 0.9
+            "max_flow_in": 2.5,
+            "max_flow_out": 2.5,
+            "efficiency_in": 0.9,
+            "efficiency_out": 0.9
         }
    ]
 }
