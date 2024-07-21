@@ -14,15 +14,16 @@ class SingleRoom(BaseClassJson):
 
     Attributes:
     -----------
-    total_floor_area:            area                                 m2
-    height:                      height                               m
-    u_value:                     U-value (thermal transmittance)      W/m2K
-    air_renewal:                 Air renewals per hour                1/h
-    air_density:                 Air density                          kg/m3
-    air_specific_heat_capacity:  Specific heat capacity of air        kJ/kg K
-    thermal_mass_parameter:      Thermal mass parameter (kappa value) kJ/m2K
-    initial_temperature:         Initial temperature                  C
-    external_temperature_sched:       External temperature                 C
+    total_floor_area:            area                                 [m2]
+    height:                      height                               [m]
+    u_value:                     U-value (thermal transmittance)      [W/m2 K]
+    air_renewal:                 Air renewals per hour                [1/h]
+    air_density:                 Air density                          [kg/m3]
+    air_specific_heat_capacity:  Specific heat capacity of air        [kJ/kg K]
+    thermal_mass_parameter:      Thermal mass parameter (kappa value) [kJ/m2K]
+    initial_temperature:         Initial temperature                  [C]
+    external_temperature_sched:  External temperature                 [C]
+    external_heating_sched:      External heating (ie, sun + occupancy)  [KW]
     """
 
     total_floor_area: float = 70
@@ -35,6 +36,7 @@ class SingleRoom(BaseClassJson):
     initial_temperature: float = 20
 
     external_temperature_sched: NumberSched = 20
+    external_heating_sched: NumberSched = 0
 
     #
     # public methods
@@ -69,7 +71,7 @@ class SingleRoom(BaseClassJson):
     def q_coeff(self, duration: float, thermal_capacity):
         """Return the thermal unit Q coefficient."""
         #  Thermal unit q coeff
-        #      n_t * P_e * D_t / ( TMP * TFA )
+        #      P_e * D_t / ( TMP * TFA )
         #
         d_t = duration * 3600
 

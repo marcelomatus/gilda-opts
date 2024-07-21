@@ -39,6 +39,11 @@ class SRTSLP:
         tini = single_room.initial_temperature
         text = get_value_at(single_room.external_temperature_sched, bid, tini)
 
+        qext = single_room.q_coeff(
+            block.duration,
+            get_value_at(single_room.external_heating_sched, bid, 0)
+        )
+
         #
         # tfin row
         #
@@ -46,10 +51,10 @@ class SRTSLP:
         row[tfin_col] = 1
 
         if prev_tfin_col >= 0:
-            ub = lb = t_coeff * text
+            ub = lb = t_coeff * text + qext
             row[prev_tfin_col] = -1 + t_coeff
         else:
-            ub = lb = tini * (1 - t_coeff) + t_coeff * text
+            ub = lb = tini * (1 - t_coeff) + t_coeff * text + qext
         tfin_row = lp.add_row(row, lb=lb, ub=ub)
 
         return tfin_col, tfin_row
