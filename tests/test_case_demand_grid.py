@@ -1,4 +1,4 @@
-"""Test demand_grid_tssa."""
+"""Test demand_grid."""
 
 from gilda_opts.system import System
 from gilda_opts.system_lp import SystemLP

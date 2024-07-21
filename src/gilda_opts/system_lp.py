@@ -7,6 +7,7 @@ from gilda_opts.srts_lp import SRTSLP
 from gilda_opts.thermal_unit_lp import ThermalUnitLP
 from gilda_opts.block import Block
 from gilda_opts.bus_lp import BusLP
+from gilda_opts.line_lp import LineLP
 from gilda_opts.demand_lp import DemandLP
 from gilda_opts.grid_lp import GridLP
 from gilda_opts.linear_problem import LinearProblem
@@ -28,6 +29,7 @@ class SystemLP:
         self.lp = lp if lp is not None else LinearProblem()
 
         self.buses_lp = self.create_collection(system.buses, BusLP)
+        self.lines_lp = self.create_collection(system.lines, LineLP)
         self.srtss_lp = self.create_collection(system.srtss, SRTSLP)
         self.demands_lp = self.create_collection(system.demands, DemandLP)
         self.tssas_lp = self.create_collection(system.tssas, TSSALP)
@@ -66,6 +68,7 @@ class SystemLP:
     def add_blocks(self, blocks: List[Block]):
         """Add System equations to a block."""
         self.add_blocks_to_collection(self.buses_lp, blocks)
+        self.add_blocks_to_collection(self.lines_lp, blocks)
         self.add_blocks_to_collection(self.grids_lp, blocks)
         self.add_blocks_to_collection(self.demands_lp, blocks)
         self.add_blocks_to_collection(self.tssas_lp, blocks)
@@ -94,6 +97,7 @@ class SystemLP:
     def get_sched(self):
         """Return the system sched."""
         buses_sched = [o.get_sched() for o in self.buses_lp.values()]
+        lines_sched = [o.get_sched() for o in self.lines_lp.values()]
         demands_sched = [o.get_sched() for o in self.demands_lp.values()]
         tssas_sched = [o.get_sched() for o in self.tssas_lp.values()]
         cesas_sched = [o.get_sched() for o in self.cesas_lp.values()]
@@ -111,6 +115,7 @@ class SystemLP:
             solver_time=self.lp.get_time(),
             grids=grids_sched,
             buses=buses_sched,
+            lines=lines_sched,
             demands=demands_sched,
             tssas=tssas_sched,
             cesas=cesas_sched,

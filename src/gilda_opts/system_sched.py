@@ -5,6 +5,7 @@ from typing import List
 from gilda_opts.baseclass_json import BaseClassJson
 
 from gilda_opts.bus_sched import BusSched
+from gilda_opts.line_sched import LineSched
 from gilda_opts.demand_sched import DemandSched
 from gilda_opts.grid_sched import GridSched
 from gilda_opts.tssa_sched import TSSASched
@@ -34,6 +35,7 @@ class SystemSched(BaseClassJson):
     solver_time: float = 0
 
     buses: List[BusSched] = field(default_factory=lambda: [])
+    lines: List[LineSched] = field(default_factory=lambda: [])
     grids: List[GridSched] = field(default_factory=lambda: [])
     demands: List[DemandSched] = field(default_factory=lambda: [])
     tssas: List[TSSASched] = field(default_factory=lambda: [])

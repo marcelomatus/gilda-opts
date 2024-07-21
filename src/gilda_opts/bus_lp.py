@@ -16,7 +16,11 @@ class BusLP:
         self.bus = bus
         self.system_lp = system_lp
 
-    def add_block(self, bid: int, block: Block):  # pylint: disable=unused-argument
+    def add_block(
+        self,
+        bid: int,
+        block: Block,  # pylint: disable=unused-argument
+    ):
         """Add Bus equations to a block."""
         lp = self.system_lp.lp
         row = lp.add_rhs_row(rhs=0)
