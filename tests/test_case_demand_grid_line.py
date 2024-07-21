@@ -1,4 +1,5 @@
 """Test demand_grid."""
+
 from pytest import approx
 
 from gilda_opts.system import System

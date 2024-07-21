@@ -73,7 +73,7 @@ class ThermalUnitLP:
             onoff_row = lp.add_row(row, lb=lb, ub=ub)
 
         else:
-            onoff_col = lp.add_col(lb=0, ub=0)
+            onoff_col = -1  # lp.add_col(lb=0, ub=1, c=1)
             onoff_row = -1
 
         return onoff_col, onoff_row
@@ -105,7 +105,7 @@ class ThermalUnitLP:
     def get_sched(self):
         """Return the optimal thermal_unit schedule."""
         lp = self.system_lp.lp
-        onoff_values = lp.get_col_sol(self.onoff_cols.values())
+        onoff_values = lp.get_col_sol(self.onoff_cols.values(), def_value=0)
         return ThermalUnitSched(
             uid=self.thermal_unit.uid,
             name=self.thermal_unit.name,

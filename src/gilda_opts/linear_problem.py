@@ -231,18 +231,21 @@ class LinearProblem:
         """Get the solution time."""
         return self.result.solver.time if self.result is not None else None
 
-    def get_col_at(self, index):
+    def get_col_at(self, index, def_value=None):
         """Get the solution value at the given index."""
+        if index < 0:
+            return def_value
+
         return pyo.value(self.model.x[index]) if self.model is not None else None
 
-    def get_col_sol(self, indexes):
+    def get_col_sol(self, indexes, def_value=None):
         """Get the solution values for a given indexes list."""
         if self.model is None:
             return None
 
         x: np.ndarray = np.ndarray(len(indexes))
         for k, j in enumerate(indexes):
-            x[k] = pyo.value(self.model.x[j])
+            x[k] = pyo.value(self.model.x[j]) if j >= 0 else def_value
 
         return x
 
