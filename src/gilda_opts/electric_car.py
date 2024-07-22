@@ -5,11 +5,7 @@ from typing import List
 
 from gilda_opts.baseclass_json import BaseClassJson
 from gilda_opts.bess import Battery
-
-
-HOME_LOCATION = 0
-ONROAD_LOCATION = 1
-PLUGGED_LOCATION = 2
+from gilda_opts.utils import IntSched, NumberSched
 
 
 def default_battery():
@@ -19,6 +15,7 @@ def default_battery():
         max_flow_in=50,
         max_flow_out=0,
         efficiency_in=0.95,
+        efficiency_out=0.95,
         emin_profile_sched=0.2,
         emax_profile_sched=0.9,
     )
@@ -31,12 +28,10 @@ class Engine(BaseClassJson):
 
     Attributes:
     -----------
-    energy_consumption:   Energy consumption [Kwh/Km]
-    efficiency:           Transfer efficiency out of the battery to the engine [0..1]
+    energy_efficiency:   Energy efficiency [Km/Kwh]
     """
 
-    energy_consumption: float = 1.0 / 5.0
-    efficiency: float = 0.95
+    energy_efficiency: float = 8.0
 
 
 @dataclass
@@ -54,17 +49,19 @@ class ElectricCar(BaseClassJson):
     battery:                Storage system [Battery]
     engine:                 Electric engine [Engine]
 
-    location_sched:         Location sched: home=0, onroad=1, parked=2
-    onroad_distance_sched:       Traveled distances while on the street [Km]
+    bus_uid_sched:          Bus_id where is plugged or unplugged=-1
+    distance_sched:         Traveled distances while on road [Km]
+
+    cfail_sched:            Fail distance cost, you may use the taxi tariff [$/Km]
+
     """
 
     uid: int = -1
     name: str = ""
-    home_bus_uid: int = -1
-    public_bus_uid: int = -1
 
     battery: Battery = field(default_factory=default_battery)
     engine: Engine = field(default_factory=Engine)
 
-    location_sched: List[int] = field(default_factory=list)
-    onroad_distance_sched: List[float] = field(default_factory=list)
+    bus_uid_sched: IntSched = -1
+    distance_sched: NumberSched = 0
+    cfail_sched: NumberSched = -1

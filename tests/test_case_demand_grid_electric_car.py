@@ -37,7 +37,6 @@ def test_demanad_grid_tssas_electric_car_1():
       "electric_cars": [{
             "uid": 1,
             "name": "ev1",
-            "home_bus_uid": 1,
             "battery": {
               "capacity": 20,
               "max_flow_in": 3,
@@ -46,8 +45,9 @@ def test_demanad_grid_tssas_electric_car_1():
               "efficiency_out": 0.5
             },
            "engine": {
-              "energy_consumption": 0.125
-           }
+              "energy_efficiency": 8
+           },
+           "bus_uid_sched": 1
         }]
     }"""
 
@@ -144,20 +144,19 @@ def test_demanad_grid_tssas_electric_car_2():
       "electric_cars": [{
             "uid": 1,
             "name": "ev1",
-            "home_bus_uid": 1,
             "battery": {
               "capacity": 20,
               "max_flow_in": 3,
-              "max_flow_out": 3,
-              "efficiency_in": 0.5,
-              "efficiency_out": 0.5
+              "max_flow_out": 0,
+              "efficiency_in": 1,
+              "efficiency_out": 1
             },
            "engine": {
-              "energy_consumption": 0.125,
-              "efficiency": 1.0
+              "energy_efficiency": 8
            },
-           "location_sched": [0,0,0,1],
-           "onroad_distance_sched": [0,0,0,16]
+           "bus_uid_sched": [1,1,1,-1],
+           "distance_sched": [0,0,0,16],
+           "cfail_sched": 350
         }]
     }"""
 
@@ -176,7 +175,7 @@ def test_demanad_grid_tssas_electric_car_2():
 
     s1_lp = SystemLP(s1)
 
-    status = s1_lp.solve(keepfiles=False)
+    status = s1_lp.solve(keepfiles=True)
 
     assert status == "ok"
 
@@ -191,13 +190,13 @@ def test_demanad_grid_tssas_electric_car_2():
     assert lp.get_col_at(s1_lp.tssas_lp[1].onoff_cols[2]) == 1
     assert lp.get_col_at(s1_lp.tssas_lp[1].onoff_cols[3]) == 1
 
-    assert lp.get_col_at(s1_lp.electric_cars_lp[1].engine_flow_cols[0]) == 0
-    assert lp.get_col_at(s1_lp.electric_cars_lp[1].engine_flow_cols[1]) == 0
-    assert lp.get_col_at(s1_lp.electric_cars_lp[1].engine_flow_cols[2]) == 0
-    assert lp.get_col_at(s1_lp.electric_cars_lp[1].engine_flow_cols[3]) == 2
+    assert lp.get_col_at(s1_lp.electric_cars_lp[1].engine_distance_cols[0], 0) == 0
+    assert lp.get_col_at(s1_lp.electric_cars_lp[1].engine_distance_cols[1], 0) == 0
+    assert lp.get_col_at(s1_lp.electric_cars_lp[1].engine_distance_cols[2], 0) == 0
+    assert lp.get_col_at(s1_lp.electric_cars_lp[1].engine_distance_cols[3], 0) == 16
 
-    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_in_cols[0]) == 3
-    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_in_cols[1]) == 1
+    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_in_cols[0]) == 2
+    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_in_cols[1]) == 0
     assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_in_cols[2]) == 0
     assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_in_cols[3]) == 0
 
@@ -206,7 +205,7 @@ def test_demanad_grid_tssas_electric_car_2():
     assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_out_cols[2]) == 0
     assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_flow_out_cols[3]) == 0
 
-    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_efin_cols[0]) == 1.5
+    assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_efin_cols[0]) == 2.0
     assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_efin_cols[1]) == 2.0
     assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_efin_cols[2]) == 2.0
     assert lp.get_col_at(s1_lp.electric_cars_lp[1].battery_efin_cols[3]) == 0
@@ -218,14 +217,25 @@ def test_demanad_grid_tssas_electric_car_2():
 
     assert lp.get_col_at(s1_lp.grids_lp[1].pmax_col) == 6
 
-    assert lp.get_col_at(s1_lp.grids_lp[1].withdrawn_cols[0]) == 7
-    assert lp.get_col_at(s1_lp.grids_lp[1].withdrawn_cols[1]) == 6
+    assert lp.get_col_at(s1_lp.grids_lp[1].withdrawn_cols[0]) == 6
+    assert lp.get_col_at(s1_lp.grids_lp[1].withdrawn_cols[1]) == 5
     assert lp.get_col_at(s1_lp.grids_lp[1].withdrawn_cols[2]) == 6
     assert lp.get_col_at(s1_lp.grids_lp[1].withdrawn_cols[3]) == 7
-
-    assert lp.get_obj() == 5000 * 6 + 11 * 7 + 12 * 6 + 13 * 6 + 14 * 7
 
     s1_sched = s1_lp.get_sched()
 
     assert s1_sched.name == s1.name
-    assert s1_sched.electric_cars[0].battery_efin_values[0] == 1.5
+    assert s1_sched.electric_cars[0].battery_efin_values[0] == 2
+    assert s1_sched.electric_cars[0].battery_efin_values[1] == 2
+    assert s1_sched.electric_cars[0].battery_efin_values[2] == 2
+    assert s1_sched.electric_cars[0].battery_efin_values[3] == 0
+
+    assert s1_sched.electric_cars[0].engine_distance_values[0] == 0
+    assert s1_sched.electric_cars[0].engine_distance_values[1] == 0
+    assert s1_sched.electric_cars[0].engine_distance_values[2] == 0
+    assert s1_sched.electric_cars[0].engine_distance_values[3] == 16
+
+    assert s1_sched.electric_cars[0].engine_distance_duals[0] == 0
+    assert s1_sched.electric_cars[0].engine_distance_duals[1] == 0
+    assert s1_sched.electric_cars[0].engine_distance_duals[2] == 0
+    assert s1_sched.electric_cars[0].engine_distance_duals[3] == 1.375

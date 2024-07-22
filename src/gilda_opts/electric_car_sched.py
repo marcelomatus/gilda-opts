@@ -18,7 +18,8 @@ class ElectricCarSched(BaseClassJson):
     battery_efin_values:    battery efin_values
     battery_flow_in_values:  battery flow_in_values
     battery_flow_out_values: battery flow_out_values
-    engine_flow_values:     engine flow values
+    engine_distance_values:     engine distance values
+    engine_distance_duals:     engine distance duals
     """
 
     uid: int = -1
@@ -26,4 +27,5 @@ class ElectricCarSched(BaseClassJson):
     battery_efin_values: List[float] = field(default_factory=list)
     battery_flow_in_values: List[float] = field(default_factory=list)
     battery_flow_out_values: List[float] = field(default_factory=list)
-    engine_flow_values: List[float] = field(default_factory=list)
+    engine_distance_values: List[float] = field(default_factory=list)
+    engine_distance_duals: List[float] = field(default_factory=list)

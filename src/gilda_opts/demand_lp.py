@@ -26,10 +26,12 @@ class DemandLP:
         #
         # adding the load variable
         #
-        cfail = block.energy_cost(self.demand.cfail)
+        cfail_sched = get_value_at(self.demand.cfail_sched, bid, -1)
+        cfail = block.energy_cost(cfail_sched)
 
-        ub = get_value_at(self.demand.load_sched, bid, 0)
-        lb = 0 if cfail >= 0 else ub
+        load = get_value_at(self.demand.load_sched, bid, 0)
+        ub = load
+        lb = 0 if cfail > 0.0 else ub
         load_col = lp.add_col(lb=lb, ub=ub, c=0)
 
         self.load_cols[bid] = load_col
@@ -38,17 +40,17 @@ class DemandLP:
         #
         # adding the fail variable
         #
-        if cfail < 0.0:
+        if cfail <= 0.0:
             return
 
-        fail_col = lp.add_col(lb=0, c=cfail)
+        fail_col = lp.add_col(lb=0, ub=load, c=cfail)
         self.fail_cols[bid] = fail_col
 
         row = {}
         row[load_col] = 1
         row[fail_col] = 1
 
-        fail_row = lp.add_rhs_row(row=row, rhs=ub)
+        fail_row = lp.add_row(row=row, lb=load)
         self.fail_rows[bid] = fail_row
 
     def post_blocks(self):

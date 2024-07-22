@@ -77,7 +77,7 @@ def test_demand_grid_2():
                   "uid": 1,
                   "bus_uid": 1,
                   "load_sched": [1, 2, 3, 4],
-                  "cfail": 10000}],
+                  "cfail_sched": 10000}],
       "grids": [{"name": "g1",
                 "uid": 1,
                 "bus_uid": 1,

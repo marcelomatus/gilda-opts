@@ -23,4 +23,4 @@ class Demand(BaseClassJson):
     name: str = ""
     bus_uid: int = -1
     load_sched: NumberSched = 0.0
-    cfail: float = -1
+    cfail_sched: NumberSched = -1
