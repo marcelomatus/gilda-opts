@@ -20,4 +20,5 @@ class SRTSSched(BaseClassJson):
 
     uid: int = -1
     name: str = ""
+    tfin_duals: List[float] = field(default_factory=list)
     tfin_values: List[float] = field(default_factory=list)

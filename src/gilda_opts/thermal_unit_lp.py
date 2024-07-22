@@ -1,13 +1,15 @@
 """Contains the srts_lp class."""
 
-from gilda_opts.single_room import SingleRoom
-from gilda_opts.thermal_unit import ThermalUnit
-from gilda_opts.srts import SRTS, MAX_TEMPERATURE, MIN_TEMPERATURE
-from gilda_opts.thermal_unit_sched import ThermalUnitSched
+import numpy as np
+
 from gilda_opts.block import Block
 from gilda_opts.bus_lp import BusLP
-from gilda_opts.srts_lp import SRTSLP
 from gilda_opts.linear_problem import LinearProblem
+from gilda_opts.single_room import SingleRoom
+from gilda_opts.srts import MAX_TEMPERATURE, MIN_TEMPERATURE, SRTS
+from gilda_opts.srts_lp import SRTSLP
+from gilda_opts.thermal_unit import ThermalUnit
+from gilda_opts.thermal_unit_sched import ThermalUnitSched
 from gilda_opts.utils import get_value_at
 
 MAX_TEMPERATURE_RANGE = MAX_TEMPERATURE - MIN_TEMPERATURE
@@ -20,6 +22,7 @@ class ThermalUnitLP:
         """Create the ThermalUnit instance."""
         self.onoff_cols: dict[int, int] = {}
         self.onoff_rows: dict[int, int] = {}
+        self.dual_factors: dict[int, float] = {}
 
         self.thermal_unit = thermal_unit
         self.system_lp = system_lp
@@ -39,15 +42,15 @@ class ThermalUnitLP:
         #
         single_room: SingleRoom = srts.single_room
 
-        (thermal_capacity, thermal_cost_sched, heat_direction) = (
-            thermal_unit.get_thermal_capacity(bid)
+        (thermal_capacity, thermal_cost, heat_direction) = (
+            thermal_unit.get_thermal_parameters(bid)
         )
 
         q_coeff = heat_direction * single_room.q_coeff(block.duration, thermal_capacity)
 
         if q_coeff != 0:
-            tcost = block.energy_cost(thermal_cost_sched)
-            ctype = block.intvar_type
+            tcost = block.energy_cost(thermal_cost)
+            ctype = block.intvar_type * (1 - thermal_unit.power_controlled)
             onoff_col = lp.add_col(lb=0, ub=1, c=tcost, ctype=ctype)
             srts_lp.add_block_q_col(bid, onoff_col, q_coeff)
 
@@ -76,14 +79,14 @@ class ThermalUnitLP:
             onoff_col = -1  # lp.add_col(lb=0, ub=1, c=1)
             onoff_row = -1
 
-        return onoff_col, onoff_row
+        return onoff_col, onoff_row, heat_direction
 
     def add_block(self, bid: int, block: Block):
         """Add thermal units equation to a block."""
         lp: LinearProblem = self.system_lp.lp
         srts_lp: SRTSLP = self.system_lp.get_srts_lp(self.thermal_unit.srts_uid)
 
-        onoff_col, onoff_row = ThermalUnitLP.add_block_i(
+        onoff_col, onoff_row, heat_direction = ThermalUnitLP.add_block_i(
             lp=lp,
             bid=bid,
             block=block,
@@ -98,6 +101,8 @@ class ThermalUnitLP:
             bus_lp.add_block_load_col(bid, onoff_col, coeff=self.thermal_unit.capacity)
 
         self.onoff_cols[bid], self.onoff_rows[bid] = onoff_col, onoff_row
+        dual_factor = heat_direction * block.energy_cost(1)
+        self.dual_factors[bid] = dual_factor if dual_factor != 0 else 1
 
     def post_blocks(self):
         """Close the LP formulation post the blocks formulation."""
@@ -105,9 +110,14 @@ class ThermalUnitLP:
     def get_sched(self):
         """Return the optimal thermal_unit schedule."""
         lp = self.system_lp.lp
-        onoff_values = lp.get_col_sol(self.onoff_cols.values(), def_value=0)
+        dual_factors = np.asarray(list(self.dual_factors.values()), dtype=float)
+        onoff_duals = lp.get_dual_sol(self.onoff_rows.values(), 0) / dual_factors
+
+        onoff_values = lp.get_col_sol(self.onoff_cols.values(), 0)
+
         return ThermalUnitSched(
             uid=self.thermal_unit.uid,
             name=self.thermal_unit.name,
+            onoff_duals=onoff_duals,
             onoff_values=onoff_values,
         )

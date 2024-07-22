@@ -249,19 +249,22 @@ class LinearProblem:
 
         return x
 
-    def get_dual_at(self, i):
+    def get_dual_at(self, index, def_value=None):
         """Get the dual value at the given index."""
+        if index < 0:
+            return def_value
+
         return (
-            pyo.value(self.model.dual[self.model.constraints[i]]) * self.scale_obj
+            pyo.value(self.model.dual[self.model.constraints[index]]) * self.scale_obj
             if self.model is not None
             else None
         )
 
-    def get_dual_sol(self, indexes):
+    def get_dual_sol(self, indexes, def_value=None):
         """Get the dual values for a given indexes list."""
         y: np.ndarray = np.ndarray(len(indexes))
         for k, i in enumerate(indexes):
-            y[k] = self.get_dual_at(i)
+            y[k] = self.get_dual_at(i) if i >= 0 else def_value
 
         return y
 

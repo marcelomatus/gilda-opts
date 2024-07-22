@@ -1,5 +1,7 @@
 """Contains the bus_lp class."""
 
+import numpy as np
+
 from gilda_opts.block import Block
 from gilda_opts.bus import Bus
 from gilda_opts.bus_sched import BusSched
@@ -25,7 +27,7 @@ class BusLP:
         lp = self.system_lp.lp
         row = lp.add_rhs_row(rhs=0)
         self.load_rows[bid] = row
-        self.dual_factors[bid] = block.energy_cost(1)
+        self.dual_factors[bid] = -block.energy_cost(1)
 
     def post_blocks(self):
         """Close the LP formulation post the blocks formulation."""
@@ -42,15 +44,11 @@ class BusLP:
     def get_sched(self):
         """Return bus schedule."""
         lp = self.system_lp.lp
-        dual_values = lp.get_dual_sol(self.load_rows.values())
-
-        for i, v in enumerate(dual_values):
-            dual_fact = -self.dual_factors[i]
-            if dual_fact != 0:
-                dual_values[i] = v / dual_fact
+        dual_factors = np.asarray(list(self.dual_factors.values()), dtype=float)
+        load_duals = lp.get_dual_sol(self.load_rows.values()) / dual_factors
 
         return BusSched(
             uid=self.bus.uid,
             name=self.bus.name,
-            dual_values=dual_values,
+            load_duals=load_duals,
         )

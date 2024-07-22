@@ -1,9 +1,11 @@
 """Contains the srts_lp class."""
 
-from gilda_opts.srts import SRTS, MIN_TEMPERATURE, MAX_TEMPERATURE
-from gilda_opts.srts_sched import SRTSSched
+import numpy as np
+
 from gilda_opts.block import Block
 from gilda_opts.linear_problem import LinearProblem
+from gilda_opts.srts import MAX_TEMPERATURE, MIN_TEMPERATURE, SRTS
+from gilda_opts.srts_sched import SRTSSched
 from gilda_opts.utils import get_value_at
 
 
@@ -14,6 +16,7 @@ class SRTSLP:
         """Create the SRTSLP instance."""
         self.tfin_cols: dict[int, int] = {}
         self.tfin_rows: dict[int, int] = {}
+        self.dual_factors: dict[int, float] = {}
 
         self.srts = srts
         self.system_lp = system_lp
@@ -40,8 +43,7 @@ class SRTSLP:
         text = get_value_at(single_room.external_temperature_sched, bid, tini)
 
         qext = single_room.q_coeff(
-            block.duration,
-            get_value_at(single_room.external_heating_sched, bid, 0)
+            block.duration, get_value_at(single_room.external_heating_sched, bid, 0)
         )
 
         #
@@ -73,6 +75,7 @@ class SRTSLP:
         )
 
         self.tfin_cols[bid], self.tfin_rows[bid] = tfin_col, tfin_row
+        self.dual_factors[bid] = -block.energy_cost(1)
 
     def get_tfin_col(self, bid: int):
         """Return tfin col and row."""
@@ -92,9 +95,14 @@ class SRTSLP:
     def get_sched(self):
         """Return the optimal srts schedule."""
         lp = self.system_lp.lp
+        dual_factors = np.asarray(list(self.dual_factors.values()), dtype=float)
+        tfin_duals = lp.get_dual_sol(self.tfin_rows.values()) / dual_factors
+
         tfin_values = lp.get_col_sol(self.tfin_cols.values())
+
         return SRTSSched(
             uid=self.srts.uid,
             name=self.srts.name,
+            tfin_duals=tfin_duals,
             tfin_values=tfin_values,
         )

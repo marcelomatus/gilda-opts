@@ -22,4 +22,4 @@ class BusSched(BaseClassJson):
 
     uid: int = -1
     name: str = ""
-    dual_values: List[float] = field(default_factory=list)
+    load_duals: List[float] = field(default_factory=list)

@@ -6,26 +6,29 @@ from dataclasses import dataclass
 from gilda_opts.baseclass_json import BaseClassJson
 from gilda_opts.utils import NumberSched, IntSched, get_value_at
 
+HEATING_MODE = +1
+COOLING_MODE = -1
+OFFLINE_MODE = 0
+
 
 @dataclass
 class ThermalUnit(BaseClassJson):
     """Thermal Unit.
 
-    capacity:    Electric capacity [KW]
-    efficiency:  Efficiency KW heat/ KWh electricity [0..1]
-
     uid:             ThermalUnit unique id
     name:            ThermalUnit name
-    bus_uid:         Bus uid to be connected to
-    srts_uid:        SRTS uid to be attached to
+    bus_uid:         Bus uid to be connected electrically
+    srts_uid:        SRTS uid to be attached thermally
 
-    electric_capacity:  electric consumption capacity [KW]
-    thermal_capacity:   thermal capacity [KW]
-    thermal_cost_sched:       thermal cost additional to the electricity cost [$/KWh]
-    heating_efficiency: how much thermal energy is transferred to the room [0..1]
-    cooling_efficiency: how much thermal energy is transferred to the room [0..1]
+    capacity:           Electric capacity [KW]
+    heating_efficiency: How much electric energy is converted to heating [0..1]
+    cooling_efficiency: How much electric energy is converted to cooling [0..1]
 
-    active_mode_sched:        active mode list: 1: heating, 0: disconnected, -1: cooling
+    thermal_capacity:   Thermal capacity additional to the electrical energy  [KW]
+    thermal_cost_sched: Thermal cost additional to the electricity cost       [$/KWh]
+
+    power_controlled:   Is the on/off state:  binary=0 or continuous=1         [0,1]
+    active_mode_sched:  Active mode sched: 1= heating, 0= offline, -1= cooling [-1,0,1]
     """
 
     uid: int = -1
@@ -39,19 +42,23 @@ class ThermalUnit(BaseClassJson):
 
     thermal_capacity: float = 0
     thermal_cost_sched: NumberSched = 0
+
+    power_controlled: int = 0
     active_mode_sched: IntSched = 1
 
     #
     # public methods
     #
-    def get_thermal_capacity(self, bid: int):
-        """Return thermal capacity."""
-        active_mode = get_value_at(self.active_mode_sched, bid, 0)
-        if active_mode == 0:
-            return 0, 0, 0
+    def get_thermal_parameters(self, bid: int):
+        """Return thermal capacity, thermal_cost and active_mode."""
+        active_mode = get_value_at(self.active_mode_sched, bid, OFFLINE_MODE)
+        if active_mode == OFFLINE_MODE:
+            return 0, 0, active_mode
 
         efficiency = (
-            self.heating_efficiency if active_mode > 0 else self.cooling_efficiency
+            self.heating_efficiency
+            if active_mode == HEATING_MODE
+            else self.cooling_efficiency
         )
 
         thermal_capacity = efficiency * self.capacity + self.thermal_capacity
@@ -61,4 +68,4 @@ class ThermalUnit(BaseClassJson):
         return thermal_capacity, thermal_cost, active_mode
 
 
-#  LocalWords: SRTS uid srts
+#  LocalWords: SRTS uid srts ThermalUnit

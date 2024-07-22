@@ -1,5 +1,7 @@
 """Contains the demnand_lp class."""
 
+import numpy as np
+
 from gilda_opts.bess import Battery, BESS
 from gilda_opts.bess_sched import BESSSched
 from gilda_opts.block import Block
@@ -17,6 +19,7 @@ class BESSLP:
         self.flow_out_cols: dict[int, int] = {}
         self.efin_cols: dict[int, int] = {}
         self.efin_rows: dict[int, int] = {}
+        self.dual_factors: dict[int, float] = {}
 
         self.bess = bess
         self.system_lp = system_lp
@@ -95,6 +98,7 @@ class BESSLP:
         self.flow_in_cols[bid] = flow_in_col
         self.efin_cols[bid] = efin_col
         self.efin_rows[bid] = efin_row
+        self.dual_factors[bid] = -block.energy_cost(1)
 
     @staticmethod
     def post_blocks_i(
@@ -119,12 +123,16 @@ class BESSLP:
     def get_sched(self):
         """Return the optimal bess schedule."""
         lp = self.system_lp.lp
+        dual_factors = np.asarray(list(self.dual_factors.values()), dtype=float)
+        efin_duals = lp.get_dual_sol(self.efin_rows.values()) / dual_factors
+
         efin_values = lp.get_col_sol(self.efin_cols.values())
         flow_in_values = lp.get_col_sol(self.flow_in_cols.values())
         flow_out_values = lp.get_col_sol(self.flow_out_cols.values())
         return BESSSched(
             uid=self.bess.uid,
             name=self.bess.name,
+            efin_duals=efin_duals,
             efin_values=efin_values,
             flow_in_values=flow_in_values,
             flow_out_values=flow_out_values,

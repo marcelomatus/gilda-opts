@@ -123,3 +123,8 @@ def test_demand_grid_2():
     s1_sched = s1_lp.get_sched()
 
     assert s1_sched.name == s1.name
+
+    assert s1_sched.buses[0].load_duals[0] == 11
+    assert s1_sched.buses[0].load_duals[1] == 12
+    assert s1_sched.buses[0].load_duals[2] == 5013
+    assert s1_sched.buses[0].load_duals[3] == 14

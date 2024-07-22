@@ -22,6 +22,8 @@ class BESSSched(BaseClassJson):
 
     uid: int = -1
     name: str = ""
+    efin_duals: List[float] = field(default_factory=list)
     efin_values: List[float] = field(default_factory=list)
+
     flow_in_values: List[float] = field(default_factory=list)
     flow_out_values: List[float] = field(default_factory=list)

@@ -20,4 +20,5 @@ class ThermalUnitSched(BaseClassJson):
 
     uid: int = -1
     name: str = ""
+    onoff_duals: List[float] = field(default_factory=list)
     onoff_values: List[float] = field(default_factory=list)
