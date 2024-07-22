@@ -27,7 +27,11 @@ class System(BaseClassJson):
     -----------
     name: System name
     uid: System uid
+
+    intvar_type:  Integer variable type= 1:integers, 0: reals
+
     blocks: Block List
+
     buses: Bus List
     lines: Line List
     grids: Grid List
@@ -43,15 +47,26 @@ class System(BaseClassJson):
 
     name: str = ""
     uid: int = -1
+
+    intvar_type: int = 1
+
     blocks: List[Block] = field(default_factory=list)
-    buses: List[Bus] = field(default_factory=lambda: [])
-    lines: List[Line] = field(default_factory=lambda: [])
-    grids: List[Grid] = field(default_factory=lambda: [])
-    demands: List[Demand] = field(default_factory=lambda: [])
-    tssas: List[TSSA] = field(default_factory=lambda: [])
-    cesas: List[CESA] = field(default_factory=lambda: [])
-    besss: List[BESS] = field(default_factory=lambda: [])
-    srtss: List[SRTS] = field(default_factory=lambda: [])
-    thermal_units: List[ThermalUnit] = field(default_factory=lambda: [])
-    local_sources: List[LocalSource] = field(default_factory=lambda: [])
-    electric_cars: List[ElectricCar] = field(default_factory=lambda: [])
+
+    buses: List[Bus] = field(default_factory=list)
+    lines: List[Line] = field(default_factory=list)
+    grids: List[Grid] = field(default_factory=list)
+    demands: List[Demand] = field(default_factory=list)
+    tssas: List[TSSA] = field(default_factory=list)
+    cesas: List[CESA] = field(default_factory=list)
+    besss: List[BESS] = field(default_factory=list)
+    srtss: List[SRTS] = field(default_factory=list)
+    thermal_units: List[ThermalUnit] = field(default_factory=list)
+    local_sources: List[LocalSource] = field(default_factory=list)
+    electric_cars: List[ElectricCar] = field(default_factory=list)
+
+    #
+    # Public methods
+    #
+    def get_intvar_type(self, block: Block):
+        """Return the intvar_type for a block."""
+        return self.intvar_type * block.intvar_type

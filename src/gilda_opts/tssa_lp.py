@@ -27,13 +27,13 @@ class TSSALP:
         """Add TSSA equations to a block."""
         lp: LinearProblem = self.system_lp.lp
         bus_lp = self.system_lp.get_bus_lp(self.tssa.bus_uid)
+        intvar_type = self.system_lp.system.get_intvar_type(block)
 
         #
         # adding the load variable
         #
         load = self.tssa.load
-        ctype = block.intvar_type
-        onoff_col = lp.add_col(lb=0, ub=1, ctype=ctype)
+        onoff_col = lp.add_col(lb=0, ub=1, ctype=intvar_type)
 
         self.onoff_cols[bid] = onoff_col
         bus_lp.add_block_load_col(bid, onoff_col, coeff=load)

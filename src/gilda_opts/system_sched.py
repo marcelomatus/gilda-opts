@@ -20,28 +20,43 @@ from gilda_opts.electric_car_sched import ElectricCarSched
 @dataclass
 class SystemSched(BaseClassJson):
     """
-    System class.
+    SystemSched class, contains the system optimal scheduling.
 
     Attributes:
     -----------
-    buses: List of electric buses included in the system problem.
-    demands: List of electric demands
-    grids: List of electric grid connections
+    name: System name
+    uid: System uid
+
+    total_cost: Total objective cost
+    solver_time: Solver time
+
+    buses: BusSched list
+    lines: LineSched list
+    grids: GridSched list
+    demands: DemandSched list
+    tssas: TSSASched list
+    cesas: CESASched list
+    besss: BESSSched list
+    srtss: SRTSSched list
+    thermal_units: ThermalUnitSched list
+    local_sources: LocalSourceSched list
+    electric_cars: ElectricCarSched list
     """
 
     name: str = ""
     uid: int = -1
+
     total_cost: float = 0
     solver_time: float = 0
 
-    buses: List[BusSched] = field(default_factory=lambda: [])
-    lines: List[LineSched] = field(default_factory=lambda: [])
-    grids: List[GridSched] = field(default_factory=lambda: [])
-    demands: List[DemandSched] = field(default_factory=lambda: [])
-    tssas: List[TSSASched] = field(default_factory=lambda: [])
-    cesas: List[CESASched] = field(default_factory=lambda: [])
-    besss: List[BESSSched] = field(default_factory=lambda: [])
-    srtss: List[SRTSSched] = field(default_factory=lambda: [])
-    thermal_units: List[ThermalUnitSched] = field(default_factory=lambda: [])
-    local_sources: List[LocalSourceSched] = field(default_factory=lambda: [])
-    electric_cars: List[ElectricCarSched] = field(default_factory=lambda: [])
+    buses: List[BusSched] = field(default_factory=list)
+    lines: List[LineSched] = field(default_factory=list)
+    grids: List[GridSched] = field(default_factory=list)
+    demands: List[DemandSched] = field(default_factory=list)
+    tssas: List[TSSASched] = field(default_factory=list)
+    cesas: List[CESASched] = field(default_factory=list)
+    besss: List[BESSSched] = field(default_factory=list)
+    srtss: List[SRTSSched] = field(default_factory=list)
+    thermal_units: List[ThermalUnitSched] = field(default_factory=list)
+    local_sources: List[LocalSourceSched] = field(default_factory=list)
+    electric_cars: List[ElectricCarSched] = field(default_factory=list)

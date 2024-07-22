@@ -26,6 +26,7 @@ class CESALP:
         lp: LinearProblem = self.system_lp.lp
         bus_lp = self.system_lp.get_bus_lp(self.cesa.bus_uid)
 
+        intvar_type = self.system_lp.system.get_intvar_type(block)
         #
         # adding the load variable
         #
@@ -40,7 +41,7 @@ class CESALP:
         load = self.cesa.load
         bus_lp.add_block_load_col(bid, onoff_col, coeff=load)
 
-        self.onoff_ctypes[onoff_col] = block.intvar_type
+        self.onoff_ctypes[onoff_col] = intvar_type
         self.cumulative_cols.append((cmask, block.duration, onoff_col))
 
     def post_blocks(self):

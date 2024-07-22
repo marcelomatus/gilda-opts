@@ -32,6 +32,7 @@ class ThermalUnitLP:
         lp: LinearProblem,
         bid: int,
         block: Block,
+        intvar_type: int,
         srts: SRTS,
         thermal_unit: ThermalUnit,
         srts_lp: SRTSLP,
@@ -50,7 +51,7 @@ class ThermalUnitLP:
 
         if q_coeff != 0:
             tcost = block.energy_cost(thermal_cost)
-            ctype = block.intvar_type * (1 - thermal_unit.power_controlled)
+            ctype = intvar_type * (1 - thermal_unit.power_controlled)
             onoff_col = lp.add_col(lb=0, ub=1, c=tcost, ctype=ctype)
             srts_lp.add_block_q_col(bid, onoff_col, q_coeff)
 
@@ -85,11 +86,13 @@ class ThermalUnitLP:
         """Add thermal units equation to a block."""
         lp: LinearProblem = self.system_lp.lp
         srts_lp: SRTSLP = self.system_lp.get_srts_lp(self.thermal_unit.srts_uid)
+        intvar_type = self.system_lp.system.get_intvar_type(block)
 
         onoff_col, onoff_row, heat_direction = ThermalUnitLP.add_block_i(
             lp=lp,
             bid=bid,
             block=block,
+            intvar_type=intvar_type,
             srts=srts_lp.srts,
             thermal_unit=self.thermal_unit,
             srts_lp=srts_lp,
