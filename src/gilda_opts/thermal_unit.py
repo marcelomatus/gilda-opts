@@ -15,20 +15,18 @@ OFFLINE_MODE = 0
 class ThermalUnit(BaseClassJson):
     """Thermal Unit.
 
-    uid:             ThermalUnit unique id
-    name:            ThermalUnit name
-    bus_uid:         Bus uid to be connected electrically
-    srts_uid:        SRTS uid to be attached thermally
-
-    capacity:           Electric capacity [KW]
-    heating_efficiency: How much electric energy is converted to heating [0..1]
-    cooling_efficiency: How much electric energy is converted to cooling [0..1]
-
-    thermal_capacity:   Thermal capacity additional to the electrical energy  [KW]
-    thermal_cost_sched: Thermal cost additional to the electricity cost       [$/KWh]
-
-    power_controlled:   Is the on/off state:  binary=0 or continuous=1         [0,1]
-    active_mode_sched:  Active mode sched: 1= heating, 0= offline, -1= cooling [-1,0,1]
+    Attributes:
+     uid:                ThermalUnit unique id
+     name:               ThermalUnit name
+     bus_uid:            Bus uid to be connected electrically
+     srts_uid:           SRTS uid to be attached thermally
+     capacity:           Electric capacity [KW]
+     heating_efficiency: How much electric energy is converted to heating [0..1]
+     cooling_efficiency: How much electric energy is converted to cooling [0..1]
+     thermal_capacity:   Thermal capacity additional to the electrical energy   [KW]
+     thermal_cost_sched: Thermal cost additional to the electricity cost        [$/KWh]
+     power_controlled:   Is the on/off state:  binary=0 or continuous=1         [0,1]
+     active_mode_sched:  Active mode sched: 1= heating, 0= offline, -1= cooling [-1,0,1]
     """
 
     uid: int = -1
