@@ -12,11 +12,10 @@ class Demand(BaseClassJson):
     Demand represents the base electric load in the scheduling problem.
 
     Attributes:
-    -----------
-    uid:         Load unique id
-    name:        Load name
-    bus_uid:     Bus uid to be connected to
-    load_sched:  Load schedule [KW]
+     uid:         Load unique id
+     name:        Load name
+     bus_uid:     Bus uid to be connected to
+     load_sched:  Load schedule [KW]
     """
 
     uid: int = -1

@@ -10,11 +10,10 @@ class Block(BaseClassJson):
     """
     Block represent time blocks used in the schedule problem formulation.
 
-    Attribute:
-    ----------
-    duration: Block time duration [hours]
-    discount: Discount factor to be used in the LP formulation
-    intvar_type:  Integer variable type= 1:integers, 0: reals
+    Attributes:
+     duration: Block time duration [hours]
+     discount: Discount factor to be used in the LP formulation
+     intvar_type:  Integer variable type= 1:integers, 0: reals
     """
 
     duration: float = 1.0

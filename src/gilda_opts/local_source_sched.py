@@ -11,10 +11,9 @@ class LocalSourceSched(BaseClassJson):
     """A LocalSourceSched represents the local_source schedule resulting optimization.
 
     Attributes:
-    ----------
-    uid:              LocalSource unique id
-    name:             LocalSource provider name
-    generation_values: LocalSource optimal generation values
+     uid:              LocalSource unique id
+     name:             LocalSource provider name
+     generation_values: LocalSource optimal generation values
     """
 
     uid: int = -1

@@ -95,7 +95,7 @@ def setup_logging(loglevel):
     """Set basic logging.
 
     Arguments:
-    ---------
+    ----------
       loglevel (int): minimum loglevel for emitting messages
     """
     logformat = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"

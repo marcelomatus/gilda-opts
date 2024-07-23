@@ -12,12 +12,11 @@ class BusSched(BaseClassJson):
     A BusSched represents the bus schedule resulting from the optimization.
 
     Attributes:
-    ----------
-    uid:                 Bus unique id
-    name:                Bus name
-    efin_values:   efin_values
-    flow_in_values: flow_in_values
-    flow_out_values: flow_out_values
+     uid:             Bus unique id
+     name:            Bus name
+     efin_values:     efin_values
+     flow_in_values:  flow_in_values
+     flow_out_values: flow_out_values
     """
 
     uid: int = -1

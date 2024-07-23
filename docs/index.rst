@@ -36,7 +36,7 @@ Contents
    Modeling <Modeling>
    Examples of use <Examples>
    Changelog <changelog>
-   Module Reference <axopi/modules>
+   Module Reference <api/modules>
 
 
 Indices and tables

@@ -12,10 +12,9 @@ class DemandSched(BaseClassJson):
     A DemandSched represents the demand schedule resulting from the optimization.
 
     Attributes:
-    ----------
-    uid:              Demand unique id
-    name:             Demand provider name
-    load_values: Demand optimal load values
+     uid:              Demand unique id
+     name:             Demand provider name
+     load_values: Demand optimal load values
     """
 
     uid: int = -1

@@ -19,13 +19,12 @@ class LinearProblem:
     Represents a linear problem interface class and its interaction with the solver.
 
     Attributes:
-    -----------
-    A:   Constraint Matrix
-    c:   cost vector
-    clb: col lower boundary vector
-    cub: col upper boundary vector
-    rlb: row lower boundary vector
-    rub: row upper boundary vector
+     A:   Constraint Matrix
+     c:   cost vector
+     clb: col lower boundary vector
+     cub: col upper boundary vector
+     rlb: row lower boundary vector
+     rub: row upper boundary vector
     """
 
     inf = float("inf")

@@ -7,7 +7,12 @@ from gilda_opts.baseclass_json import BaseClassJson
 
 @dataclass
 class Bus(BaseClassJson):
-    """Bus class."""
+    """Bus class.
+
+    Attributes:
+      uid:  Bus unique id
+      name: Bus name
+    """
 
     uid: int = -1
     name: str = ""

@@ -17,14 +17,12 @@ class SRTS(BaseClassJson):
     SRTS represents the Simple Building Thermal Model load in the scheduling problem.
 
     Attributes:
-    -----------
-    uid:  SRTS unique id
-    name: SRTS name
-
-    single_room:              SingleRoom instance
-    min_temperature_sched:    Minimum temperature sched [C]
-    max_temperature_sched:    Maximum temperature sched [C]
-    thermal_drift_cost_sched: Thermal drift cost sched [$/C h]
+     uid:  SRTS unique id
+     name: SRTS name
+     single_room:              SingleRoom instance
+     min_temperature_sched:    Minimum temperature sched [C]
+     max_temperature_sched:    Maximum temperature sched [C]
+     thermal_drift_cost_sched: Thermal drift cost sched [$/C h]
     """
 
     uid: int = -1

@@ -12,12 +12,12 @@ class BESSSched(BaseClassJson):
     A BESSSched represents the bess schedule resulting from the optimization.
 
     Attributes:
-    ----------
-    uid:                 BESS unique id
-    name:                BESS name
-    efin_values:   efin_values
-    flow_in_values: flow_in_values
-    flow_out_values: flow_out_values
+    -----------
+     uid:             BESS unique id
+     name:            BESS name
+     efin_values:     efin_values
+     flow_in_values:  flow_in_values
+     flow_out_values: flow_out_values
     """
 
     uid: int = -1

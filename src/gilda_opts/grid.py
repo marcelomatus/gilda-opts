@@ -12,23 +12,18 @@ class Grid(BaseClassJson):
     A Grid represents the electric service from the grid company.
 
     Attributes:
-    ----------
-    uid:              Grid unique id
-    name:             Grid provider name
-    bus_uid:          Bus uid
-
-    capacity:                Connection Capacity [KW]
-    withdrawn_profile_sched: Withdrawn profile schedule, as a factor of capacity [0..1]
-    injection_profile_sched: Injection profile schedule, as a factor of capacity [0..1]
-
-    energy_buy_price_sched:     Energy tariff schedule (withdrawn) [$/KWh]
-    energy_sell_price_sched: Energy sell price schedule (injection) [$/KWh]
-
-    power_tariff:       Power tariff [$/KW]
-    power_factor_sched: Power factor schedule [0..1]
-
-    emission_cost:         Emission cost [$/gCO2]
-    emission_factor_sched: Emission factor schedule [gCO2/KWh]
+     uid:              Grid unique id
+     name:             Grid provider name
+     bus_uid:          Bus uid
+     capacity:                Connection Capacity [KW]
+     withdrawn_profile_sched: Withdrawn profile schedule, as a factor of capacity [0..1]
+     injection_profile_sched: Injection profile schedule, as a factor of capacity [0..1]
+     energy_buy_price_sched:     Energy tariff schedule (withdrawn) [$/KWh]
+     energy_sell_price_sched: Energy sell price schedule (injection) [$/KWh]
+     power_tariff:       Power tariff [$/KW]
+     power_factor_sched: Power factor schedule [0..1]
+     emission_cost:         Emission cost [$/gCO2]
+     emission_factor_sched: Emission factor schedule [gCO2/KWh]
     """
 
     uid: int = -1

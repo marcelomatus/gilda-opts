@@ -1,7 +1,6 @@
 """ElectricCar module represents an Electric Car."""
 
 from dataclasses import dataclass, field
-from typing import List
 
 from gilda_opts.baseclass_json import BaseClassJson
 from gilda_opts.bess import Battery
@@ -27,8 +26,7 @@ class Engine(BaseClassJson):
     Engine represetns an Electric Engine.
 
     Attributes:
-    -----------
-    energy_efficiency:   Energy efficiency [Km/Kwh]
+     energy_efficiency:   Energy efficiency [Km/Kwh]
     """
 
     energy_efficiency: float = 8.0
@@ -40,20 +38,13 @@ class ElectricCar(BaseClassJson):
     ElectricCar represents an Electric Car.
 
     Attributes:
-    -----------
-    uid:                    ElectricCar unique id
-    name:                   ElectricCar name
-    athome_bus_uid:         Bus uid to be connected to at home
-    charger_bus_uid:        Bus uid to be connected to on public charger
-
-    battery:                Storage system [Battery]
-    engine:                 Electric engine [Engine]
-
-    bus_uid_sched:          Bus_id where is plugged or unplugged=-1
-    distance_sched:         Traveled distances while on road [Km]
-
-    cfail_sched:            Fail distance cost, you may use the taxi tariff [$/Km]
-
+     uid:                    ElectricCar unique id
+     name:                   ElectricCar name
+     battery:                Storage system [Battery]
+     engine:                 Electric engine [Engine]
+     bus_uid_sched:          Bus_id where is plugged or unplugged=-1
+     distance_sched:         Traveled distances while on road [Km]
+     cfail_sched:            Fail distance cost, you may use the taxi tariff [$/Km]
     """
 
     uid: int = -1

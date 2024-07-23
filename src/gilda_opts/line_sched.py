@@ -12,10 +12,9 @@ class LineSched(BaseClassJson):
     A LineSched represents the line schedule resulting from the optimization.
 
     Attributes:
-    ----------
-    uid:          Line unique id
-    name:         Line provider name
-    flow_values: Line optimal flow ab values
+     uid:          Line unique id
+     name:         Line provider name
+     flow_values: Line optimal flow ab values
     """
 
     uid: int = -1

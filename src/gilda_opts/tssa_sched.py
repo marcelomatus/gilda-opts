@@ -12,10 +12,9 @@ class TSSASched(BaseClassJson):
     A TSSASched represents the tssa schedule resulting from the optimization.
 
     Attributes:
-    ----------
-    uid:          TSSA unique id
-    name:         TSSA provider name
-    onoff_values: TSSA optimal onoff values
+     uid:          TSSA unique id
+     name:         TSSA provider name
+     onoff_values: TSSA optimal onoff values
     """
 
     uid: int = -1

@@ -62,6 +62,7 @@ except Exception as e:
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
+    "myst_parser",
     "sphinx.ext.autodoc",
     "sphinx.ext.intersphinx",
     "sphinx.ext.todo",
@@ -281,7 +282,16 @@ intersphinx_mapping = {
     "pandas": ("https://pandas.pydata.org/pandas-docs/stable", None),
     "scipy": ("https://docs.scipy.org/doc/scipy/reference", None),
     "setuptools": ("https://setuptools.pypa.io/en/stable/", None),
-    "pyscaffold": ("https://pyscaffold.org/en/stable", None),
 }
 
 print(f"loading configurations for {project} {version} ...", file=sys.stderr)
+
+
+# suppress warnings
+suppress_warnings = [
+    "autosectionlabel.*",
+]
+
+autodoc_mock_imports = [
+    "dataclasses_json.api",
+]

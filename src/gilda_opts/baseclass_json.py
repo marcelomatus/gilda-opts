@@ -6,4 +6,7 @@ from dataclass_wizard import JSONWizard
 
 @dataclass_json(undefined=Undefined.RAISE)
 class BaseClassJson(JSONWizard):
-    """Base Json Mixin."""
+    """Base Json Mixin.
+
+    If a unknown key is found in JSON, an exception will RAISE.
+    """

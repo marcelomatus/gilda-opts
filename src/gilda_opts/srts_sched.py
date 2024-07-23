@@ -12,10 +12,9 @@ class SRTSSched(BaseClassJson):
     A SRTSSched represents the srts schedule resulting from the optimization.
 
     Attributes:
-    ----------
-    uid:                 SRTS unique id
-    name:                SRTS name
-    tfin_values:         tfin_values
+     uid:                 SRTS unique id
+     name:                SRTS name
+     tfin_values:         tfin_values
     """
 
     uid: int = -1

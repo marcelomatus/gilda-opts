@@ -23,24 +23,21 @@ class SystemSched(BaseClassJson):
     SystemSched class, contains the system optimal scheduling.
 
     Attributes:
-    -----------
-    name: System name
-    uid: System uid
-
-    total_cost: Total objective cost
-    solver_time: Solver time
-
-    buses: BusSched list
-    lines: LineSched list
-    grids: GridSched list
-    demands: DemandSched list
-    tssas: TSSASched list
-    cesas: CESASched list
-    besss: BESSSched list
-    srtss: SRTSSched list
-    thermal_units: ThermalUnitSched list
-    local_sources: LocalSourceSched list
-    electric_cars: ElectricCarSched list
+     name: System name
+     uid: System uid
+     total_cost: Total objective cost
+     solver_time: Solver time
+     buses: BusSched list
+     lines: LineSched list
+     grids: GridSched list
+     demands: DemandSched list
+     tssas: TSSASched list
+     cesas: CESASched list
+     besss: BESSSched list
+     srtss: SRTSSched list
+     thermal_units: ThermalUnitSched list
+     local_sources: LocalSourceSched list
+     electric_cars: ElectricCarSched list
     """
 
     name: str = ""

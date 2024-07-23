@@ -12,10 +12,9 @@ class CESASched(BaseClassJson):
     A CESASched represents the cesa schedule resulting from the optimization.
 
     Attributes:
-    ----------
-    uid:          CESA unique id
-    name:         CESA provider name
-    onoff_values: CESA optimal onoff values
+     uid:          CESA unique id
+     name:         CESA provider name
+     onoff_values: CESA optimal onoff values
     """
 
     uid: int = -1

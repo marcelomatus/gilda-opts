@@ -12,14 +12,13 @@ class ElectricCarSched(BaseClassJson):
     A ElectricCarSched represents the bess schedule resulting from the optimization.
 
     Attributes:
-    ----------
-    uid:                          ElectricCar unique id
-    name:                         ElectricCar name
-    battery_efin_values:    battery efin_values
-    battery_flow_in_values:  battery flow_in_values
-    battery_flow_out_values: battery flow_out_values
-    engine_distance_values:     engine distance values
-    engine_distance_duals:     engine distance duals
+     uid:                          ElectricCar unique id
+     name:                         ElectricCar name
+     battery_efin_values:    battery efin_values
+     battery_flow_in_values:  battery flow_in_values
+     battery_flow_out_values: battery flow_out_values
+     engine_distance_values:     engine distance values
+     engine_distance_duals:     engine distance duals
     """
 
     uid: int = -1

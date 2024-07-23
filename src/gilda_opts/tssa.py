@@ -12,13 +12,12 @@ class TSSA(BaseClassJson):
     TSSA represents the Time Shift-able Smart Appliance load in the scheduling problem.
 
     Attributes:
-    -----------
-    uid:          TSSA unique id
-    name:         TSSA name
-    bus_uid:       Bus uid to be connected to
-    load:         Load value [KW]
-    on_period:    'On' continuous period time [H]
-    off_indexes:  List of block index where the onoff variable value is set to off
+     uid:          TSSA unique id
+     name:         TSSA name
+     bus_uid:       Bus uid to be connected to
+     load:         Load value [KW]
+     on_period:    'On' continuous period time [H]
+     off_indexes:  List of block index where the onoff variable value is set to off
     """
 
     uid: int = -1

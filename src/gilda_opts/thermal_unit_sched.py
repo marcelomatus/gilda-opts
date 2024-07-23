@@ -12,10 +12,10 @@ class ThermalUnitSched(BaseClassJson):
     A ThermalUnitSched represents the thermal_unit schedule.
 
     Attributes:
-    ----------
-    uid:            ThermalUnit unique id
-    name:           ThermalUnit name
-    onoff_values:   onoff_cool_values
+     uid:            ThermalUnit unique id
+     name:           ThermalUnit name
+     onoff_values:   onoff values
+     onoff_duals:   onoff duals
     """
 
     uid: int = -1

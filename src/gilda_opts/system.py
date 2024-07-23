@@ -24,25 +24,21 @@ class System(BaseClassJson):
     System class.
 
     Attributes:
-    -----------
-    name: System name
-    uid: System uid
-
-    intvar_type:  Integer variable type= 1:integers, 0: reals
-
-    blocks: Block List
-
-    buses: Bus List
-    lines: Line List
-    grids: Grid List
-    demands: Demand List
-    tssas: TSSA List
-    cesas: CESA List
-    besss: BESS List
-    srtss: SRTS List
-    thermal_units: ThermalUnit List
-    local_sources: LocalSource List
-    electric_cars: ElectricCar List
+     name: System name
+     uid: System uid
+     intvar_type:  Integer variable type= 1:integers, 0: reals
+     blocks: Block List
+     buses: Bus List
+     lines: Line List
+     grids: Grid List
+     demands: Demand List
+     tssas: TSSA List
+     cesas: CESA List
+     besss: BESS List
+     srtss: SRTS List
+     thermal_units: ThermalUnit List
+     local_sources: LocalSource List
+     electric_cars: ElectricCar List
     """
 
     name: str = ""

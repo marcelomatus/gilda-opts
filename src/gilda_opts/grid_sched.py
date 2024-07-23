@@ -12,11 +12,10 @@ class GridSched(BaseClassJson):
     A GridSched represents the grid schedule resulting from the optimization.
 
     Attributes:
-    ----------
-    uid:              Grid unique id
-    name:             Grid provider name
-    injection_values: Grid optimal injection values
-    withdrawn_values: Grid optimal withdrawn values
+     uid:              Grid unique id
+     name:             Grid provider name
+     injection_values: Grid optimal injection values
+     withdrawn_values: Grid optimal withdrawn values
     """
 
     uid: int = -1
