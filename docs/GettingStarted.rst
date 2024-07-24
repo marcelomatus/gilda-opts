@@ -8,8 +8,7 @@ System Requirements
 
 To use ``GILDA-OPTS`` you will need:
 
-* Python 3.11.9, up and running. 
-   We strongly recommend the use of `pyenv`_  or `virtualenv`_ for this, either in Linux or Windows.
+* Python 3.11.9, up and running. We strongly recommend the use of `pyenv`_  or `virtualenv`_ for this, either in Linux or Windows.
 * Python libraries or packages (`pyomo`, `numpy` and others), but these will
   be installed automatically. Please try to work over a vanilla version of
   Python. We recommend, again, you use `pyenv`_ for this.
