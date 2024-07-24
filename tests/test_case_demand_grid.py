@@ -67,10 +67,7 @@ def test_demand_grid_2():
     ds = """{
       "name": "s1",
       "uid": 1,
-      "blocks": [{"duration": 1},
-                 {"duration": 1},
-                 {"duration": 1},
-                 {"duration": 1}],
+      "block_durations": [1, 1, 1, 1],
       "buses": [{"uid": 1,
                  "name": "home"}],
       "demands": [{"name": "d1",

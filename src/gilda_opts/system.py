@@ -2,23 +2,23 @@
 
 from dataclasses import dataclass, field
 from typing import List
-from gilda_opts.baseclass_json import BaseClassJson
 
+from gilda_opts.baseclass_json import BaseClassJson
+from gilda_opts.bess import BESS
 from gilda_opts.block import Block
 from gilda_opts.bus import Bus
-from gilda_opts.line import Line
-from gilda_opts.demand import Demand
-from gilda_opts.grid import Grid
-from gilda_opts.tssa import TSSA
 from gilda_opts.cesa import CESA
-from gilda_opts.bess import BESS
+from gilda_opts.demand import Demand
+from gilda_opts.electric_car import ElectricCar
+from gilda_opts.grid import Grid
+from gilda_opts.line import Line
+from gilda_opts.local_source import LocalSource
 from gilda_opts.srts import SRTS
 from gilda_opts.thermal_unit import ThermalUnit
-from gilda_opts.local_source import LocalSource
-from gilda_opts.electric_car import ElectricCar
+from gilda_opts.tssa import TSSA
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=False)
 class System(BaseClassJson):
     """
     System class.
@@ -28,6 +28,7 @@ class System(BaseClassJson):
      uid: System uid
      intvar_type:  Integer variable type= 1:integers, 0: reals
      blocks: Block List
+     block_durations: Duration list [h]
      buses: Bus List
      lines: Line List
      grids: Grid List
@@ -47,6 +48,7 @@ class System(BaseClassJson):
     intvar_type: int = 1
 
     blocks: List[Block] = field(default_factory=list)
+    block_durations: List[float] = field(default_factory=list)
 
     buses: List[Bus] = field(default_factory=list)
     lines: List[Line] = field(default_factory=list)

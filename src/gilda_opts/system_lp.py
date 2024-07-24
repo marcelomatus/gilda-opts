@@ -25,8 +25,12 @@ class SystemLP:
     def __init__(self, system: System, lp: LinearProblem | None = None):
         """Create the SystemLP instance."""
         self.load_rows: dict[int, int] = {}
-        self.system = system
         self.lp = lp if lp is not None else LinearProblem()
+
+        if len(system.blocks) == 0:
+            system.blocks = [Block(duration=d) for d in system.block_durations]
+
+        self.system = system
 
         self.buses_lp = self.create_collection(system.buses, BusLP)
         self.lines_lp = self.create_collection(system.lines, LineLP)
