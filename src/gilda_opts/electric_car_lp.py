@@ -70,7 +70,7 @@ class ElectricCarLP:
             lb = 0 if cfail > 0.0 else ub
 
             dist_to_kwh = 1.0 / (
-                ec.battery.efficiency_out * ec.engine.energy_efficiency
+                ec.battery.get_efficiency_out() * ec.engine.energy_efficiency
             )
 
             ceng = block.power_cost(ec.battery.discharge_cost * dist_to_kwh)

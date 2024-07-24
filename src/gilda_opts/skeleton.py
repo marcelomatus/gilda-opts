@@ -3,6 +3,7 @@
 import argparse
 import logging
 import sys
+import os
 
 from gilda_opts import __version__
 from gilda_opts.system import System
@@ -111,7 +112,16 @@ def main(args):
     _logger.debug("Starting gilda opt ...")
 
     file_contents = args.infile.read()
-    system = System.from_json(file_contents)
+    try:
+        system = System.from_json(file_contents)
+    except Exception as e:  # pylint: disable=W0718
+        print(
+            "An error occurred parsing the input file",
+            os.path.basename(args.infile.name),
+        )
+        print(e)
+        sys.exit(1)
+
     system_lp = SystemLP(system)
     status = system_lp.solve(keepfiles=args.keepfiles, solver=args.solver)
 

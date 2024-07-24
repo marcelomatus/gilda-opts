@@ -37,14 +37,14 @@ class BESSLP:
         #
         # flow_in col
         #
-        ub = bess.max_flow_in if bus_lp is not None else 0
+        ub = bess.get_max_flow_in() if bus_lp is not None else 0
         flow_in_col = lp.add_col(lb=0, ub=ub)
 
         #
         # flow_out col
         #
         cvar = block.energy_cost(bess.discharge_cost)
-        ub = bess.max_flow_out if bus_lp is not None else 0
+        ub = bess.get_max_flow_out() if bus_lp is not None else 0
         flow_out_col = lp.add_col(lb=0, ub=ub, c=cvar)
 
         #
@@ -66,8 +66,8 @@ class BESSLP:
         #
         row = {}
         row[efin_col] = 1.0
-        row[flow_in_col] = -block.duration * bess.efficiency_in
-        row[flow_out_col] = block.duration / bess.efficiency_out
+        row[flow_in_col] = -block.duration * bess.get_efficiency_in()
+        row[flow_out_col] = block.duration / bess.get_efficiency_out()
 
         if prev_efin_col < 0:
             lb, ub = bess.eini, bess.eini
