@@ -1,0 +1,245 @@
+{
+    "name": "Test",
+    "uid": 1,
+    "blocks": [
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        },
+        {
+            "duration": 1
+        }
+    ],
+    "buses": [
+        {
+            "uid": 1,
+            "name": "home"
+        }
+    ],
+    "demands": [
+        {
+            "name": "d1",
+            "uid": 1,
+            "bus_uid": 1,
+            "loads": [
+                0.11,
+                0.10,
+                0.11,
+                0.12,
+                0.14,
+                0.12,
+                0.21,
+                0.25,
+                0.26,
+                0.24,
+                0.20,
+                0.18,
+                0.20,
+                0.19,
+                0.17,
+                0.21,
+                0.20,
+                0.22,
+                0.22,
+                0.30,
+                0.27,
+                0.25,
+                0.15,
+                0.18
+            ]
+        }
+    ],
+    "grids": [
+        {
+            "name": "g1",
+            "uid": 1,
+            "bus_uid": 1,
+            "capacity": 30,
+            "energy_tariffs": [
+                135,
+                119,
+                112,
+                127,
+                111,
+                111,
+                108,
+                79,
+                39,
+                34,
+                34,
+                33,
+                33,
+                34,
+                34,
+                34,
+                33,
+                36,
+                42,
+                58,
+                80,
+                100,
+                87,
+                139
+            ],
+            "power_tariff": 5000,
+            "power_factors": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1,
+                0,
+                0
+            ]
+        }
+    ],
+    "local_sources": [
+        {
+            "name": "gd1",
+            "uid": 1,
+            "bus_uid": 1,
+            "capacity": 10,
+            "gen_profile": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0.028,
+                0.1036,
+                0.2122,
+                0.3966,
+                0.6405,
+                0.7098,
+                0.6811,
+                0.5882,
+                0.4272,
+                0.2428,
+                0.0398,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0    
+            ]
+        }
+    ],
+    "tssas": [
+        {
+            "uid": 1,
+            "name": "lavadora",
+            "bus_uid": 1,
+            "load": 0.5,
+            "on_period": 3
+        },
+        {
+            "uid": 2,
+            "name": "secadora",
+            "bus_uid": 1,
+            "load": 2.25,
+            "on_period": 3
+        },
+        {
+            "uid": 3,
+            "name": "VEs",
+            "bus_uid": 1,
+            "load": 7.4,
+            "on_period": 5
+        }
+    ],
+    "besss": [
+        {
+            "uid": 1,
+            "name": "b1",
+            "bus_uid": 1,
+            "capacity": 20,
+            "max_flow": 2.5,
+            "efficiency": 0.9
+        }
+   ]
+}
