@@ -8,16 +8,16 @@ System Requirements
 
 To use ``GILDA-OPTS`` you will need:
 
-* Python 3.11.9, up and running. We strongly recommend the use of `pyenv`_
-   or `virtualenv`_ for this, either in Linux or Windows.
+* Python 3.11.9, up and running. 
+   We strongly recommend the use of `pyenv`_  or `virtualenv`_ for this, either in Linux or Windows.
 * Python libraries or packages (`pyomo`, `numpy` and others), but these will
   be installed automatically. Please try to work over a vanilla version of
-  python. We recommend, again, you use `pyenv`_ for this.
+  Python. We recommend, again, you use `pyenv`_ for this.
 * A mixed integer linear programming solver (as `CBC`, `Gurobi`). You may install
   the CBC solver in Linux using your favorite package manager. For example, in
   Ubuntu you may try:
 
-``$ sudo apt-get install cbc``
+``$ sudo apt install coinor-cbc``
 
 * In windows you may use `chocolatey`_, or something similar, to install Python
   and `CBC`.
@@ -53,8 +53,9 @@ The sources for ``GILDA-OPTS`` can be downloaded from the `Github repository`_.
 2. Once you have a copy of the source, you can install it running this command
    in your terminal:
 
-  ```$ cd gilda_opts``
-  ```$ pip install .``
+  ``$ cd gilda-opts``
+
+  ``$ pip install .``
 
 
 Once installed, you can verify that ``GILDA-OPTS`` is available by executing:
