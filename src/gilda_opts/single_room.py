@@ -9,32 +9,28 @@ from gilda_opts.utils import NumberSched
 
 @dataclass
 class SingleRoom(BaseClassJson):
-    """
-    SingleRoom represents single room.
+    """SingleRoom represents single room."""
 
-    Attributes:
-     total_floor_area:            area                                 [m2]
-     height:                      height                               [m]
-     u_value:                     U-value (thermal transmittance)      [W/m2 K]
-     air_renewal:                 Air renewals per hour                [1/h]
-     air_density:                 Air density                          [kg/m3]
-     air_specific_heat_capacity:  Specific heat capacity of air        [kJ/kg K]
-     thermal_mass_parameter:      Thermal mass parameter (kappa value) [kJ/m2K]
-     initial_temperature:         Initial temperature                  [C]
-     external_temperature_sched:  External temperature                 [C]
-     external_heating_sched:      External heating (ie, sun + occupancy)  [KW]
-    """
-
+    #: area [m2]
     total_floor_area: float = 70
+    #: height [m]
     height: float = 2.5
+    #: U-value (thermal transmittance) [W/m2 K]
     u_value: float = 2
+    #: Air renewals per hour [1/h]
     air_renewal: float = 0.5
+    #: Air density [kg/m3]
     air_density: float = 1.225
+    #: Specific heat capacity of air [kJ/kg K]
     air_specific_heat_capacity: float = 1.005
+    #: Thermal mass parameter (kappa value) [kJ/m2K]
     thermal_mass_parameter: float = 250.0
+    #: Initial temperature [C]
     initial_temperature: float = 20
 
+    #: External temperature [C]
     external_temperature_sched: NumberSched = 20
+    #: External heating (ie, sun + occupancy) [KW]
     external_heating_sched: NumberSched = 0
 
     #
