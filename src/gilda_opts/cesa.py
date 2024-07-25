@@ -17,16 +17,6 @@ class CESA(BaseClassJson):
 
     For example, it may requires to consume 3 KWh every day.
 
-    Attributes:
-     uid:          CESA unique id
-     name:         CESA name
-     bus_uid:      Bus uid to be connected to
-     load:         Load value [KW]
-     cumulative_mask_sched:  Mask array for each block
-     cumulative_on_periods: Cumulative on periods [h]
-     cumulative_energies: Cumulative energies [KWh]
-
-
     Examples:
      CESA uses the mask concept to assign the on/off per block variables to the
      cumulative on_period or energy constraints.
@@ -36,11 +26,23 @@ class CESA(BaseClassJson):
      variables will be binary.
 
     """
-
+    #: CESA unique id
     uid: int = -1
+    
+    #: CESA name
     name: str = ""
+    
+    #: Bus uid to be connected to
     bus_uid: int = -1
+
+    #: Load value [KW]
     load: float = 0
+
+    #: Mask array for each block
     cumulative_mask_sched: IntSched = 0
+
+    #: Cumulative on periods [h]
     cumulative_on_periods: List[float] = field(default_factory=list)
+
+    #: Cumulative energies [KWh]
     cumulative_energies: List[float] = field(default_factory=list)
