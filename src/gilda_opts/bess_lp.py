@@ -1,4 +1,4 @@
-"""Contains the demnand_lp class."""
+"""Contains the demand lp class."""
 
 import numpy as np
 
@@ -11,7 +11,10 @@ from gilda_opts.utils import get_value_at
 
 
 class BESSLP:
-    """Represents a Block in the LP formulation."""
+    """Represents a Block in the LP formulation.
+
+    :meta private:
+    """
 
     def __init__(self, bess: BESS, system_lp=None):
         """Create the BESSLP instance."""
