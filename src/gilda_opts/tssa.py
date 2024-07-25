@@ -8,21 +8,22 @@ from gilda_opts.baseclass_json import BaseClassJson
 
 @dataclass
 class TSSA(BaseClassJson):
-    """
-    TSSA represents the Time Shift-able Smart Appliance load in the scheduling problem.
+    """TSSA represents the Time Shift-able Smart Appliance load in the scheduling problem."""
 
-    Attributes:
-     uid:          TSSA unique id
-     name:         TSSA name
-     bus_uid:       Bus uid to be connected to
-     load:         Load value [KW]
-     on_period:    'On' continuous period time [H]
-     off_indexes:  List of block index where the onoff variable value is set to off
-    """
-
+    #: TSSA unique id
     uid: int = -1
+
+    #: TSSA name
     name: str = ""
+
+    #: Bus uid to be connected to
     bus_uid: int = -1
+
+    #: Load value [KW]
     load: float = 0
+
+    #: 'On' continuous period time [H]
     on_period: float = 0
+
+    #: List of block index where the onoff variable value is set to off
     off_indexes: List[int] = field(default_factory=list)
