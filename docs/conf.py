@@ -35,6 +35,7 @@ except ImportError:
 
 output_dir = os.path.join(__location__, "api")
 module_dir = os.path.join(__location__, "../src/gilda_opts")
+exclude_pattern = "../*/*/*_lp.py ../*/*/*_sched.py ../*/*/utils.py ../*/*/base*py"
 try:
     shutil.rmtree(output_dir)
 except FileNotFoundError:
@@ -43,7 +44,7 @@ except FileNotFoundError:
 try:
     import sphinx
 
-    cmd_line = f"sphinx-apidoc --implicit-namespaces -f -o {output_dir} {module_dir} ../*/*/*_lp.py ../*/*/*_sched.py"
+    cmd_line = f"sphinx-apidoc --implicit-namespaces -f -o {output_dir} {module_dir} {exclude_pattern}"
 
     args = cmd_line.split(" ")
     if tuple(sphinx.__version__.split(".")) >= ("1", "7"):

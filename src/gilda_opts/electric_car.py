@@ -3,7 +3,7 @@
 from dataclasses import dataclass, field
 
 from gilda_opts.baseclass_json import BaseClassJson
-from gilda_opts.bess import Battery
+from gilda_opts.battery import Battery
 from gilda_opts.utils import IntSched, NumberSched
 
 
