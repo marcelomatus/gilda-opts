@@ -9,25 +9,23 @@ from gilda_opts.utils import NumberSched
 
 @dataclass
 class Line(BaseClassJson):
-    """Line represents a line between two buses.
+    """Line represents a line between two buses."""
 
-    Attributes:
-     uid:          Line unique id
-     name:         Line name
-     bus_a_uid:    Bus a uid to be connected
-     bus_b_uid:    Bus b uid to be connected
-     capacity:     Transmission capacity [KW]
-     max_flow_profile_sched:  Max flow profile sched [0..1]
-     min_flow_rpofile_sched:  Max flow profile sched [0..1]
-    """
-
+    #: Line unique id
     uid: int = -1
+    #: Line name
     name: str = ""
+    #: Bus a uid to be connected
     bus_a_uid: int = -1
+    #: Bus b uid to be connected
     bus_b_uid: int = -1
 
+    #: Transmission capacity [KW]
     capacity: float = 0
+    #: Max flow profile sched [0..1]
     max_flow_profile_sched: NumberSched = 1
+    #: Max flow profile sched [0..1]
     min_flow_profile_sched: NumberSched = -1
 
+    #: line losses 
     losses: float = 0
