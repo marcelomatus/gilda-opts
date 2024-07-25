@@ -20,46 +20,42 @@ from gilda_opts.tssa import TSSA
 
 @dataclass(frozen=False)
 class System(BaseClassJson):
-    """
-    System class.
-
-    Attributes:
-     name: System name
-     uid: System uid
-     intvar_type:  Integer variable type= 1:integers, 0: reals
-     blocks: Block List
-     block_durations: Duration list [h]
-     buses: Bus List
-     lines: Line List
-     grids: Grid List
-     demands: Demand List
-     tssas: TSSA List
-     cesas: CESA List
-     besss: BESS List
-     srtss: SRTS List
-     thermal_units: ThermalUnit List
-     local_sources: LocalSource List
-     electric_cars: ElectricCar List
-    """
-
+    """System class."""
+    
+    #: System name
     name: str = ""
+    #: System uid
     uid: int = -1
 
+    #: Integer variable type= 1:integers, 0: reals
     intvar_type: int = 1
 
+    #: Block List
     blocks: List[Block] = field(default_factory=list)
+    #: Duration list [h]
     block_durations: List[float] = field(default_factory=list)
 
+    #: Bus List
     buses: List[Bus] = field(default_factory=list)
+    #: Line List
     lines: List[Line] = field(default_factory=list)
+    #: Grid List
     grids: List[Grid] = field(default_factory=list)
+    #: Demand List
     demands: List[Demand] = field(default_factory=list)
+    #: TSSA List
     tssas: List[TSSA] = field(default_factory=list)
+    #: CESA List
     cesas: List[CESA] = field(default_factory=list)
+    #: BESS List
     besss: List[BESS] = field(default_factory=list)
+    #: SRTS List
     srtss: List[SRTS] = field(default_factory=list)
+    #: ThermalUnit List
     thermal_units: List[ThermalUnit] = field(default_factory=list)
+    #: LocalSource List
     local_sources: List[LocalSource] = field(default_factory=list)
+    #: ElectricCar List
     electric_cars: List[ElectricCar] = field(default_factory=list)
 
     #
