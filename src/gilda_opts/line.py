@@ -27,5 +27,5 @@ class Line(BaseClassJson):
     #: Max flow profile sched [0..1]
     min_flow_profile_sched: NumberSched = -1
 
-    #: line losses 
+    #: line losses
     losses: float = 0

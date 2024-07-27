@@ -26,12 +26,13 @@ class CESA(BaseClassJson):
      variables will be binary.
 
     """
+
     #: CESA unique id
     uid: int = -1
-    
+
     #: CESA name
     name: str = ""
-    
+
     #: Bus uid to be connected to
     bus_uid: int = -1
 

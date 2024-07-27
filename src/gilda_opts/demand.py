@@ -9,7 +9,7 @@ from gilda_opts.utils import NumberSched
 @dataclass
 class Demand(BaseClassJson):
     """Demand represents the base electric load in the scheduling problem."""
-    
+
     #: Load unique id
     uid: int = -1
 

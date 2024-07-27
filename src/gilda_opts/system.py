@@ -21,7 +21,7 @@ from gilda_opts.tssa import TSSA
 @dataclass(frozen=False)
 class System(BaseClassJson):
     """System class."""
-    
+
     #: System name
     name: str = ""
     #: System uid

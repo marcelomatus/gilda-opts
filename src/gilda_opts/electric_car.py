@@ -23,7 +23,7 @@ def default_battery():
 @dataclass
 class Engine(BaseClassJson):
     """Engine represetns an Electric Engine."""
-    
+
     #: Energy efficiency [Km/Kwh]
     energy_efficiency: float = 8.0
 
@@ -31,13 +31,13 @@ class Engine(BaseClassJson):
 @dataclass
 class ElectricCar(BaseClassJson):
     """ElectricCar represents an Electric Car."""
-    
+
     #: ElectricCar unique id
     uid: int = -1
     #: ElectricCar name
     name: str = ""
 
-    #: Storage system [Battery]    
+    #: Storage system [Battery]
     battery: Battery = field(default_factory=default_battery)
     #: Electric engine [Engine]
     engine: Engine = field(default_factory=Engine)

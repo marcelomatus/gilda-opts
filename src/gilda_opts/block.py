@@ -8,7 +8,7 @@ from gilda_opts.baseclass_json import BaseClassJson
 @dataclass
 class Block(BaseClassJson):
     """Block represent time blocks used in the schedule problem formulation."""
-    
+
     #: Block time duration [hours]
     duration: float = 1.0
 
