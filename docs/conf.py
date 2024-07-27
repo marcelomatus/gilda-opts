@@ -36,6 +36,7 @@ except ImportError:
 output_dir = os.path.join(__location__, "api")
 module_dir = os.path.join(__location__, "../src/gilda_opts")
 exclude_pattern = "../*/*/*_lp.py ../*/*/*_sched.py ../*/*/utils.py ../*/*/base*py"
+#exclude_pattern=""
 try:
     shutil.rmtree(output_dir)
 except FileNotFoundError:

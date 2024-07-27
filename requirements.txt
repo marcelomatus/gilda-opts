@@ -1,6 +1,6 @@
 scipy
-numpy<1.24
-pyomo
+numpy
+pyomo@git+https://github.com/Pyomo/pyomo.git
 logging
 pathlib
 dataclasses
