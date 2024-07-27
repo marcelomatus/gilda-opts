@@ -22,37 +22,29 @@ def default_battery():
 
 @dataclass
 class Engine(BaseClassJson):
-    """
-    Engine represetns an Electric Engine.
-
-    Attributes:
-     energy_efficiency:   Energy efficiency [Km/Kwh]
-    """
-
+    """Engine represetns an Electric Engine."""
+    
+    #: Energy efficiency [Km/Kwh]
     energy_efficiency: float = 8.0
 
 
 @dataclass
 class ElectricCar(BaseClassJson):
-    """
-    ElectricCar represents an Electric Car.
-
-    Attributes:
-     uid:                    ElectricCar unique id
-     name:                   ElectricCar name
-     battery:                Storage system [Battery]
-     engine:                 Electric engine [Engine]
-     bus_uid_sched:          Bus_id where is plugged or unplugged=-1
-     distance_sched:         Traveled distances while on road [Km]
-     cfail_sched:            Fail distance cost, you may use the taxi tariff [$/Km]
-    """
-
+    """ElectricCar represents an Electric Car."""
+    
+    #: ElectricCar unique id
     uid: int = -1
+    #: ElectricCar name
     name: str = ""
 
+    #: Storage system [Battery]    
     battery: Battery = field(default_factory=default_battery)
+    #: Electric engine [Engine]
     engine: Engine = field(default_factory=Engine)
 
+    #: Bus_id where is plugged or unplugged=-1
     bus_uid_sched: IntSched = -1
+    #: Traveled distances while on road [Km]
     distance_sched: NumberSched = 0
+    #: Fail distance cost, you may use the taxi tariff [$/Km]
     cfail_sched: NumberSched = -1

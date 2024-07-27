@@ -13,35 +13,32 @@ OFFLINE_MODE = 0
 
 @dataclass
 class ThermalUnit(BaseClassJson):
-    """Thermal Unit.
+    """Thermal Unit."""
 
-    Attributes:
-     uid:                ThermalUnit unique id
-     name:               ThermalUnit name
-     bus_uid:            Bus uid to be connected electrically
-     srts_uid:           SRTS uid to be attached thermally
-     capacity:           Electric capacity [KW]
-     heating_efficiency: How much electric energy is converted to heating [0..1]
-     cooling_efficiency: How much electric energy is converted to cooling [0..1]
-     thermal_capacity:   Thermal capacity additional to the electrical energy   [KW]
-     thermal_cost_sched: Thermal cost additional to the electricity cost        [$/KWh]
-     power_controlled:   Is the on/off state:  binary=0 or continuous=1         [0,1]
-     active_mode_sched:  Active mode sched: 1= heating, 0= offline, -1= cooling [-1,0,1]
-    """
-
+    #: ThermalUnit unique id
     uid: int = -1
+    #: ThermalUnit name
     name: str = ""
+    #: Bus uid to be connected electrically
     bus_uid: int = -1
+    #: SRTS uid to be attached thermally
     srts_uid: int = -1
 
+    #: Electric capacity [KW]
     capacity: float = 0
+    #: How much electric energy is converted to heating [0..1]
     heating_efficiency: float = 0
+    #: How much electric energy is converted to cooling [0..1]
     cooling_efficiency: float = 0
 
+    #: Thermal capacity additional to the electrical energy [KW]
     thermal_capacity: float = 0
+    #: Thermal cost additional to the electricity cost [$/KWh]
     thermal_cost_sched: NumberSched = 0
 
+    #: Is the on/off state:  binary=0 or continuous=1 [0,1]
     power_controlled: int = 0
+    #: Active mode sched: 1= heating, 0= offline, -1= cooling [-1,0,1]
     active_mode_sched: IntSched = 1
 
     #

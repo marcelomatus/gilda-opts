@@ -13,25 +13,21 @@ TEMPERATURE_DRIFT_COST = 160000.0 / (20 * 8)
 
 @dataclass
 class SRTS(BaseClassJson):
-    """
-    SRTS represents the Simple Building Thermal Model load in the scheduling problem.
+    """SRTS represents the Simple Building Thermal Model load in the scheduling problem."""
 
-    Attributes:
-     uid:  SRTS unique id
-     name: SRTS name
-     single_room:              SingleRoom instance
-     min_temperature_sched:    Minimum temperature sched [C]
-     max_temperature_sched:    Maximum temperature sched [C]
-     thermal_drift_cost_sched: Thermal drift cost sched [$/C h]
-    """
-
+    #: SRTS unique id
     uid: int = -1
+    #: SRTS name
     name: str = ""
 
+    #: SingleRoom instance
     single_room: SingleRoom = field(default_factory=SingleRoom)
 
+    #: Minimum temperature sched [C]
     min_temperature_sched: NumberSched = MIN_TEMPERATURE
+    #: Maximum temperature sched [C]
     max_temperature_sched: NumberSched = MAX_TEMPERATURE
+    #: Thermal drift cost sched [$/C h]
     thermal_drift_cost_sched: NumberSched = TEMPERATURE_DRIFT_COST
 
 

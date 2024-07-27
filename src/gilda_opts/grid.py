@@ -8,37 +8,33 @@ from gilda_opts.utils import NumberSched
 
 @dataclass
 class Grid(BaseClassJson):
-    """
-    A Grid represents the electric service from the grid company.
+    """A Grid represents the electric service from the grid company."""
 
-    Attributes:
-     uid:              Grid unique id
-     name:             Grid provider name
-     bus_uid:          Bus uid
-     capacity:                Connection Capacity [KW]
-     withdrawn_profile_sched: Withdrawn profile schedule, as a factor of capacity [0..1]
-     injection_profile_sched: Injection profile schedule, as a factor of capacity [0..1]
-     energy_buy_price_sched:     Energy tariff schedule (withdrawn) [$/KWh]
-     energy_sell_price_sched: Energy sell price schedule (injection) [$/KWh]
-     power_tariff:       Power tariff [$/KW]
-     power_factor_sched: Power factor schedule [0..1]
-     emission_cost:         Emission cost [$/gCO2]
-     emission_factor_sched: Emission factor schedule [gCO2/KWh]
-    """
-
+    #: Grid unique id
     uid: int = -1
+    #: Grid provider name
     name: str = ""
+    #: Bus uid
     bus_uid: int = -1
 
+    #: Connection Capacity [KW]
     capacity: float = 0
+    #: Withdrawn profile schedule, as a factor of capacity [0..1]
     withdrawn_profile_sched: NumberSched = 1.0
+    #: Injection profile schedule, as a factor of capacity [0..1]
     injection_profile_sched: NumberSched = 1.0
 
+    #: Energy tariff schedule (withdrawn) [$/KWh]
     energy_buy_price_sched: NumberSched = 0.0
+    #: Energy sell price schedule (injection) [$/KWh]
     energy_sell_price_sched: NumberSched = 0.0
 
+    #: Emission cost [$/gCO2]
     emission_cost: float = 0.0
+    #: Emission factor schedule [gCO2/KWh]
     emission_factor_sched: NumberSched = 0.0
 
+    #: Power tariff [$/KW]
     power_tariff: float = 0.0
+    #: Power factor schedule [0..1]
     power_factor_sched: NumberSched = 0.0

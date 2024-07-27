@@ -8,18 +8,19 @@ from gilda_opts.utils import NumberSched
 
 @dataclass
 class LocalSource(BaseClassJson):
-    """
-    A LocalSource represents a local energy source.
+    """A LocalSource represents a local energy source."""
 
-    Attributes:
-     uid:                LocalSource unique id
-     name:               LocalSource provider name
-     capacity:           Connection Capacity [KW]
-     generation_profile_sched: Generation profile, as a factor of the  capacity [0..1]
-    """
-
+    #: LocalSource unique id
     uid: int = -1
+
+    #: LocalSource provider name
     name: str = ""
+
+    #: Bus uid
     bus_uid: int = -1
+
+    #: Connection Capacity [KW]
     capacity: float = 0
+
+    #: Generation profile, as a factor of the  capacity [0..1]
     generation_profile_sched: NumberSched = 0
