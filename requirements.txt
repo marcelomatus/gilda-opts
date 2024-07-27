@@ -1,7 +1,6 @@
 scipy
 numpy
 pyomo@git+https://github.com/Pyomo/pyomo.git
-logging
 pathlib
 dataclasses
 dataclasses-json
