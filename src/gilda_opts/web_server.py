@@ -1,66 +1,71 @@
 """gilda_opts_web implements a simple web server."""
 
-from flask import Flask, request, jsonify
-from gilda_opts.system import System
-from gilda_opts.system_lp import SystemLP
+import os
+
+from flask import Flask, jsonify, request
 from waitress import serve
 
+from gilda_opts.system import System
+from gilda_opts.system_lp import SystemLP
 
+#
+# Some definitions
+#
+
+# Gilda default port
+GILDAOPTS_PORT = 5012
+# 400 is the HTTP status code for Bad Request
+BAD_REQUEST = 400
+# 200 is the HTTP status code for OK
+OK_REQUEST = 200
+
+#
 # Create an instance of the Flask class
+#
 app = Flask(__name__)  # __name__ determines the root path of the application
 
 
-@app.route("/process", methods=["POST"])
-def process_json():
+@app.route("/optimize", methods=["POST"])
+def optimize_json():
     """
-    Process the JSON data from a POST request and respond with a JSON object.
+    Optimize the JSON system from a POST request and respond with a JSON optimal schedulling.
 
-    The function reads JSON data from the incoming POST request, adds a 'status' key
-    to the JSON object with the value 'processed', and returns the modified JSON object.
 
-    :return: JSON response with the modified data.
+    :return: JSON response with the optimized scheduling.
     :rtype: flask.Response
-    :raises: 400 Bad Request if the incoming request does not contain valid JSON.
+    :raises: BAD_REQUEST Bad Request if the incoming request is not valid.
     """
     # Retrieves the incoming JSON request data
     data = request.data.decode("utf-8")
 
     if not data:
-        # 400 is the HTTP status code for Bad Request
-        return jsonify({"error": "Invalid or missing JSON"}), 400
+        return jsonify({"error": "Invalid or missing JSON"}), BAD_REQUEST
 
     try:
         system = System.from_json(data)
     except Exception as e:  # pylint: disable=W0718
-        return jsonify({"error": print(e)}), 400
+        return jsonify({"error": print(e)}), BAD_REQUEST
 
     system_lp = SystemLP(system)
     status = system_lp.solve()
 
     if status != "ok":
-        # 400 is the HTTP status code for Bad Request
-        return jsonify({"error": "Invalid LP, no solution"}), 400
+        return jsonify({"error": "Invalid problem, no solution"}), BAD_REQUEST
 
     sched = system_lp.get_sched()
     response_data = sched.to_json(indent=4)
 
-    return response_data, 200  # 200 is the HTTP status code for OK
+    return response_data, OK_REQUEST
 
 
 def run():
-    """
-    Run the Flask development server.
-
-    This starts the Flask web server in debug mode, which provides detailed
-    error messages and automatically restarts the server when code changes are
-    detected.
-    """
+    """Run the server."""
     web_ui_url = "0.0.0.0"
-    port = 5012
+    port = int(os.environ.get('GILDAOPTS_PORT', GILDAOPTS_PORT))
+    app.logger.info("Launching gilda-opts server at: http://%s:%s", web_ui_url, port)
 
-    serve(app, host=web_ui_url, port=port, threads=8)
+    serve(app, host=web_ui_url, port=port, threads=4)
 
 
 if __name__ == "__main__":
-    """Run the app."""
     run()
