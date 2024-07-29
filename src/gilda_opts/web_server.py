@@ -55,7 +55,7 @@ def run():
     error messages and automatically restarts the server when code changes are
     detected.
     """
-    web_ui_url = '0.0.0.0'
+    web_ui_url = "0.0.0.0"
     port = 5012
 
     serve(app, host=web_ui_url, port=port, threads=8)
