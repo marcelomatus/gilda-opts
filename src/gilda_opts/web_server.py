@@ -3,6 +3,8 @@
 from flask import Flask, request, jsonify
 from gilda_opts.system import System
 from gilda_opts.system_lp import SystemLP
+from waitress import serve
+
 
 # Create an instance of the Flask class
 app = Flask(__name__)  # __name__ determines the root path of the application
@@ -53,7 +55,10 @@ def run():
     error messages and automatically restarts the server when code changes are
     detected.
     """
-    app.run(debug=True, port=5012)
+    web_ui_url = '0.0.0.0'
+    port = 5012
+
+    serve(app, host=web_ui_url, port=port, threads=8)
 
 
 if __name__ == "__main__":
