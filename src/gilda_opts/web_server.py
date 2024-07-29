@@ -13,6 +13,8 @@ from gilda_opts.system_lp import SystemLP
 #
 
 # Gilda default port
+GILDAOPTS_ADDR = "0.0.0.0"
+# Gilda default port
 GILDAOPTS_PORT = 5012
 # 400 is the HTTP status code for Bad Request
 BAD_REQUEST = 400
@@ -60,11 +62,12 @@ def optimize_json():
 
 def run():
     """Run the server."""
-    web_ui_url = "0.0.0.0"
-    port = int(os.environ.get('GILDAOPTS_PORT', GILDAOPTS_PORT))
-    app.logger.info("Launching gilda-opts server at: http://%s:%s", web_ui_url, port)
+    address = os.environ.get("GILDAOPTS_ADDR", GILDAOPTS_ADDR)
+    port = int(os.environ.get("GILDAOPTS_PORT", GILDAOPTS_PORT))
 
-    serve(app, host=web_ui_url, port=port, threads=4)
+    app.logger.info("Launching gilda_opts server at: http://%s:%s", address, port)
+
+    serve(app, host=address, port=port, threads=4)
 
 
 if __name__ == "__main__":
