@@ -2,7 +2,8 @@ flask
 waitress
 scipy
 numpy
-pyomo@git+https://github.com/Pyomo/pyomo.git
+pyomo ; python_version<"3.12"
+pyomo@git+https://github.com/Pyomo/pyomo ; python_version>="3.12"
 pathlib
 dataclasses
 dataclasses-json
