@@ -29,14 +29,15 @@ app = Flask(__name__)  # __name__ determines the root path of the application
 
 @app.route("/optimize", methods=["POST"])
 def optimize_json():
-    """
-    Optimize the JSON system from a POST request and respond with a JSON optimal schedulling.
-
+    """Optimize the JSON system and respond with the JSON optimal scheduling.
 
     :return: JSON response with the optimized scheduling.
     :rtype: flask.Response
     :raises: BAD_REQUEST Bad Request if the incoming request is not valid.
+
     """
+    app.logger.info("Gilda-opts processing optimize request")
+
     # Retrieves the incoming JSON request data
     data = request.data.decode("utf-8")
 
@@ -57,6 +58,7 @@ def optimize_json():
     sched = system_lp.get_sched()
     response_data = sched.to_json(indent=4)
 
+    app.logger.info("Gilda-opts solution Ok. Processing solver time %s", sched.solver_time)
     return response_data, OK_REQUEST
 
 
