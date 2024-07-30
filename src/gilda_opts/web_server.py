@@ -58,7 +58,9 @@ def optimize_json():
     sched = system_lp.get_sched()
     response_data = sched.to_json(indent=4)
 
-    app.logger.info("Gilda-opts solution Ok. Processing solver time %s", sched.solver_time)
+    app.logger.info(
+        "Gilda-opts solution Ok. Processing solver time %s", sched.solver_time
+    )
     return response_data, OK_REQUEST
 
 
