@@ -8,7 +8,9 @@ from gilda_opts.utils import NumberSched
 
 @dataclass
 class LocalSource(BaseClassJson):
-    """A LocalSource represents a local energy source."""
+    """A LocalSource refers to the production of electric power near the location where it will be consumed.
+    The main local sources include solar panelsa and small wind turbines for home. 
+    This local renewable generation is quantified in megawatts (MW) of capacity"""
 
     #: LocalSource unique id
     uid: int = -1
