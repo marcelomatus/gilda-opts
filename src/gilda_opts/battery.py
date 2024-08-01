@@ -1,4 +1,4 @@
-"""Battery module represents a Battery Energy Storage System."""
+"""Battery module represents the storage medium for Battery Energy Storage System."""
 
 from dataclasses import dataclass
 from gilda_opts.utils import NumberSched
@@ -8,7 +8,11 @@ from gilda_opts.baseclass_json import BaseClassJson
 
 @dataclass
 class Battery(BaseClassJson):
-    """Battery represents an electric battery Element."""
+    """Battery represents an electric battery element. 
+    
+    Battery stores energy from multiple sources, such as local distribution network 
+    or from self-consumption local sources (PV or wind), to later supplies energy to 
+    the home during periods of network congestion or higher power prices."""
 
     #: Storage capacity [KWh]
     capacity: float = 0
