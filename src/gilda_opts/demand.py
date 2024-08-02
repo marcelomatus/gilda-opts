@@ -12,7 +12,7 @@ class Demand(BaseClassJson):
     
     In this context, base demand refers to the electrical load of appliances that cannot be controlled or adjusted.
     
-    Base demand is specified as a MW value for each time slice within the planning horizon.""
+    Base demand is specified as a MW value for each time slice within the planning horizon."""
 
     #: Load unique id
     uid: int = -1
