@@ -8,11 +8,15 @@ from gilda_opts.utils import NumberSched
 
 @dataclass
 class Demand(BaseClassJson):
-    """Demand represents the base electric load or power consumed over a given period of time, for example, one week.
-    
-    In this context, base demand refers to the electrical load of appliances that cannot be controlled or adjusted.
-    
-    Base demand is specified as a MW value for each time slice within the planning horizon."""
+    """Demand represents the base electric load or power consumed.
+
+    In this context, base demand refers to the electrical load of appliances
+    that cannot be controlled or adjusted.
+
+    Base demand is specified as a MW value for each time slice within the
+    planning horizon.
+
+    """
 
     #: Load unique id
     uid: int = -1

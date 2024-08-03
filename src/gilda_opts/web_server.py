@@ -1,6 +1,7 @@
 """gilda_opts_web implements a simple web server."""
 
 import os
+import logging
 
 from flask import Flask, jsonify, request
 from waitress import serve
@@ -67,8 +68,9 @@ def optimize_json():
 def run():
     """Run the server."""
     address = os.environ.get("GILDAOPTS_ADDR", GILDAOPTS_ADDR)
-    port = int(os.environ.get("GILDAOPTS_PORT", GILDAOPTS_PORT))
+    port = int(os.environ.get("PORT", GILDAOPTS_PORT))
 
+    app.logger.setLevel(logging.DEBUG)
     app.logger.info("Launching gilda_opts server at: http://%s:%s", address, port)
 
     serve(app, host=address, port=port, threads=4)
