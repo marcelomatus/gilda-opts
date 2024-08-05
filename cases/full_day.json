@@ -31,6 +31,10 @@
         {
             "uid": 1,
             "name": "home"
+        },
+        {
+            "uid": 2,
+            "name": "work"
         }
     ],
     "demands": [
@@ -175,13 +179,35 @@
             "bus_uid": 1,
             "load": 2.25,
             "on_period": 3
-        },
+        }
+    ],
+
+    "electric_cars":[
         {
-            "uid": 3,
-            "name": "VEs",
-            "bus_uid": 1,
-            "load": 7.4,
-            "on_period": 5
+            "uid": 1,
+            "name":"VEs_1",
+            "battery": {
+                "capacity":75 ,
+                "max_flow_in": 7.4,
+                "max_flow_out": 7.4,
+                "efficiency_in": 1,
+                "efficiency_out": 1
+            },
+            "engine": {
+                "energy_efficiency": 6
+            },
+            "bus_uid_sched": [1,1,1,1,1,-1,-1,-1,-1,-1,2,2,-1,-1,-1,2,2,2,-1,-1,1,1,1,1],
+            "distance_sched": [0,0,0,0,0,10,10,10,10,10,0,0,10,10,10,0,0,0,10,10,0,0,0,0]
+        }
+    ],
+    "cesas":[
+        {
+            "uid":1,
+            "name":"WaterPump",
+            "bus_uid":1,
+            "load":2.0,
+            "cumulative_mask_sched":1,
+            "cumulative_on_periods":[8.0] 
         }
     ],
     "besss": [
