@@ -1,0 +1,225 @@
+{
+    "name": "Test",
+    "uid": 1,
+    "block_durations": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+    ],
+    "buses": [
+        {
+            "uid": 1,
+            "name": "home"
+        },
+        {
+            "uid": 2,
+            "name": "work"
+        }
+    ],
+    "demands": [
+        {
+            "name": "d1",
+            "uid": 1,
+            "bus_uid": 1,
+            "load_sched": [
+                0.11,
+                0.10,
+                0.11,
+                0.12,
+                0.14,
+                0.12,
+                0.21,
+                0.25,
+                0.26,
+                0.24,
+                0.20,
+                0.18,
+                0.20,
+                0.19,
+                0.17,
+                0.21,
+                0.20,
+                0.22,
+                0.22,
+                0.30,
+                0.27,
+                0.25,
+                0.15,
+                0.18
+            ]
+        }
+    ],
+    "grids": [
+        {
+            "name": "g1",
+            "uid": 1,
+            "bus_uid": 1,
+            "capacity": 30,
+            "energy_buy_price_sched": [
+                135,
+                119,
+                112,
+                127,
+                111,
+                111,
+                108,
+                79,
+                39,
+                34,
+                34,
+                33,
+                33,
+                34,
+                34,
+                34,
+                33,
+                36,
+                42,
+                58,
+                80,
+                100,
+                87,
+                139
+            ],
+            "power_tariff": 5000,
+            "power_factor_sched": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1,
+                0,
+                0
+            ]
+        }
+    ],
+    "local_sources": [
+        {
+            "name": "gd1",
+            "uid": 1,
+            "bus_uid": 1,
+            "capacity": 10,
+            "generation_profile_sched": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0.028,
+                0.1036,
+                0.2122,
+                0.3966,
+                0.6405,
+                0.7098,
+                0.6811,
+                0.5882,
+                0.4272,
+                0.2428,
+                0.0398,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        }
+    ],
+    "tssas": [
+        {
+            "uid": 1,
+            "name": "lavadora",
+            "bus_uid": 1,
+            "load": 0.5,
+            "on_period": 3
+        },
+        {
+            "uid": 2,
+            "name": "secadora",
+            "bus_uid": 1,
+            "load": 2.25,
+            "on_period": 3
+        }
+    ],
+
+    "electric_cars":[
+        {
+            "uid": 1,
+            "name":"VEs_1",
+            "battery": {
+                "capacity":75 ,
+                "max_flow_in": 7.4,
+                "max_flow_out": 7.4,
+                "efficiency_in": 1,
+                "efficiency_out": 1
+            },
+            "engine": {
+                "energy_efficiency": 6
+            },
+            "bus_uid_sched": [1,1,1,1,1,-1,-1,-1,-1,-1,2,2,-1,-1,-1,2,2,2,-1,-1,1,1,1,1],
+            "distance_sched": [0,0,0,0,0,10,10,10,10,10,0,0,10,10,10,0,0,0,10,10,0,0,0,0]
+        }
+    ],
+    "cesas":[
+        {
+            "uid":1,
+            "name":"WaterPump",
+            "bus_uid":1,
+            "load":2.0,
+            "cumulative_mask_sched":1,
+            "cumulative_on_periods":[8.0] 
+        }
+
+    ],
+
+    "besss": [
+        {
+            "uid": 1,
+            "name": "b1",
+            "bus_uid": 1,
+            "capacity": 20,
+            "max_flow": 2.5,
+            "efficiency": 0.9
+        }
+    ]
+}
