@@ -13,10 +13,6 @@ from gilda_opts.system_lp import SystemLP
 # Some definitions
 #
 
-# Gilda default port
-GILDAOPTS_ADDR = "0.0.0.0"
-# Gilda default port
-GILDAOPTS_PORT = 5012
 # 400 is the HTTP status code for Bad Request
 BAD_REQUEST = 400
 # 200 is the HTTP status code for OK
@@ -63,6 +59,12 @@ def optimize_json():
         "Gilda-opts solution Ok. Processing solver time %s", sched.solver_time
     )
     return response_data, OK_REQUEST
+
+
+# Gilda-opts default port
+GILDAOPTS_ADDR = "0.0.0.0"
+# Gilda default port
+GILDAOPTS_PORT = 5012
 
 
 def run():

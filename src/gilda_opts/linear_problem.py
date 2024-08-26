@@ -78,8 +78,10 @@ class LinearProblem:
         self.cols += 1
         return j
 
-    def add_row(self, row={}, name=None, lb=-inf, ub=inf):  # pylint: disable=W0102
+    def add_row(self, row=None, name=None, lb=-inf, ub=inf):
         """Add one column or constraint to the LP problem."""
+        if row is None:
+            row = {}
         i = self.rows
         for j, v in row.items():
             self.A[i, j] = v
@@ -94,7 +96,7 @@ class LinearProblem:
         self.rows += 1
         return i
 
-    def add_rhs_row(self, row={}, name=None, rhs=0):  # pylint: disable=W0102
+    def add_rhs_row(self, row=None, name=None, rhs=0):
         """Add one column or constraint to the LP problem providing the RHS."""
         return self.add_row(row, name=name, lb=rhs, ub=rhs)
 

@@ -51,4 +51,4 @@ def test_system_2():
     except UndefinedParameterError:
         return
 
-    assert False
+    raise AssertionError()
