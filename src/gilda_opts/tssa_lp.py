@@ -56,6 +56,9 @@ class TSSALP:
         # Adding the period constraint
         #
         n = len(self.onoff_cols)
+        if n == 0:
+            return
+        
         d = [self.system_lp.system.blocks[i].duration for i in range(0, n)]
 
         row = {}
